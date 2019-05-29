@@ -1,0 +1,57 @@
+openapi: 3.0.0
+servers: []
+info:
+  version: "will-be-set-during-build"
+  title: Organizations data definitions
+  description: Object definitions for the Organizations on the Winding Tree platform.
+paths: {}
+components:
+  schemas:
+    OrganizationOnChain:
+      title: Organization on blockchain
+      description: Organization registered in the Segment directory
+      type: object
+      required:
+      - address
+      - owner
+      - dataUri
+      properties:
+        address:
+          description: Ethereum address of the organization.
+          $ref: '@windingtree/wt-shared-schemas/swagger.yaml#/components/schemas/EthereumAddressType'
+        manager:
+          description: Ethereum address of the organization smart contract's owner.
+          $ref: '@windingtree/wt-shared-schemas/swagger.yaml#/components/schemas/EthereumAddressType'
+        dataUri:
+          description: URI of the off-chain organization data.
+          $ref: '@windingtree/wt-shared-schemas/swagger.yaml#/components/schemas/UriType'
+        created:
+          description: Number of a block when the Organization was created.
+          type: integer
+        delegates:
+          description: A list of Ethereum addresses that can represent the Organization and sign documents on its behalf.
+          type: array
+            items:
+              $ref: '@windingtree/wt-shared-schemas/swagger.yaml#/components/schemas/EthereumAddressType'
+          
+  # Off chain data formats  
+    OrganizationDataIndex:
+      title: Organization data index
+      description: Landing document for Organization resources. Link to this document is stored in the Segment Directory record.
+      type: object
+      required:
+      - dataFormatVersion
+      - legalEntity
+      - updatedAt
+      properties:
+        dataFormatVersion:
+          description: Version number indicating the data format specification version.
+          type: string
+          format: semver
+          maxLength: 20
+        legalEntity:
+          $ref: '@windingtree/wt-shared-schemas/swagger.yaml#/components/schemas/LegalEntityType'
+        updatedAt:
+          type: string
+          description: Date-time when the data was last changed. Used by consumers to handle incremental updates and caching.
+          format: date-time

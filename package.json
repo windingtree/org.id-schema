@@ -1,0 +1,28 @@
+{
+  "name": "@windingtree/wt-organization-schemas",
+  "version": "0.0.0",
+  "description": "Organization data schemas for WT platform",
+  "main": "dist/swagger.yaml",
+  "scripts": {
+    "build": "npm run clean && ./build.js",
+    "clean": "rimraf dist"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/windingtree/wt-organization-schemas.git"
+  },
+  "author": "Winding Tree Developers <dev@windingtree.com>",
+  "license": "Apache-2.0",
+  "bugs": {
+    "url": "https://github.com/windingtree/wt-organization-schemas/issues"
+  },
+  "homepage": "https://github.com/windingtree/wt-organization-schemas#readme",
+  "devDependencies": {
+    "@windingtree/wt-shared-schemas": "^0.6.6",
+    "rimraf": "^2.6.3",
+    "yamljs": "^0.3.0"
+  },
+  "publishConfig": {
+    "access": "public"
+  }
+}

@@ -1,0 +1,26 @@
+dist: xenial
+sudo: false
+group: beta
+language: node_js
+cache:
+  directories:
+  - "$HOME/.npm"
+install: case $TRAVIS_BRANCH in greenkeeper*) npm i;; *) npm ci;; esac;
+jobs:
+  include:
+  - stage: build
+    if: tag IS blank
+    script: npm run build
+  - stage: NPM release
+    script: echo 'Deploying to NPM...'
+    if: tag IS present
+    before_deploy: npm run build
+    deploy:
+      provider: npm
+      email: devops@windingtree.com
+      skip_cleanup: true
+      api_key: "$NPM_TOKEN"
+      on:
+        repo: windingtree/wt-organization-schemas
+        branch: master
+        tags: true
