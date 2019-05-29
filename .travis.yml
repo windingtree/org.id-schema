@@ -24,3 +24,6 @@ jobs:
         repo: windingtree/wt-organization-schemas
         branch: master
         tags: true
+env:
+  global:
+    secure: RSp//wdTV7+0r3vEg5X/ui6yYaDNVByXqPQpMqapegydlB5/lU6kW4uOzo7tMrYDbDGklJXMMtBySH+o0PBYfLkfY1XEoTZCxenUhQTBd5hIMEWxxlMt57EYSqTfQRiay/a3FuwKhEeSdYvqqCsWaPMP4TAOWNAiEjvNWTKIi4ndL7kzwqGbk+1riGhKQCeGE3TdnC5RivX673MJGLYhQvjz4OmqPiPFadjSEqKBH60BKFP8olfodpHFvGc30XEUcPVQ+YRLudQ60w1vOIaXQ+vmF84rvmJuocJX51Li7qpr6/shuIPhbnM3JY90ltnTZS/nyzr6zNgTYUAsHF3RqzoBmjaUu5oVG6XL3ufted/iF6RupzUJNgZmPoRoPPjYO3gxNaFL6ydMFBgCuw6Vpfk0WhVkNFvKVQTeBH5UMA/D9IcsHIaRY/od3TtpWgSZLHbfd9DYqvhtMElqfbbDhYGQcqwFvqrmbeYYz8676ffMg9Gkyk40XBZhMjHb7nTeJzjuow0UDPRxG246I839BgzwZC96ZNTomf576rjGoD3UwLH8rhNaFiH/JNvdcOXV+G7mqB/ug8597ouIEBe5WJWTblqvN1rNViojnlCBerzsMBQy4wMas8M3YsdqfpV1VhXf404Dp7za7WstSPSmTnd2TiwRWMhOTP/lx0ayI/o=
