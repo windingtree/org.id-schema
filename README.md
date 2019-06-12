@@ -2,6 +2,10 @@
 Model schema definitions used for Organizations on the
 [Winding Tree platform](https://windingtree.com/).
 
+
+This data structure is a part of the `ORG.ID` specification and JSON files
+conforming to this layout should be linked from the Organization smart contract.
+
 For more information visit our [developer portal](https://developers.windingtree.com/).
 
 ## Build

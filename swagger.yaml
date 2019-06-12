@@ -7,43 +7,6 @@ info:
 paths: {}
 components:
   schemas:
-    OrganizationOnChain:
-      title: Organization on blockchain
-      description: |
-        Organization smart contract registered in the Segment directory. The actual
-        smart contract interface is a little different, but OAS does not allow us to
-        capture that. Consult @windingtree/wt-contracts for proper specification of
-        what the organization smart contract requires. The important thing to grasp is
-        that this smart contract is the main property of the Organization that links all
-        other data.
-      type: object
-      required:
-      - address
-      - owner
-      - dataUri
-      - delegates
-      properties:
-        address:
-          description: Ethereum address of the organization.
-          $ref: '@windingtree/wt-shared-schemas/swagger.yaml#/components/schemas/EthereumAddressType'
-        owner:
-          description: Ethereum address of the organization smart contract's owner.
-          $ref: '@windingtree/wt-shared-schemas/swagger.yaml#/components/schemas/EthereumAddressType'
-        dataUri:
-          description: |
-            URI of the off-chain organization data. It should point to a file that conforms
-            to `OrganizationDataIndex` format.
-          $ref: '@windingtree/wt-shared-schemas/swagger.yaml#/components/schemas/UriType'
-        delegates:
-          description: A list of Ethereum addresses that can represent the Organization and sign documents on its behalf.
-          type: array
-          minLength: 0
-          items:
-            $ref: '@windingtree/wt-shared-schemas/swagger.yaml#/components/schemas/EthereumAddressType'
-        created:
-          description: Number of a block when the Organization was created.
-          type: integer
-          
     # Off chain data formats
     OrganizationDataIndex:
       title: Organization data index
