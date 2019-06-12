@@ -6,34 +6,86 @@ const YAML = require('yamljs');
 const { version } = require(path.resolve(__dirname, `package.json`));
 const buildDir = 'dist';
 
-let model = YAML.load(`./swagger.yaml`);
+const MODEL_DEFINITIONS = [
+  '@windingtree/wt-shared-schemas',
+//  '@windingtree/wt-hotel-schemas',
+//  '@windingtree/wt-airline-schemas',
+//  '@windingtree/wt-ota-schemas',
+];
 
-/**
- * Update $refs in model definition with absolute address.
- * @param model
- */
-const resolveRefs = (model) => {
-  if (model.$ref && model.$ref.startsWith('@windingtree/')) {
-    model.$ref = model.$ref.replace('@windingtree/wt-shared-schemas/swagger.yaml', '');
+const normalizePath = (path) => {
+  return path.replace('@', '').replace('/', '-');
+};
+
+const replaceReferences = (model, from, to) => {
+  if (model.$ref) {
+    model.$ref = model.$ref.replace(from, to);
   }
   if (typeof model === 'object') {
     for (let property in model) {
-      resolveRefs(model[property]);
+      replaceReferences(model[property], from, to);
     }
   }
+  return model;
 };
 
-const addDefinitions = (model) => {
-  const refDef = YAML.load('node_modules/@windingtree/wt-shared-schemas/dist/swagger.yaml');
-  resolveRefs(refDef);
-  model.components.schemas = Object.assign(model.components.schemas, refDef.components.schemas);
+/**
+ * Update $refs in model definition to local references.
+ * @param model
+ */
+const resolveReferences = (model) => {
+  if (model.$ref && model.$ref.startsWith('@windingtree/')) {
+    for (let modelPath of MODEL_DEFINITIONS) {
+      // We cannot use nested schemas, because the swagger-model-validator does not support that
+      model.$ref = model.$ref.replace(`${modelPath}/swagger.yaml#/components/schemas/`, `#/components/schemas/${normalizePath(modelPath)}-`);
+    }
+  }
+  if (typeof model === 'object') {
+    for (let property in model) {
+      resolveReferences(model[property]);
+    }
+  }
   return model;
-}
+};
 
-resolveRefs(model);
-model = addDefinitions(model);
-model.info.version = version;
-if (!fs.existsSync(buildDir)) {
-  fs.mkdirSync(buildDir);
+/**
+ * Add referenced models to enable $ref resolution
+ * @param model
+ */
+const addDefinitions = (model) => {
+  for (let modelPath of MODEL_DEFINITIONS) {
+    let refDef = YAML.load(path.resolve(__dirname, `./node_modules/${modelPath}/dist/swagger.yaml`));
+    // We cannot use nested schemas, because the swagger-model-validator does not support that
+    refDef = replaceReferences(refDef, '#/components/schemas/', `#/components/schemas/${normalizePath(modelPath)}-`);
+    model.components.schemas = Object.assign({},
+      model.components.schemas,
+      Object.keys(refDef.components.schemas).reduce((agg, curr) => {
+        agg[`${normalizePath(modelPath)}-${curr}`] = refDef.components.schemas[curr];
+        return agg;
+      }, {})
+    );
+  }
+  return model;
+};
+
+
+const convertSchema = () => {
+  let swaggerDocument = YAML.load(path.resolve(__dirname, `./swagger.yaml`));
+  swaggerDocument = resolveReferences(swaggerDocument);
+  const processed = addDefinitions(swaggerDocument);
+  processed.info.version = version;
+  if (!fs.existsSync(buildDir)) {
+    fs.mkdirSync(buildDir);
+  }
+  fs.writeFileSync(`${buildDir}/swagger.yaml`, YAML.dump(processed, 10, 2));
+};
+
+module.exports = {
+  resolveReferences,
+  addDefinitions,
+  convertSchema,
+};
+
+if (require.main === module) {
+  convertSchema();
 }
-fs.writeFileSync(`${buildDir}/swagger.yaml`, YAML.stringify(model, 10, 2));

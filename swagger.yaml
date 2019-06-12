@@ -7,37 +7,10 @@ info:
 paths: {}
 components:
   schemas:
-    OrganizationOnChain:
-      title: Organization on blockchain
-      description: Organization registered in the Segment directory
-      type: object
-      required:
-      - address
-      - owner
-      - dataUri
-      properties:
-        address:
-          description: Ethereum address of the organization.
-          $ref: '@windingtree/wt-shared-schemas/swagger.yaml#/components/schemas/EthereumAddressType'
-        manager:
-          description: Ethereum address of the organization smart contract's owner.
-          $ref: '@windingtree/wt-shared-schemas/swagger.yaml#/components/schemas/EthereumAddressType'
-        dataUri:
-          description: URI of the off-chain organization data.
-          $ref: '@windingtree/wt-shared-schemas/swagger.yaml#/components/schemas/UriType'
-        created:
-          description: Number of a block when the Organization was created.
-          type: integer
-        delegates:
-          description: A list of Ethereum addresses that can represent the Organization and sign documents on its behalf.
-          type: array
-            items:
-              $ref: '@windingtree/wt-shared-schemas/swagger.yaml#/components/schemas/EthereumAddressType'
-          
-  # Off chain data formats  
+    # Off chain data formats
     OrganizationDataIndex:
       title: Organization data index
-      description: Landing document for Organization resources. Link to this document is stored in the Segment Directory record.
+      description: Landing document for Organization. Link to this document is stored in the Segment Directory record.
       type: object
       required:
       - dataFormatVersion
@@ -49,9 +22,55 @@ components:
           type: string
           format: semver
           maxLength: 20
+        name:
+          allOf:
+            - $ref: '@windingtree/wt-shared-schemas/swagger.yaml#/components/schemas/NameType'
+            - description: Human readable name of the Organization that can be used for quick identification.
         legalEntity:
-          $ref: '@windingtree/wt-shared-schemas/swagger.yaml#/components/schemas/LegalEntityType'
+          allOf:
+            - oneOf:
+              - $ref: '@windingtree/wt-shared-schemas/swagger.yaml#/components/schemas/LegalEntityType'
+              - $ref: '@windingtree/wt-shared-schemas/swagger.yaml#/components/schemas/RelationshipSignatureType'
+            - description: |
+                Legal information about this organization. Either stored directly or as a signed
+                relationship reference to another Organization smart contract. Users must verify that the 
+                relationship signature is valid (it did not expire and the signature was produced by someone
+                associated with the organization, typically a `delegate`).
         updatedAt:
+          description: Date-time when the data was last changed. Possibly used by consumers to handle incremental updates and caching.
           type: string
-          description: Date-time when the data was last changed. Used by consumers to handle incremental updates and caching.
           format: date-time
+        guarantee:
+          allOf:
+            - $ref: '@windingtree/wt-shared-schemas/swagger.yaml#/components/schemas/RelationshipSignatureType'
+            - description: |
+                *Some other Organization* is guaranteeing that **this Organization** can be trusted. That means
+                that when a user is evaluating trustworthiness of **this Organization**, she should take into
+                account the trustworthiness of *Some other Organization*.
+        hotel:
+          $ref: '#/components/schemas/ApiReference'
+        airline:
+          $ref: '#/components/schemas/ApiReference'
+        ota:
+          $ref: '#/components/schemas/ApiReference'
+    ApiReference:
+      title: API reference
+      type: object
+      required:
+        - entrypoint
+        - docs
+        - type
+      properties:
+        entrypoint:
+          $ref: '@windingtree/wt-shared-schemas/swagger.yaml#/components/schemas/UriType'
+        docs:
+          $ref: '@windingtree/wt-shared-schemas/swagger.yaml#/components/schemas/UriType'
+        type:
+          type: string
+          enum:
+            - windingtree
+            - ota
+            - htng
+            - ndc
+            - custom
+
