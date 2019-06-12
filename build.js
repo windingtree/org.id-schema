@@ -8,9 +8,9 @@ const buildDir = 'dist';
 
 const MODEL_DEFINITIONS = [
   '@windingtree/wt-shared-schemas',
-  '@windingtree/wt-hotel-schemas',
-  '@windingtree/wt-airline-schemas',
-  '@windingtree/wt-ota-schemas',
+//  '@windingtree/wt-hotel-schemas',
+//  '@windingtree/wt-airline-schemas',
+//  '@windingtree/wt-ota-schemas',
 ];
 
 const normalizePath = (path) => {
