@@ -2,15 +2,15 @@ openapi: 3.0.0
 servers: []
 info:
   version: "will-be-set-during-build"
-  title: Organizations data definitions
-  description: Object definitions for the Organizations on the Winding Tree platform.
+  title: ORG.JSON specification
+  description: Object definitions for the ORG.JSON part of ORG.ID of the Winding Tree platform.
 paths: {}
 components:
   schemas:
     # Off chain data formats
     OrganizationDataIndex:
-      title: Organization data index
-      description: Landing document for Organization. Link to this document is stored in the Segment Directory record.
+      title: ORG.JSON
+      description: Landing file for each ORG.ID. Link to this document is stored in the 0xORG smart contract.
       type: object
       required:
       - dataFormatVersion
