@@ -47,11 +47,25 @@ components:
                 *Some other Organization* is guaranteeing that **this Organization** can be trusted. That means
                 that when a user is evaluating trustworthiness of **this Organization**, she should take into
                 account the trustworthiness of *Some other Organization*.
-        services:
-          description: A list of API services that this organization provides.
-          type: array
-          items:
-            $ref: '#/components/schemas/ApiReference'
+        hotel:
+          allOf:
+            - $ref: '@windingtree/wt-hotel-schemas/swagger.yaml#/components/schemas/HotelDescriptionMinimal'
+            - type: object
+              properties:
+                apis:
+                  $ref: '#/components/schemas/ApiReferences'
+        airline:
+          allOf:
+            - $ref: '@windingtree/wt-airline-schemas/swagger.yaml#/components/schemas/AirlineDescriptionMinimal'
+            - type: object
+              properties:
+                apis:
+                  $ref: '#/components/schemas/ApiReferences'
+    ApiReferences:
+      description: A list of API services that this organization provides.
+      type: array
+      items:
+        $ref: '#/components/schemas/ApiReference'
     ApiReference:
       title: External API reference
       type: object
@@ -72,9 +86,3 @@ components:
         version:
           description: A version of the API. Can be in `semver` format but other formats are possible.
           type: string
-        segment:
-          type: string
-          enum:
-            - hotels
-            - airlines
-            - otas

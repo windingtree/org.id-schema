@@ -18,6 +18,8 @@
   },
   "homepage": "https://github.com/windingtree/wt-organization-schemas#readme",
   "devDependencies": {
+    "@windingtree/wt-airline-schemas": "^0.7.0",
+    "@windingtree/wt-hotel-schemas": "^0.8.1",
     "@windingtree/wt-shared-schemas": "^0.7.0",
     "rimraf": "^2.6.3",
     "yamljs": "^0.3.0"
