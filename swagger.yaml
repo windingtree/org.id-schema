@@ -58,21 +58,20 @@ components:
       required:
         - entrypoint
         - docs
-        - type
+        - format
+        - version
         - segment
       properties:
         entrypoint:
           $ref: '@windingtree/wt-shared-schemas/swagger.yaml#/components/schemas/UriType'
         docs:
           $ref: '@windingtree/wt-shared-schemas/swagger.yaml#/components/schemas/UriType'
-        type:
+        format:
+          description: API format, such as `Winding Tree`, `OTA`, `HTNG` or something else. This should be case insensitive.
           type: string
-          enum:
-            - windingtree
-            - ota
-            - htng
-            - ndc
-            - custom
+        version:
+          description: A version of the API. Can be in `semver` format but other formats are possible.
+          type: string
         segment:
           type: string
           enum:
