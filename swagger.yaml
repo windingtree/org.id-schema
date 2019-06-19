@@ -35,7 +35,7 @@ components:
                 Legal information about this organization. Either stored directly or as a signed
                 relationship reference to another Organization smart contract. Users must verify that the 
                 relationship signature is valid (it did not expire and the signature was produced by someone
-                associated with the organization, typically a `delegate`).
+                associated with the organization).
         updatedAt:
           description: Date-time when the data was last changed. Possibly used by consumers to handle incremental updates and caching.
           type: string
