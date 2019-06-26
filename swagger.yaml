@@ -27,40 +27,48 @@ components:
             - $ref: '@windingtree/wt-shared-schemas/swagger.yaml#/components/schemas/NameType'
             - description: Human readable name of the Organization that can be used for quick identification.
         legalEntity:
-          allOf:
-            - oneOf:
-              - $ref: '@windingtree/wt-shared-schemas/swagger.yaml#/components/schemas/LegalEntityType'
-              - $ref: '@windingtree/wt-shared-schemas/swagger.yaml#/components/schemas/RelationshipSignatureType'
-            - description: |
-                Legal information about this organization. Either stored directly or as a signed
-                relationship reference to another Organization smart contract. Users must verify that the 
-                relationship signature is valid (it did not expire and the signature was produced by someone
-                associated with the organization).
+          $ref: '#/components/schemas/LegalEntity'
         updatedAt:
           description: Date-time when the data was last changed. Possibly used by consumers to handle incremental updates and caching.
           type: string
           format: date-time
         guarantee:
-          allOf:
-            - $ref: '@windingtree/wt-shared-schemas/swagger.yaml#/components/schemas/RelationshipSignatureType'
-            - description: |
-                *Some other Organization* is guaranteeing that **this Organization** can be trusted. That means
-                that when a user is evaluating trustworthiness of **this Organization**, she should take into
-                account the trustworthiness of *Some other Organization*.
+          $ref: '#/components/schemas/Guarantee'
         hotel:
-          allOf:
-            - $ref: '@windingtree/wt-hotel-schemas/swagger.yaml#/components/schemas/HotelDescriptionMinimal'
-            - type: object
-              properties:
-                apis:
-                  $ref: '#/components/schemas/ApiReferences'
+          $ref: '#/components/schemas/Hotel'
         airline:
-          allOf:
-            - $ref: '@windingtree/wt-airline-schemas/swagger.yaml#/components/schemas/AirlineDescriptionMinimal'
-            - type: object
-              properties:
-                apis:
-                  $ref: '#/components/schemas/ApiReferences'
+          $ref: '#/components/schemas/Airline'
+    LegalEntity:
+      allOf:
+        - oneOf:
+          - $ref: '@windingtree/wt-shared-schemas/swagger.yaml#/components/schemas/LegalEntityType'
+          - $ref: '@windingtree/wt-shared-schemas/swagger.yaml#/components/schemas/RelationshipSignatureType'
+        - description: |
+            Legal information about this organization. Either stored directly or as a signed
+            relationship reference to another Organization smart contract. Users must verify that the 
+            relationship signature is valid (it did not expire and the signature was produced by someone
+            associated with the organization).
+    Guarantee:
+      allOf:
+        - $ref: '@windingtree/wt-shared-schemas/swagger.yaml#/components/schemas/RelationshipSignatureType'
+        - description: |
+            *Some other Organization* is guaranteeing that **this Organization** can be trusted. That means
+            that when a user is evaluating trustworthiness of **this Organization**, she should take into
+            account the trustworthiness of *Some other Organization*.
+    Hotel:
+      allOf:
+        - $ref: '@windingtree/wt-hotel-schemas/swagger.yaml#/components/schemas/HotelDescriptionMinimal'
+        - type: object
+          properties:
+            apis:
+              $ref: '#/components/schemas/ApiReferences'
+    Airline:
+      allOf:
+        - $ref: '@windingtree/wt-airline-schemas/swagger.yaml#/components/schemas/AirlineDescriptionMinimal'
+        - type: object
+          properties:
+            apis:
+              $ref: '#/components/schemas/ApiReferences'
     ApiReferences:
       description: A list of API services that this organization provides.
       type: array
