@@ -2,95 +2,343 @@ openapi: 3.0.0
 servers: []
 info:
   version: "will-be-set-during-build"
-  title: ORG.JSON specification
+  title: ORG.JSON DID Document specification
   description: Object definitions for the ORG.JSON part of ORG.ID of the Winding Tree platform.
 paths: {}
 components:
   schemas:
-    # Off chain data formats
-    OrganizationDataIndex:
+    DIDDocument:
       title: ORG.JSON
       description: Landing file for each ORG.ID. Link to this document is stored in the 0xORG smart contract.
       type: object
       required:
-      - dataFormatVersion
-      - legalEntity
-      - updatedAt
+        - "@context"
+        - id
+        - created
+        - updated
       properties:
-        dataFormatVersion:
-          description: Version number indicating the data format specification version.
+        "@context":
+          description:
+            DID document context. When two software systems need to exchange data, 
+            they need to use terminology and a protocol that both systems understand. 
+            The @context property ensures that two systems operating on the same DID document 
+            are using mutually agreed terminology. 
+            @context property should be represented by the link to document schema. 
+            Standard DID context is https://www.w3.org/ns/did/v1
           type: string
-          format: semver
-          maxLength: 20
-        name:
-          allOf:
-            - $ref: '@windingtree/wt-shared-schemas/swagger.yaml#/components/schemas/NameType'
-            - description: Human readable name of the Organization that can be used for quick identification.
-        legalEntity:
-          $ref: '#/components/schemas/LegalEntity'
-        updatedAt:
-          description: Date-time when the data was last changed. Possibly used by consumers to handle incremental updates and caching.
+        id:
+          description:
+            The DID subject is denoted with the id property. The DID subject is the entity 
+            that the DID document is about. That is, it is the entity identified by the DID 
+            and described by the DID document. e.g. "did:orgid:0xB4Caa470E33A4cE899C16e6C7E125eA03956e95D"
+          $ref: '#/components/schemas/DIDReference'
+        proof:
+          description:
+            A proof on a DID document is cryptographic proof of the integrity of the DID document. 
+            The value of the property MUST be a valid JSON-LD proof, as defined by Linked Data Proofs
+          type: array
+          items:
+            $ref: '#/components/schemas/ProofReference'
+        publicKey: 
+          description:
+            List of public keys. Public keys are used for digital signatures, encryption 
+            and other cryptographic operations, which in turn are the basis for purposes such as 
+            authentication or establishing secure communication with service endpoints. 
+          type: array
+          items:
+            $ref: '#/components/schemas/PublicKeyReference'
+        authentication: 
+          description:
+            Authentication is the mechanism by which DID controllers can cryptographically prove 
+            that they are associated with a DID
+          type: array
+          items:
+            $ref: '#/components/schemas/AuthenticationReference'
+        service:
+          description: 
+            One of the primary purposes of a DID document is to enable discovery of service endpoints. 
+            A service endpoint can be any type of service the DID subject wants to advertise, 
+            including decentralized identity management services for further discovery, authentication, 
+            authorization, or interaction.
+          type: array
+          items:
+            $ref: '#/components/schemas/ServiceReference'
+        created:
+          description: Date-time when the data was created.
           type: string
           format: date-time
-        guarantee:
-          $ref: '#/components/schemas/Guarantee'
-        hotel:
-          $ref: '#/components/schemas/Hotel'
-        airline:
-          $ref: '#/components/schemas/Airline'
-    LegalEntity:
+        updated:
+          description:
+            Date-time when the data was last changed. Possibly used by consumers to handle incremental updates 
+            and caching.
+          type: string
+          format: date-time
+        entity:
+          allOf:
+            - $ref: '#/components/schemas/EntityReference'
+            - type: object
+            properties:
+              "type":
+                description: Legal entity type
+                type: string
+                enum: [Hotel, Airline, OTA]
+            discriminator:
+              propertyName: "type"
+    
+    DIDReference:
+      description: 
+        The DID subject is the entity 
+        that the DID document is about. That is, it is the entity identified by the DID 
+        and described by the DID document. e.g. "did:orgid:0xB4Caa470E33A4cE899C16e6C7E125eA03956e95D"
+      type: string
+    
+    ProofReference:
       allOf:
+        - description:
+          A linked data proof is comprised of information about the proof, parameters required to verify it, 
+          and the proof value itself.
         - oneOf:
-          - $ref: '@windingtree/wt-shared-schemas/swagger.yaml#/components/schemas/LegalEntityType'
-          - $ref: '@windingtree/wt-shared-schemas/swagger.yaml#/components/schemas/RelationshipSignatureType'
-        - description: |
-            Legal information about this organization. Either stored directly or as a signed
-            relationship reference to another Organization smart contract. Users must verify that the 
-            relationship signature is valid (it did not expire and the signature was produced by someone
-            associated with the organization).
-    Guarantee:
+          - $ref: '#/components/schemas/LdProofReference'
+          - $ref: '#/components/schemas/LdSignatureReference'
+          - $ref: '#/components/schemas/LdsRSA2018Reference'
+      
+    LdProofReference:
+      description: Linked Data Proofs https://w3c-dvcg.github.io/ld-proofs/
+      type: object        
+      required:
+        - type
+        - proofPurpose
+        - verificationMethod
+        - created
+        - proofValue
+      properties:
+        "type": 
+          description:
+            The specific proof type used. For example, an Ed25519Signature2018 
+            type indicates that the proof includes a digital signature 
+            produced by an ed25519 cryptographic key.
+          type: string
+        proofPurpose:
+          description:
+            The specific intent for the proof, the reason why an entity 
+            created it. Acts as a safeguard to prevent the proof from being 
+            misused for a purpose other than the one it was intended for. 
+            For example, a proof can be used for purposes of authentication, 
+            for asserting control of a Verifiable Credential (assertionMethod), 
+            and several others. 
+            e.q. authentication|assertionMethod|keyAgreement|contractAgreement
+          type: string
+        verificationMethod:
+          description:
+            A set of parameters required to independently verify the proof, 
+            such as an identifier for a public/private key pair that would be 
+            used in the proof.
+          type: string
+        created:
+          description:
+            The string value of an [ISO8601] combined date and time string 
+            generated by the Proof Algorithm.
+          type: date-time
+        domain:
+          description: A string value specifying the restricted domain of the proof.
+          type: string
+        challenge: 
+          description: 
+            A random or pseudo-random value used by some authentication protocols 
+            to mitigate replay attacks.
+          type: string
+          proofValue: 
+          description: 
+            One of any number of valid representations of proof value 
+            generated by the Proof Algorithm.
+          type: string 
+
+    LdSignatureReference:
+      description: Linked Data Signatures https://w3c-dvcg.github.io/ld-signatures/
+      type: object        
+      required:
+        - type
+        - created
+        - signatureValue
+      properties:
+        "type": 
+          description: 
+            A URI that identifies the digital signature suite that was used to create 
+            the signature. For example Ed25519Signature2018.
+          type: string
+        created:
+          description:
+            The string value of an [ISO8601] combined date and time string 
+            generated by the Proof Algorithm.
+          type: date-time
+        domain:
+          description: A string value specifying the restricted domain of the proof.
+          type: string
+        nonce: 
+          description: 
+            A string value that is included in the digital signature and MUST only 
+            be used once for a particular domain and window of time. 
+            This value is used to mitigate replay attacks.
+          type: string
+        verificationMethod:
+          description:
+            A set of parameters required to independently verify the proof, 
+            such as an identifier for a public/private key pair that would be 
+            used in the proof.
+          type: string
+        signatureValue: 
+          description: 
+            One of any number of valid representations of signature value 
+            generated by the Signature Algorithm.
+          type: string
+
+    LdsRSA2018Reference:
+      description: RSA Signature Suite 2018 https://w3c-dvcg.github.io/lds-rsa2018/
+      type: object        
+      required:
+        - type
+        - created
+        - signatureValue
+      properties:
+        "type": 
+          description: 
+            A URI that identifies the digital signature suite that was used to create 
+            the signature. For example Ed25519Signature2018.
+          type: string
+        created:
+          description:
+            The string value of an [ISO8601] combined date and time string 
+            generated by the Proof Algorithm.
+          type: date-time
+        creator:
+          description: Link to proof creator or its DID
+          type: string
+        domain:
+          description: A string value specifying the restricted domain of the proof.
+          type: string
+        signatureValue: 
+          description: 
+            One of any number of valid representations of signature value 
+            generated by the Signature Algorithm.
+          type: string
+
+    PublicKeyReference:
+      description: 
+        Public keys are used for digital signatures, encryption 
+        and other cryptographic operations, which in turn are the basis for purposes such as 
+        authentication or establishing secure communication with service endpoints. 
+      type: object
+      required: 
+        - id
+        - type
+        - controller
+      properties:
+        id:
+          description: DID
+          $ref: '#/components/schemas/DIDReference'
+        "type":
+          description: Public key type
+          type: string
+          enum: [RSA, ed25519, secp256k1-koblitz, secp256r1, Curve25519]
+        controller:
+          description: Identifies the controller of the corresponding private key, MUST be a valid DID.
+          type: string
+        "description":
+          description: Textual note about a purpose or usage of the key
+          type: string
+        publicKeyPem:
+          description: RSA public key value
+          type: string
+        publicKeyBase58:
+          description: Ed25519 public key value
+          type: string
+        secp256k1-koblitz:
+          description: Secp256k1 Koblitz public key value
+          type: string
+        Curve25519:
+          description: Curve25519 (also known as X25519) public key value
+          type: string
+
+    AuthenticationReference:
       allOf:
-        - $ref: '@windingtree/wt-shared-schemas/swagger.yaml#/components/schemas/RelationshipSignatureType'
-        - description: |
-            *Some other Organization* is guaranteeing that **this Organization** can be trusted. That means
-            that when a user is evaluating trustworthiness of **this Organization**, she should take into
-            account the trustworthiness of *Some other Organization*.
-    Hotel:
-      allOf:
-        - $ref: '@windingtree/wt-hotel-schemas/swagger.yaml#/components/schemas/HotelDescriptionMinimal'
-        - type: object
-          properties:
-            apis:
-              $ref: '#/components/schemas/ApiReferences'
-    Airline:
-      allOf:
-        - $ref: '@windingtree/wt-airline-schemas/swagger.yaml#/components/schemas/AirlineDescriptionMinimal'
-        - type: object
-          properties:
-            apis:
-              $ref: '#/components/schemas/ApiReferences'
-    ApiReferences:
-      description: A list of API services that this organization provides.
-      type: array
-      items:
-        $ref: '#/components/schemas/ApiReference'
-    ApiReference:
-      title: External API reference
+        - description: 
+          Authentication is the mechanism by which DID controllers can cryptographically prove 
+          that they are associated with a DID.
+        - oneOf:
+          - $ref: '#/components/schemas/DIDReference'
+          - $ref: '#/components/schemas/PublicKeyReference'
+      
+    ServiceReference:
+      description: 
+        One of the primary purposes of a DID document is to enable discovery of service endpoints. 
+        A service endpoint can be any type of service the DID subject wants to advertise, 
+        including decentralized identity management services for further discovery, authentication, 
+        authorization, or interaction.
       type: object
       required:
-        - entrypoint
-        - docs
-        - format
-        - version
-        - segment
+        - id
+        - type
+        - serviceEndpoint
       properties:
-        entrypoint:
-          $ref: '@windingtree/wt-shared-schemas/swagger.yaml#/components/schemas/UriType'
-        docs:
-          $ref: '@windingtree/wt-shared-schemas/swagger.yaml#/components/schemas/UriType'
-        format:
-          description: API format, such as `Winding Tree`, `OTA`, `HTNG` or something else. This should be case insensitive.
+        id:
+          description: DID
+          $ref: '#/components/schemas/DIDReference'
+        "type":
+          description: Service endpoint type
           type: string
-        version:
-          description: A version of the API. Can be in `semver` format but other formats are possible.
+        serviceEndpoint:
+          allOf:
+            - description: 
+              JSON-LD object or a valid URI conforming to [RFC3986] and normalized according 
+              to the rules in section 6 of [RFC3986] and to any normalization rules 
+              in its applicable URI scheme specification.
+            - oneOf:
+              - $ref: '#/components/schemas/LinkedEndpointReference'
+              - $ref: '#/components/schemas/LinkedDocumentEndpointReference'
+
+    LinkedEndpointReference:
+      description: 
+        Service endpoint URI conforming to [RFC3986] and normalized according 
+        to the rules in section 6 of [RFC3986] and to any normalization rules 
+        in its applicable URI scheme specification.
+      type: string
+
+    LinkedDocumentEndpointReference:
+      description: Service endpoint document conforming to JSON-LD object https://www.w3.org/TR/json-ld/
+      type: object
+      required:
+        - "@context"
+      properties:
+        "@context":
+          description: 
+            When two people communicate with one another, the conversation takes place 
+            in a shared environment, typically called "the context of the conversation". 
+            This shared context allows the individuals to use shortcut terms, 
+            like the first name of a mutual friend, to communicate more quickly 
+            but without losing accuracy. A context in JSON-LD works in the same way. 
+            It allows two applications to use shortcut terms to communicate with one another 
+            more efficiently, but without losing accuracy.
+          oneOf:
+            - $ref: '#/components/schemas/LinkedContextReference'
+            - $ref: '#/components/schemas/LinkedContextDocumentReference'
+        "type":
+          description: Service endpoint type
           type: string
+
+    LinkedContextReference: 
+      description: Linked context URI
+      type: string
+
+    LinkedContextDocumentReference:
+      description: Context document https://www.w3.org/TR/json-ld/#the-context
+      type: object
+
+    EntityReference:
+      description:
+        Legal information about this organization. Either stored directly or as a signed
+        relationship reference to another Organization smart contract. Users must verify that the 
+        relationship signature is valid (it did not expire and the signature was produced by someone
+        associated with the organization).
+      type: object
+      properties:
+            
