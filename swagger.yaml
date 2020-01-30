@@ -79,7 +79,7 @@ components:
         legalEntity:
           allOf:
             - $ref: '#/components/schemas/LegalEntityReference'
-        Entity:
+        entity:
           allOf:
             - $ref: '#/components/schemas/EntityReference'
     
