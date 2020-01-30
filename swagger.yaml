@@ -77,11 +77,9 @@ components:
           type: string
           format: date-time
         legalEntity:
-          allOf:
-            - $ref: '#/components/schemas/LegalEntityReference'
+          $ref: '#/components/schemas/LegalEntityReference'
         entity:
-          allOf:
-            - $ref: '#/components/schemas/EntityReference'
+          $ref: '#/components/schemas/EntityReference'
     
     DIDReference:
       description: 
@@ -413,6 +411,7 @@ components:
             The post name is a name created and maintained for postal purposes 
             to identify a subdivision of addresses and postal delivery points. 
             e.g. "Brussels"
+          type: string
         locatorDesignator:
           description: 
             A number or a sequence of characters that uniquely identifies 
@@ -694,6 +693,7 @@ components:
             acceptable to use these. However, the preferred choice for European 
             interoperability is NACE. 
             e.g. "F42.11" (Construction of roads and motorways)
+          type: string
         location:
           $ref: '#/components/schemas/LocationReference'      
           
