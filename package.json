@@ -22,7 +22,7 @@
     "@windingtree/wt-hotel-schemas": "^0.8.3",
     "@windingtree/wt-shared-schemas": "^0.7.2",
     "rimraf": "^2.6.3",
-    "yamljs": "^0.3.0"
+    "js-yaml": "3.13.1"
   },
   "publishConfig": {
     "access": "public"
