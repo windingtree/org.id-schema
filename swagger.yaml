@@ -22,50 +22,9 @@ components:
         - updated
       properties:
         "@context":
-          description:
-            DID document context. When two software systems need to exchange 
-            data, they need to use terminology and a protocol that both systems 
-            understand. The @context property ensures that two systems operating 
-            on the same DID document are using mutually agreed terminology. 
-            @context property should be represented by the link to document 
-            schema. Standard DID context is https://www.w3.org/ns/did/v1
-          type: string
+          $ref: '#/components/schemas/ContextReference'
         id:
           $ref: '#/components/schemas/DIDReference'
-        proof:
-          description:
-            A proof on a DID document is cryptographic proof of the integrity of 
-            the DID document. The value of the property MUST be a valid 
-            JSON-LD proof, as defined by Linked Data Proofs
-          type: array
-          items:
-            $ref: '#/components/schemas/ProofReference'
-        publicKey: 
-          description:
-            List of public keys. Public keys are used for digital signatures, 
-            encryption and other cryptographic operations, which in turn are 
-            the basis for purposes such as authentication or establishing secure 
-            communication with service endpoints. 
-          type: array
-          items:
-            $ref: '#/components/schemas/PublicKeyReference'
-        authentication: 
-          description:
-            Authentication is the mechanism by which DID controllers 
-            can cryptographically prove that they are associated with a DID
-          type: array
-          items:
-            $ref: '#/components/schemas/AuthenticationReference'
-        service:
-          description: 
-            One of the primary purposes of a DID document is to enable 
-            discovery of service endpoints. A service endpoint can be 
-            any type of service the DID subject wants to advertise, including 
-            decentralized identity management services for further discovery, 
-            authentication, authorization, or interaction.
-          type: array
-          items:
-            $ref: '#/components/schemas/ServiceReference'
         created:
           description: Date-time when the data was created.
           type: string
@@ -76,10 +35,195 @@ components:
             to handle incremental updates and caching.
           type: string
           format: date-time
+        publicKey: 
+          description:
+            List of public keys. Public keys are used for digital signatures, 
+            encryption and other cryptographic operations, which in turn are 
+            the basis for purposes such as authentication or establishing secure 
+            communication with service endpoints. 
+          type: array
+          items:
+            $ref: '#/components/schemas/PublicKeyReference'
+        service:
+          description: 
+            One of the primary purposes of a DID document is to enable 
+            discovery of service endpoints. A service endpoint can be 
+            any type of service the DID subject wants to advertise, including 
+            decentralized identity management services for further discovery, 
+            authentication, authorization, or interaction.
+          type: array
+          items:
+            $ref: '#/components/schemas/ServiceReference'
+        trust:
+          description: 
+            The set of trust records of entity
+          type: object
+          required:
+            - assertions
+          properties:
+            assertions:
+              $ref: '#/components/schemas/TrustAssertionsReference'
+            credentials:
+              $ref: '#/components/schemas/TrustCredentialsReference'
         legalEntity:
           $ref: '#/components/schemas/LegalEntityReference'
-        entity:
-          $ref: '#/components/schemas/EntityReference'
+        organizationalUnit:
+          $ref: '#/components/schemas/OrganizationalUnitReference'
+        serviceUnit:
+          $ref: '#/components/schemas/ServiceUnitReference'
+    
+    LegalEntityReference:
+      description:
+        Legal information about this organization. Either stored directly 
+        or as a signed relationship reference to another Organization 
+        smart contract. Users must verify that the relationship signature 
+        is valid (it did not expire and the signature was produced by someone
+        associated with the organization).
+      type: object
+      required:
+        - legalName
+        - legalIdentifier
+        - legalType
+        - registeredAddress
+        - location
+        - contacts
+      properties:
+        legalName: 
+          description: 
+            The legal name of the business. A business might have more than one 
+            legal name, particularly in countries with more than one official 
+            language.
+          type: string
+        alternativeName:
+          description: 
+            A recognized name other than the legal name. Some jurisdictions 
+            recognise concepts such as a trading name or alternative forms 
+            of a legal entity's name. The Alternative Name property can be used 
+            to record such names but should not be used to record translations 
+            of the primary legal name. Where more than one legal name exists 
+            and where they have equal standing but are expressed in different 
+            languages, identify the language used in each of the multiple legal 
+            names. It is notable that some jurisdictions regard the use of any 
+            name other than the primary Legal Name as suspicious.
+          type: string
+        legalIdentifier:
+          description:
+            The identifier given to the legal entity by the authority with which it is registered.
+          type: string
+        identifiers:
+          description: 
+            A formally-issued identifier for the legal entity, other than the 
+            one that confers legal status upon it. Legal entities may have any 
+            number of identifiers (but only one legal identifier). For example, 
+            in many jurisdictions, a business will have one or more tax numbers 
+            associated with them which do not, by themselves, confer legal 
+            entity status. The Identifier property must not be used to link 
+            to the identifier issued by the authority that conferred legal 
+            entity status on a business. 
+          type: array
+          items:
+            allOf:
+              - $ref: '#/components/schemas/LegalIdentifiersReference'
+        legalType:
+          description: 
+            The type of the business. e.g. LLC,SA,PLC,GmbH
+          type: string
+        registeredAddress:
+          $ref: '#/components/schemas/AddressReference'
+        location:
+          $ref: '#/components/schemas/LocationReference'
+        contacts:
+          type: array
+          items:
+            allOf:
+              - $ref: '#/components/schemas/ContactReference'
+    
+    OrganizationalUnitReference:
+      description:
+        Information about the organizational unit. e.g. Hotel, Agency
+      type: object
+      required: 
+        - name
+        - type
+        - description
+        - address
+        - contacts
+        - media
+      properties:
+        name:
+          description:
+            Name of the organizational unit. e.g. Grand Budapesht Hotel
+          type: string
+        "type":
+          description:
+            Type of the organizational unit. e.g. ["hotel", "boutique"]
+          type: array
+          items:
+            allOf:
+              - type: string
+        "description":
+          description:
+            Short description of the organizational unit
+          type: string
+        longDescription:
+          description:
+            Long description of the organizational unit
+          type: string
+        address:
+          $ref: '#/components/schemas/AddressReference'
+        openingHours:
+          $ref: '#/components/schemas/OpeningHoursReference'
+        contacts:
+          type: array
+          items:
+            allOf:
+              - $ref: '#/components/schemas/ContactReference'
+        media:
+          $ref: '#/components/schemas/MediaListReference'
+    
+    ServiceUnitReference:      
+      description:
+        Information about service unit. e.g. DID resolver or Verification service
+      type: object
+      required: 
+        - name
+      properties:
+        name: 
+          description:
+            Name of the service unit
+          type: string
+        "description": 
+          description:
+            Description of the service unit
+          type: string
+            
+    ContextReference:
+      description:
+        When two software systems need to exchange data, they need to use 
+        terminology and a protocol that both systems understand. 
+        The @context property ensures that two systems operating 
+        on the same DID document are using mutually agreed terminology.
+      oneOf:
+        - $ref: '#/components/schemas/LinkedContextReference'
+        - $ref: '#/components/schemas/LinkedMultipleContextReference'
+        - $ref: '#/components/schemas/LinkedContextDocumentReference'
+    
+    LinkedContextReference: 
+      description: Linked context URI
+      type: string
+
+    LinkedMultipleContextReference:
+      description:
+        A list of context references
+      type: array
+      items:
+        allOf:
+          - $ref: '#/components/schemas/LinkedContextReference'
+        
+    LinkedContextDocumentReference:
+      description: 
+        Context document https://www.w3.org/TR/json-ld/#the-context
+      type: object
     
     DIDReference:
       description: 
@@ -89,6 +233,86 @@ components:
         e.g. "did:orgid:0xB4Caa470E33A4cE899C16e6C7E125eA03956e95D"
       type: string
     
+    TrustAssertionsReference:
+      description: 
+        A list of claims with proofs
+      type: array
+      items:
+        allOf:
+          - $ref: '#/components/schemas/AssertsionsReference'
+          
+    AssertsionsReference:
+      description:
+        Trust assertion claim
+      type: object
+      required:
+        - type
+        - claim
+        - proof
+      properties:
+        "type":
+          description:
+            The claim type. e.g. domain, twitter, facebook
+          type: string
+        claim:
+          description:
+            The claim subject. For example - account or domain name
+          type: string
+        proof:
+          description:
+            A proof of the claim. e.q. link to the file with DID inside or 
+            DNS record
+          type: string
+          
+    TrustCredentialsReference:
+      description:
+        Verifiable credentials list
+      type: object
+      required:
+        - "@context"
+        - id
+        - type
+        - issuanceDate
+        - credentialSubject
+        - proof
+      properties:
+        "@context":
+          $ref: '#/components/schemas/ContextReference'
+        id:
+          $ref: '#/components/schemas/DIDReference'
+        "type":
+          description:
+            Type of the credential
+          type: array
+          items:
+            allOf:
+              - type: string
+        issuanceDate:
+          description: 
+            When the credential was issued
+          type: string
+          format: date-time
+        credentialSubject:
+          $ref: '#/components/schemas/CredentialSubjectReference'
+        proof:
+          description:
+            A proof on a DID document is cryptographic proof of the integrity of 
+            the DID document. The value of the property MUST be a valid 
+            JSON-LD proof, as defined by Linked Data Proofs
+          type: array
+          items:
+            $ref: '#/components/schemas/ProofReference'
+          
+    CredentialSubjectReference:
+      description: 
+        Identifier for the only subject of the credential
+      type: object
+      required:
+        - id
+      properties:
+        id: 
+          $ref: '#/components/schemas/DIDReference'
+            
     ProofReference:
       allOf:
         - description:
@@ -265,15 +489,6 @@ components:
           description: Curve25519 (also known as X25519) public key value
           type: string
 
-    AuthenticationReference:
-      allOf:
-        - description: 
-            Authentication is the mechanism by which DID controllers 
-            can cryptographically prove that they are associated with a DID.
-        - oneOf:
-          - $ref: '#/components/schemas/DIDReference'
-          - $ref: '#/components/schemas/PublicKeyReference'
-      
     ServiceReference:
       description: 
         One of the primary purposes of a DID document is to enable discovery 
@@ -319,31 +534,28 @@ components:
         - "@context"
       properties:
         "@context":
-          description: 
-            When two people communicate with one another, the conversation takes 
-            place in a shared environment, typically called "the context of the 
-            conversation". This shared context allows the individuals to use 
-            shortcut terms, like the first name of a mutual friend, to 
-            communicate more quickly but without losing accuracy. A context 
-            in JSON-LD works in the same way. It allows two applications to use 
-            shortcut terms to communicate with one another more efficiently, 
-            but without losing accuracy.
-          oneOf:
-            - $ref: '#/components/schemas/LinkedContextReference'
-            - $ref: '#/components/schemas/LinkedContextDocumentReference'
+          $ref: '#/components/schemas/ContextReference'
         "type":
           description: Service endpoint type
           type: string
-
-    LinkedContextReference: 
-      description: Linked context URI
-      type: string
-
-    LinkedContextDocumentReference:
-      description: 
-        Context document https://www.w3.org/TR/json-ld/#the-context
+          
+    LegalIdentifiersReference:
+      description:
+        A set of legal identifiers obtained from registrators, associations etc.
       type: object
-      
+      required:
+        - type
+        - value
+      properties:
+        "type":
+          description:
+            The type of an identifier
+          type: string
+        value:
+          description:
+            Value of the identifier. e.g. IATA code or Trade license
+          type: string
+    
     AddressReference:
       description: 
         The registered address of the business. In almost all jurisdictions, 
@@ -352,95 +564,65 @@ components:
         it is commonly the address of their lawyer or accountant - but it is 
         the address to which formal communications can be sent.
       type: object
-      required: 
-        - fullAddress
+      required:
+        - country
+        - subdivision
+        - locality
+        - postalCode
+        - streetAddress
+        - premise
       properties:
-        addressAdminUnitL1:
-          description: 
-            The uppermost administrative unit for the address, almost always 
-            a country. Best practice is to use the ISO 3166-1 code but if this 
-            is inappropriate for the context, country names should be provided 
-            in a consistent manner to reduce ambiguity. For example, either 
-            write 'United Kingdom' or 'UK' consistently throughout the data set 
-            and avoid mixing the two. e.g. "UK", "United Kingdom"
+        country:
+          description:
+            A country code in "ISO 3166 alpha-2" country code standard
           type: string
-        addressAdminUnitL2:
-          description: 
-            The region of the address, usually a county, state or other 
-            such area that typically encompasses several localities.
+        subdivision:
+          description:
+            Subdivision string
           type: string
-        thoroughfare:
-          description: 
-            The name of a passage or way through from one location to another. 
-            A thoroughfare is an address component that represents the name of 
-            a passage or way through from one location to another. 
-            A thoroughfare is not necessarily a road, it might be a waterway 
-            or some other feature. e.g. "Main Street"
+        locality:
+          description:
+            City / Town
           type: string
-        fullAddress:
-          description: 
-            The complete address with or without formatting. Use of this 
-            property is recommended as it will not suffer any misunderstandings 
-            that might arise through the breaking up of an address into its 
-            component parts.
+        postalCode:
+          description:
+            Postal code / ZIP Code
           type: string
-        POBox:
+        streetAddress:
           description: 
-            The Post Office Box number.
+            Street number
           type: string
-        addressID:
-          description: 
-            A globally unique identifier for this instance of the address. 
-            The concept of adding a globally unique identifier for each instance 
-            of an address is a crucial part of the INSPIRE data spec. A number 
-            of EU countries have already implemented an ID (a UUID) in their 
-            address register/gazetteer, among them Denmark. It is the address 
-            identifier that allows an address to be represented in a format 
-            other than INSPIRE whilst remaining conformant to the core 
-            vocabulary. The identifier is a hook that can be used to link the 
-            address to an alternative representation, such as vCard.
+        premise:
+          description:
+            Apartment, Suite, Box number, etc.
           type: string
-        postCode:
-          description: 
-            The post code, a.k.a. postal code, ZIP code, etc. Post codes are 
-            common elements in many countries' postal address systems.
+        gps: 
+          description:
+            Geographic coordinates
           type: string
-        postName:
-          description: 
-            The key postal division of the address, usually the city. 
-            The post name is a name created and maintained for postal purposes 
-            to identify a subdivision of addresses and postal delivery points. 
-            e.g. "Brussels"
+        geocodes:
+          description:
+            Special codes to ease locate an entity on the map
+          type: array
+          items:
+            allOf:
+              - $ref: '#/components/schemas/GeoCodeReference'
+              
+    GeoCodeReference:
+      description:
+        Special code obtained from the OLC or What3Words
+      type: object
+      required: 
+        - type
+        - value
+      properties:
+        "type":
+          description:
+            Geo code type. e.g. olc, what2words, etc.
           type: string
-        locatorDesignator:
-          description: 
-            A number or a sequence of characters that uniquely identifies 
-            the locator within the relevant scope. The locator designator is 
-            a number or a sequence of characters that uniquely identifies 
-            the locator within the relevant scope(s). The full identification 
-            of the locator could include one or more locator designators. 
-            In simpler terms, this is the building number, apartment number, 
-            etc. It is characteristic that these designators, according to 
-            tradition or to a specific set of rules, are assigned 
-            systematically. For example address numbers are most often assigned 
-            in ascending order with odd and even numbers on each side of the 
-            thoroughfare. Another example is the floor identifier that in 
-            a standardized way expresses on which level the address is located. 
-            The key difference between a locator designator and a locator name 
-            is that the latter is a proper name and is unlikely to include 
-            digits.
-          type: string
-        locatorName:
-          description: 
-            A proper noun applied to the real world entity identified by 
-            the address. The locator name is a proper noun applied to the real 
-            world entity identified by the locator. The locator name could be 
-            the name of the property or complex, of the building or part of 
-            the building, or it could be the name of a room inside a building. 
-            The key difference between a locator designator and a locator name 
-            is that the latter is a proper name and is unlikely to include 
-            digits. e.g. "Rose Cottage", "Grand Suite", 
-            "The little house by the lake"
+        value:
+          description:
+            Geo code value
           type: string
           
     LocationReference:
@@ -450,83 +632,28 @@ components:
         in time or space. It does not imply that the legal entity is necessarily 
         at that location at the time when the assertion is made. 
       type: object
+      required:
+        - name
+        - address
+        - contacts
       properties:
+        name:
+          description: 
+            Location name
+          type: string
         "description":
           description: 
             Location description
           type: string
         address:
           $ref: '#/components/schemas/AddressReference'
-        geographicName:
-          description: 
-            A proper noun applied to a spatial object. The country codes defined 
-            in "ISO 3166" may be used as geographic names and these are generally 
-            preferred over either the long form or short form of a country's 
-            name (as they are less error prone). The Publications Office of 
-            the European Union recommends the use of "ISO 3166-1" codes for 
-            countries in all cases except two - use "UK" in preference to 
-            the "ISO 3166" code GB for the United Kingdom; - use "EL" in 
-            preference to the "ISO 3166" code GR for Greece. Where a country 
-            has changed its name or no longer exists (such as Czechoslovakia, 
-            Yugoslavia, etc.) use the "ISO 3166-3" code. Known diversity that 
-            one has to deal with when exchanging country names between different 
-            communication partners without relying on an agreed code list are 
-            a. Long form vs. short form of a country name (e.g. “Federal 
-            Republic of Germany” vs. Germany), b. Different languages (Italy vs. 
-            Italia), c. Historic name vs. Current name (Burma vs. Myanmar), d. 
-            Ambiguity of similar sounding countries (“Republic of the Congo” vs. 
-            “Democratic Republic of the Congo”). e.g. "Athens", "DE"
-          type: string
-        geographicIdentifier:
-          description:
-            A URI that identifies the location. GeoNames.org provides stable, 
-            widely recognised identifiers for more than "10" million 
-            geographical names that can be used as links to further information. 
-            For example, "http://sws.geonames.org/593116/"" identifies 
-            the Lithuanian capital Vilnius. 
-            Unfortunately these URIs cannot easily be automatically 
-            deduced since the URI scheme uses simple numeric codes. Finding a 
-            GeoNames identifier for a location is almost always a manual process. 
-            Where such identifiers are known or can be found, however, 
-            it is recommended to use them. Where the Location class is used to 
-            identify a country, if the GeoNames URI is not known, the 
-            recommendation is to use the URI from the Named Authority List (NAL) 
-            for countries of the Publications Office of the EU. As noted for the 
-            Georaphic Name property, the EU's Publication Office diverges from 
-            "ISO 3166-1" and uses EL and UK for Greece and the United Kingdom 
-            respectively. e.g. "http://sws.geonames.org/593116/", 
-            "http://publications.europa.eu/resource/authority/country/AUT"
-          type: string
-        geometry:
-          $ref: '#/components/schemas/GeometryReference'
         openingHours:
           $ref: '#/components/schemas/OpeningHoursReference'
-        contact:
-          $ref: '#/components/schemas/ContactReference'
-    
-    GeometryReference:    
-      description: 
-        An identifiable geographic place
-      type: object
-      required:
-        - type
-        - coordinates
-      properties:
-        "type":
-          description: Geographic geometry type. e.g. "point"
-        coordinates:
-          description: 
-            The ordered list of coordinates of the geometry. 
-            e.g. [[lat], [long]]
+        contacts:
           type: array
           items:
             allOf:
-              - $ref: '#/components/schemas/GeographicPointReference'
-    
-    GeographicPointReference:
-      description:
-        Coordinate of the geographic point latitude or longitude
-      type: number
+              - $ref: '#/components/schemas/ContactReference'
     
     OpeningHoursReference:
       description:
@@ -559,50 +686,54 @@ components:
       description:
         The entity contact
       type: object
+      required:
+        - function
+        - phone
+        - email
       properties:
-        "type":
+        function:
           description: 
             The contact type that represents his job function.  
             e.g. Sales,IT,Marketing
           type: string
-        "description":
+        name:
           description:
-            Additional description of the contact
+            The contact name
           type: string
         phone:
-          $ref: '#/components/schemas/PhoneReference'
+          description:
+            The contact phone number
+          type: string
+        email:
+          description:
+            The contact email
+          type: string
+          format: email
+        messengers:
+          description:
+            List of messangers accounts of the contact
+          type: array
+          items:
+            allOf:
+              - $ref: '#/components/schemas/MessengerReference'
         language:
           $ref: '#/components/schemas/LanguageReference'
           
-    PhoneReference:
+    MessengerReference:
       description:
-        The contact phone
-      type: array
-      items:
-        allOf:
-          - $ref: '#/components/schemas/PhoneNumberReference'
-          
-    PhoneNumberReference:
-      description:
-        Phone number
+        Messanger account information
       type: object
       required:
         - type
-        - number
+        - value
       properties:
         "type":
-          description: 
-            The phone type function. e.g. phone,fax,telex
+          description:
+            Messanger type. e.g. whatsup,telegram,viber,wechat,messanger,line
           type: string
-          enum: [phone, fax, telex]
-        "description":
-          description: 
-            Information about of the phone functional role.
-            e.g. New customers registrations
-          type: string
-        number:
-          description: 
-            The phone number
+        value:
+          description:
+            Messanger account 
           type: string
           
     LanguageReference:
@@ -622,203 +753,51 @@ components:
         a country or region. e.g. "en-US"
       type: string
       
-    LegalEntityReference:
-      description:
-        Legal information about this organization. Either stored directly 
-        or as a signed relationship reference to another Organization 
-        smart contract. Users must verify that the relationship signature 
-        is valid (it did not expire and the signature was produced by someone
-        associated with the organization).
-      type: object
-      properties:
-        legalName: 
-          description: 
-            The legal name of the business. A business might have more than one 
-            legal name, particularly in countries with more than one official 
-            language.
-          type: string
-        alternativeName:
-          description: 
-            A recognized name other than the legal name. Some jurisdictions 
-            recognise concepts such as a trading name or alternative forms 
-            of a legal entity's name. The Alternative Name property can be used 
-            to record such names but should not be used to record translations 
-            of the primary legal name. Where more than one legal name exists 
-            and where they have equal standing but are expressed in different 
-            languages, identify the language used in each of the multiple legal 
-            names. It is notable that some jurisdictions regard the use of any 
-            name other than the primary Legal Name as suspicious.
-          type: string
-        legalIdentifier:
-          description:
-            The identifier given to the legal entity by the authority with which it is registered.
-          type: string
-        identifier:
-          description: 
-            A formally-issued identifier for the legal entity, other than the 
-            one that confers legal status upon it. Legal entities may have any 
-            number of identifiers (but only one legal identifier). For example, 
-            in many jurisdictions, a business will have one or more tax numbers 
-            associated with them which do not, by themselves, confer legal 
-            entity status. The Identifier property must not be used to link 
-            to the identifier issued by the authority that conferred legal 
-            entity status on a business. 
-          type: string
-        companyType:
-          description: 
-            The type of the business. e.g. LLC,SA,PLC,GmbH
-          type: string
-        registeredAddress:
-          $ref: '#/components/schemas/AddressReference'
-        companyStatus:
-          description: 
-            The status of the business. The terms 'insolvent', 'bankrupt' and 
-            'in receivership', for example, are likely to mean slightly 
-            different things with different legal implications in different 
-            jurisdictions. XBRL Europe is in the process of defining 
-            a cross-border vocabulary for company status. Taking the existing 
-            XBRL work as a starting point, the term "Normal Activity" does 
-            appear to have cross-border usefulness and this should be used 
-            in preference to terms like "trading" or "operating". Best Practice 
-            for recording various other status levels is to use the relevant 
-            jurisdiction's terms and to do so in a consistent manner. e.g. 
-            "Normal Activity", "Insolvent", "Bankrupt", "In Receivership"
-          type: string
-        companyActivity:
-          description: 
-            The activity of the business. Several controlled vocabularies exist 
-            for recording the activity of a company, many of which map to 
-            the UN's ISIC codes. Where a particular controlled vocabulary is 
-            in use within a given context, such as SIC codes in the UK, it is 
-            acceptable to use these. However, the preferred choice for European 
-            interoperability is NACE. 
-            e.g. "F42.11" (Construction of roads and motorways)
-          type: string
-        location:
-          $ref: '#/components/schemas/LocationReference'      
-          
-    EntityReference:
-      allOf:
-        - $ref: '#/components/schemas/EntityReference'
-        - type: object
-          properties:
-            "type":
-              description:
-                Type of the entity according to nature its bussiness.
-                e.g. Hotel,Airline,OTA
-              type: string
-            name:
-              description:
-                The entity name
-              type: string
-            "description":
-              description:
-                Short description of the entity
-              type: string
-            longDescription:
-              description:
-                Long description of the entity
-              type: string
-            logo:
-              description:
-                The entity logotype file. Should be a valid URI
-              type: string
-              format: uri
-            address:
-              $ref: '#/components/schemas/AddressReference'
-            contact:
-              $ref: '#/components/schemas/ContactReference'
-            code:
-              $ref: '#/components/schemas/EntityCodesReference'
-            socialMedia:
-              $ref: '#/components/schemas/SocialMediaListReference'
-            media:
-              $ref: '#/components/schemas/MediaListReference'
-            
-    EntityCodesReference:
-      description:
-        Codes or identifiers of the entity obtained from Industry associations, 
-        agencies or associations. For exaple - IATA code
-      type: array
-      items:
-        allOf:
-          - $ref: '#/components/schemas/CodeReference'
-          
-    CodeReference:
-      description:
-        Entity code
-      type: object
-      required:
-        - type
-        - code
-      properties:
-        "type":
-          description: 
-            Code type. e.g. "IATA"
-          type: string
-        code: 
-          description:
-            Code value
-          type: string
-          
-    SocialMediaListReference:
-      description:
-        List of the social media or online information resources 
-        related to the entity
-      type: array
-      items:
-        allOf:
-          - $ref: '#/components/schemas/SocialMediaReference'
-          
-    SocialMediaReference:
-      description:
-        Social media information
-      type: object
-      required:
-        - type
-        - uri
-      properties:
-        "type":
-          description: 
-            Resource type. e.g. website,facebook,twitter,instagram
-          type: string
-        "description": 
-          description:
-            Resource role description
-          type: string
-        uri:
-          description:
-            Link to the resource. MUST be a valid URI
-          type: string
-          format: uri
-        
     MediaListReference:
       description:
         List of the media files
-      type: array
-      items:
-        allOf:
-          - $ref: '#/components/schemas/MediaReference'
+      type: object
+      required:
+        - logo
+      properties:
+        logo:
+          description:
+            Logotype of the organizational unit
+          type: string
+          format: url
+        images:
+          description:
+            List of images
+          type: array
+          items:
+            allOf:
+              - $ref: '#/components/schemas/MediaReference'
           
     MediaReference:
       description:
         Media file
       type: object
       required:
-        - type
+        - description
         - uri
       properties:
-        "type":
-          description: 
-            Resource type. e.g. image,video,pdf,presentation
-          type: string
         "description": 
           description:
             Resource role description
           type: string
+        cover:
+          description: 
+            Image that representing a video content
+          type: string
+          format: url
+        thumbnail:
+          description: 
+            Thumbnail image
+          type: string
+          format: url
         uri:
           description:
-            Link to the resource. MUST be a valid URI
+            Link to the media resource. e.g. image of video file
           type: string
           format: uri    
           
