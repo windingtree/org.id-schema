@@ -69,9 +69,7 @@ components:
           $ref: '#/components/schemas/LegalEntityReference'
         organizationalUnit:
           $ref: '#/components/schemas/OrganizationalUnitReference'
-        serviceUnit:
-          $ref: '#/components/schemas/ServiceUnitReference'
-    
+            
     LegalEntityReference:
       description:
         Legal information about this organization. Either stored directly 
@@ -180,22 +178,6 @@ components:
               - $ref: '#/components/schemas/ContactReference'
         media:
           $ref: '#/components/schemas/MediaListReference'
-    
-    ServiceUnitReference:      
-      description:
-        Information about service unit. e.g. DID resolver or Verification service
-      type: object
-      required: 
-        - name
-      properties:
-        name: 
-          description:
-            Name of the service unit
-          type: string
-        "description": 
-          description:
-            Description of the service unit
-          type: string
             
     ContextReference:
       description:
