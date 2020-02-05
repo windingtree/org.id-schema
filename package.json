@@ -1,6 +1,6 @@
 {
   "name": "@windingtree/wt-organization-schemas",
-  "version": "0.2.3",
+  "version": "0.3.0",
   "description": "Organization data schemas for WT platform",
   "main": "dist/swagger.yaml",
   "scripts": {
@@ -18,11 +18,8 @@
   },
   "homepage": "https://github.com/windingtree/wt-organization-schemas#readme",
   "devDependencies": {
-    "@windingtree/wt-airline-schemas": "^0.7.0",
-    "@windingtree/wt-hotel-schemas": "^0.8.3",
-    "@windingtree/wt-shared-schemas": "^0.7.2",
-    "rimraf": "^2.6.3",
-    "yamljs": "^0.3.0"
+    "rimraf": "3.0.1",
+    "js-yaml": "3.13.1"
   },
   "publishConfig": {
     "access": "public"
