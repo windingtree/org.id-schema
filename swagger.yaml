@@ -668,10 +668,6 @@ components:
       description:
         The entity contact
       type: object
-      required:
-        - function
-        - phone
-        - email
       properties:
         function:
           description: 
@@ -693,7 +689,7 @@ components:
           format: email
         messengers:
           description:
-            List of messangers accounts of the contact
+            List of messengers accounts of the contact
           type: array
           items:
             allOf:
@@ -703,7 +699,7 @@ components:
           
     MessengerReference:
       description:
-        Messanger account information
+        Messenger account information
       type: object
       required:
         - type
@@ -711,11 +707,11 @@ components:
       properties:
         "type":
           description:
-            Messanger type. e.g. whatsup,telegram,viber,wechat,messanger,line
+            Messenger type. e.g. whatsup,telegram,viber,wechat,messenger,line
           type: string
         value:
           description:
-            Messanger account 
+            Messenger account 
           type: string
           
     LanguageReference:

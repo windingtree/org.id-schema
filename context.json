@@ -1,0 +1,22 @@
+{
+    "@context": {
+        "@version": 1.1,
+        "id": "@id",
+        "type": "@type",
+        
+        "orgid": "[ORGID_VOCAB_URL]#",
+
+        "trust": {
+            "@id": "orgid:trust",
+            "@type": "@id"
+        },
+        "legalEntity": {
+            "@id": "orgid:legalEntity",
+            "@type": "@id"
+        },
+        "organizationalUnit": {
+            "@id": "orgid:organizationalUnit",
+            "@type": "@id"
+        }
+    }
+}

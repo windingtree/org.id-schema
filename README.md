@@ -1,20 +1,23 @@
-# wt-organization-schemas
+# org.json-schema
 Model schema definitions used for ORG.JSON part of ORG.ID of the
 [Winding Tree platform](https://windingtree.com/).
-
 
 This data structure called **ORG.JSON** is part of the `ORG.ID` specification and JSON files
 conforming to this layout should be linked from the **0xORG** smart contract.
 
 For more information visit our [developer portal](https://developers.windingtree.com/).
 
+## The ORG.ID Vocabulary
+
+Complete list of the ORG.ID JSON definitions are can be found in the [vocabulary](./vocabulary.md) file. Please use this vocabulary as a documentation for the ORG.ID JSON builders and validators. 
+
 ## Build
 
-We are using a non-standard notation for referencing external Open API documents,
-such as `$ref: '@windingtree/wt-shared-schemas/swagger.yaml#/components/schemas/EthereumAddressType'`.
-These references are resolved from NPM dependencies and inlined during the build phase.
+```bash
+npm run build
+```
 
-Version number is set during the build phase as well.
+A consistent version of the OpenAPI compiled specification file (`swagger.yaml`) will be saved in the `./dist` directory just after building process finish.
 
 ## Example of the valid json file
 
@@ -22,7 +25,10 @@ Version number is set during the build phase as well.
 
 ```json
 {
-    "@context": "https://windingtree.com/ns/did/v1",
+    "@context": [
+        "https://www.w3.org/ns/did/v1",
+        "https://windingtree.com/ns/orgid/v1"
+    ],
     "id": "did:orgid:0xB4Caa470E33A4cE899C16e6C7E125eA03956e95D",
     "created": "2019-01-01T13:10:02.251Z",
     "updated": "2019-06-03T13:20:06.398Z",
@@ -224,11 +230,14 @@ Version number is set during the build phase as well.
 }
 ```
 
-### Organizational unit
+### Organizational Unit
 
 ```json
 {
-    "@context": "https://windingtree.com/ns/did/v1",
+    "@context": [
+        "https://www.w3.org/ns/did/v1",
+        "https://windingtree.com/ns/orgid/v1"
+    ],
     "id": "did:orgid:0xB4Caa470E33A4cE899C16e6C7E125eA03956e95D",
     "created": "2019-01-01T13:10:02.251Z",
     "updated": "2019-06-03T13:20:06.398Z",
@@ -319,8 +328,8 @@ Version number is set during the build phase as well.
             "country": "CZ",
             "subdivision": "71",
             "locality": "Jihlava",
-            "postal_code": "71354",
-            "street_address": "3150 Main St.",
+            "postalCode": "71354",
+            "streetAddress": "3150 Main St.",
             "premise": "STE 100",
             "gps": "50.087070,14.417210",
             "geocodes": [
