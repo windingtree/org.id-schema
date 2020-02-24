@@ -1,24 +1,23 @@
 {
-  "name": "@windingtree/wt-organization-schemas",
+  "name": "@windingtree/org.json-schema",
   "version": "0.3.0",
-  "description": "Organization data schemas for WT platform",
-  "main": "dist/swagger.yaml",
+  "description": "ORG.ID JSON schema for WT protocol",
+  "main": "dist/orgid.json",
   "scripts": {
-    "build": "npm run clean && ./build.js",
-    "clean": "rimraf dist"
+    "build": "npm run clean && mkdir -p dist && npx js-yaml ./src/orgid-json-schema.yaml > ./dist/orgid.json",
+    "clean": "rm -rf dist/*"
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/windingtree/wt-organization-schemas.git"
+    "url": "git+https://github.com/windingtree/org.json-schema.git"
   },
   "author": "Winding Tree Developers <dev@windingtree.com>",
-  "license": "Apache-2.0",
+  "license": "MIT",
   "bugs": {
-    "url": "https://github.com/windingtree/wt-organization-schemas/issues"
+    "url": "https://github.com/windingtree/org.json-schema/issues"
   },
-  "homepage": "https://github.com/windingtree/wt-organization-schemas#readme",
+  "homepage": "https://github.com/windingtree/org.json-schema#readme",
   "devDependencies": {
-    "rimraf": "3.0.1",
     "js-yaml": "3.13.1"
   },
   "publishConfig": {

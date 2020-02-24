@@ -1,20 +1,48 @@
-# wt-organization-schemas
-Model schema definitions used for ORG.JSON part of ORG.ID of the
-[Winding Tree platform](https://windingtree.com/).
+# org.json-schema
+Model schema definitions and vocabulary used for ORG.JSON part of ORG.ID of the
+[Winding Tree protocol](https://windingtree.com/).
+
+This data structure called **ORG.JSON** is part of the `ORG.ID` specification and JSON files conforming to this layout should be linked from the **0xORG** smart contract.
+
+All developers who want to create own ORG.JSON builders or validators can use this schema and vocabulary as documentation and namespace. [This vocabulary file](./vocabulary.md) has to be published and available online on the persistent URL address as well as DID context file.
+
+## NPM package
+
+ORG.ID JSON schema can be installed as npm package:
+
+```bash
+npm i @windingtree/org.json-schema
+```
+
+and used in the JS application as:
 
 
-This data structure called **ORG.JSON** is part of the `ORG.ID` specification and JSON files
-conforming to this layout should be linked from the **0xORG** smart contract.
+```javascript
+const orgidSchema = require('@windingtree/org.json-schema');
+```
 
-For more information visit our [developer portal](https://developers.windingtree.com/).
+## The ORG.ID Vocabulary
+
+Complete list of the ORG.ID JSON definitions are can be found in the [vocabulary](./vocabulary.md) file. Please use this vocabulary as a documentation for the ORG.ID JSON builders and validators. 
 
 ## Build
 
-We are using a non-standard notation for referencing external Open API documents,
-such as `$ref: '@windingtree/wt-shared-schemas/swagger.yaml#/components/schemas/EthereumAddressType'`.
-These references are resolved from NPM dependencies and inlined during the build phase.
+```bash
+npm run build
+```
 
-Version number is set during the build phase as well.
+A consistent version of the json-schema compiled specification file (`./src/orgid-json-schema.yaml`) will be saved in the `./dist` directory just after building process finish.
+
+## Usage of the DID context
+
+Link to the [DID context](./src/context.json) file should be contained in the every ORG.ID JSON. Here the example:
+
+```json
+"@context": [
+    "https://www.w3.org/ns/did/v1",
+    "https://windingtree.com/ns/orgid/v1"
+]
+```
 
 ## Example of the valid json file
 
@@ -22,7 +50,10 @@ Version number is set during the build phase as well.
 
 ```json
 {
-    "@context": "https://windingtree.com/ns/did/v1",
+    "@context": [
+        "https://www.w3.org/ns/did/v1",
+        "https://windingtree.com/ns/orgid/v1"
+    ],
     "id": "did:orgid:0xB4Caa470E33A4cE899C16e6C7E125eA03956e95D",
     "created": "2019-01-01T13:10:02.251Z",
     "updated": "2019-06-03T13:20:06.398Z",
@@ -52,9 +83,9 @@ Version number is set during the build phase as well.
     "trust": {
         "assertions": [
             {
-                "type": "domain",
+                "type": "dns",
                 "claim": "test.com",
-                "proof": "dns"
+                "proof": "TXT"
             },
             {
                 "type": "domain",
@@ -67,9 +98,9 @@ Version number is set during the build phase as well.
                 "proof": "http://test3.com/orgid.txt"
             },
             {
-                "type": "twitter",
-                "claim": "jack",
-                "proof": "https://twitter.com/status/123456789/"
+                "type": "post",
+                "claim": "twitter.com/jack",
+                "proof": "https://twitter.com/jack/status/123456789/"
             }
         ],
         "credentials": [
@@ -83,12 +114,12 @@ Version number is set during the build phase as well.
                     "VerifiableCredential",
                     "FranchiseCredential"
                 ],
-                "issuanceDate": "2010-01-01T19:73:24Z",
+                "issuanceDate": "2010-01-01T19:53:24Z",
                 "credentialSubject": {
                     "id": "did:orgid:0xB4Caa470E33A4cE899C16e6C7E125eA03956e95D",
                     "franchiseLicense": {
                         "brand": "Hilton Garden Inn",
-                        "validUntil": "2020-01-01T19:73:24Z"
+                        "validUntil": "2020-01-01T19:53:24Z"
                     }
                 },
                 "proof": {
@@ -132,8 +163,8 @@ Version number is set during the build phase as well.
                     "country": "CZ",
                     "subdivision": "71",
                     "locality": "Jihlava",
-                    "postal_code": "71354",
-                    "street_address": "3150 Main St.",
+                    "postalCode": "71354",
+                    "streetAddress": "3150 Main St.",
                     "premise": "STE 100",
                     "gps": "50.087070,14.417210",
                     "geocodes": [
@@ -224,11 +255,14 @@ Version number is set during the build phase as well.
 }
 ```
 
-### Organizational unit
+### Organizational Unit
 
 ```json
 {
-    "@context": "https://windingtree.com/ns/did/v1",
+    "@context": [
+        "https://www.w3.org/ns/did/v1",
+        "https://windingtree.com/ns/orgid/v1"
+    ],
     "id": "did:orgid:0xB4Caa470E33A4cE899C16e6C7E125eA03956e95D",
     "created": "2019-01-01T13:10:02.251Z",
     "updated": "2019-06-03T13:20:06.398Z",
@@ -319,8 +353,8 @@ Version number is set during the build phase as well.
             "country": "CZ",
             "subdivision": "71",
             "locality": "Jihlava",
-            "postal_code": "71354",
-            "street_address": "3150 Main St.",
+            "postalCode": "71354",
+            "streetAddress": "3150 Main St.",
             "premise": "STE 100",
             "gps": "50.087070,14.417210",
             "geocodes": [
