@@ -1,11 +1,25 @@
 # org.json-schema
-Model schema definitions used for ORG.JSON part of ORG.ID of the
-[Winding Tree platform](https://windingtree.com/).
+Model schema definitions and vocabulary used for ORG.JSON part of ORG.ID of the
+[Winding Tree protocol](https://windingtree.com/).
 
-This data structure called **ORG.JSON** is part of the `ORG.ID` specification and JSON files
-conforming to this layout should be linked from the **0xORG** smart contract.
+This data structure called **ORG.JSON** is part of the `ORG.ID` specification and JSON files conforming to this layout should be linked from the **0xORG** smart contract.
 
 For more information visit our [developer portal](https://developers.windingtree.com/).
+
+## NPM package
+
+ORG.ID JSON schema can be installed as npm package:
+
+```bash
+npm i @windingtree/org.json-schema
+```
+
+and used in the JS application as:
+
+
+```javascript
+const orgidSchema = require('@windingtree/org.json-schema');
+```
 
 ## The ORG.ID Vocabulary
 
@@ -17,7 +31,7 @@ Complete list of the ORG.ID JSON definitions are can be found in the [vocabulary
 npm run build
 ```
 
-A consistent version of the OpenAPI compiled specification file (`swagger.yaml`) will be saved in the `./dist` directory just after building process finish.
+A consistent version of the json-schema compiled specification file (`./src/orgid-json-schema.yaml`) will be saved in the `./dist` directory just after building process finish.
 
 ## Example of the valid json file
 
@@ -58,9 +72,9 @@ A consistent version of the OpenAPI compiled specification file (`swagger.yaml`)
     "trust": {
         "assertions": [
             {
-                "type": "domain",
+                "type": "dns",
                 "claim": "test.com",
-                "proof": "dns"
+                "proof": "TXT"
             },
             {
                 "type": "domain",
@@ -73,9 +87,9 @@ A consistent version of the OpenAPI compiled specification file (`swagger.yaml`)
                 "proof": "http://test3.com/orgid.txt"
             },
             {
-                "type": "twitter",
-                "claim": "jack",
-                "proof": "https://twitter.com/status/123456789/"
+                "type": "post",
+                "claim": "twitter.com/jack",
+                "proof": "https://twitter.com/jack/status/123456789/"
             }
         ],
         "credentials": [
@@ -89,12 +103,12 @@ A consistent version of the OpenAPI compiled specification file (`swagger.yaml`)
                     "VerifiableCredential",
                     "FranchiseCredential"
                 ],
-                "issuanceDate": "2010-01-01T19:73:24Z",
+                "issuanceDate": "2010-01-01T19:53:24Z",
                 "credentialSubject": {
                     "id": "did:orgid:0xB4Caa470E33A4cE899C16e6C7E125eA03956e95D",
                     "franchiseLicense": {
                         "brand": "Hilton Garden Inn",
-                        "validUntil": "2020-01-01T19:73:24Z"
+                        "validUntil": "2020-01-01T19:53:24Z"
                     }
                 },
                 "proof": {
@@ -138,8 +152,8 @@ A consistent version of the OpenAPI compiled specification file (`swagger.yaml`)
                     "country": "CZ",
                     "subdivision": "71",
                     "locality": "Jihlava",
-                    "postal_code": "71354",
-                    "street_address": "3150 Main St.",
+                    "postalCode": "71354",
+                    "streetAddress": "3150 Main St.",
                     "premise": "STE 100",
                     "gps": "50.087070,14.417210",
                     "geocodes": [
