@@ -4,7 +4,7 @@ Model schema definitions and vocabulary used for ORG.JSON part of ORG.ID of the
 
 This data structure called **ORG.JSON** is part of the `ORG.ID` specification and JSON files conforming to this layout should be linked from the **0xORG** smart contract.
 
-For more information visit our [developer portal](https://developers.windingtree.com/).
+All developers who want to create own ORG.JSON builders or validators can use this schema and vocabulary as documentation and namespace. [This vocabulary file](./vocabulary.md) has to be published and available online on the persistent URL address as well as DID context file.
 
 ## NPM package
 
@@ -32,6 +32,17 @@ npm run build
 ```
 
 A consistent version of the json-schema compiled specification file (`./src/orgid-json-schema.yaml`) will be saved in the `./dist` directory just after building process finish.
+
+## Usage of the DID context
+
+Link to the [DID context](./src/context.json) file should be contained in the every ORG.ID JSON. Here the example:
+
+```json
+"@context": [
+    "https://www.w3.org/ns/did/v1",
+    "https://windingtree.com/ns/orgid/v1"
+]
+```
 
 ## Example of the valid json file
 
