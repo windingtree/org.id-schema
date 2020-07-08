@@ -1,52 +1,34 @@
-# org.json-schema
-Model schema definitions and vocabulary used for ORG.JSON part of ORG.ID of the
-[Winding Tree protocol](https://windingtree.com/).
+<a href="https://orgid.tech"><img src="https://github.com/windingtree/branding/raw/master/org.id/svg/org.id-logo.svg" height="50" alt="ORG.ID"></a>
 
-This data structure called **ORG.JSON** is part of the `ORG.ID` specification and JSON files conforming to this layout should be linked from the **0xORG** smart contract.
+## ORG.JSON Schema
 
-All developers who want to create own ORG.JSON builders or validators can use this schema and vocabulary as documentation and namespace. [This vocabulary file](./vocabulary.md) has to be published and available online on the persistent URL address as well as DID context file.
+ORG.JSON is a data format used for describing organizations and organizational units. It is a part of [ORG.ID DID standard](https://orgid.tech).
+
+[Complete ORG.JSON vocabulary](./vocabulary.md).
+
+## Usage
 
 ## NPM package
 
-ORG.ID JSON schema can be installed as npm package:
-
-```bash
+```sh
 npm i @windingtree/org.json-schema
 ```
 
-and used in the JS application as:
-
-
 ```javascript
-const orgidSchema = require('@windingtree/org.json-schema');
+const orgJsonSchema = require('@windingtree/org.json-schema');
 ```
 
-## The ORG.ID Vocabulary
-
-Complete list of the ORG.ID JSON definitions are can be found in the [vocabulary](./vocabulary.md) file. Please use this vocabulary as a documentation for the ORG.ID JSON builders and validators. 
-
-## Build
+## JSON Schema Specification
 
 ```bash
 npm run build
 ```
 
-A consistent version of the json-schema compiled specification file (`./src/orgid-json-schema.yaml`) will be saved in the `./dist` directory just after building process finish.
+This will generate a JSON Schema specification file in the `dist` directory.
 
-## Usage of the DID context
+## Examples
 
-Link to the [DID context](./src/context.json) file should be contained in the every ORG.ID JSON. Here the example:
-
-```json
-"@context": [
-    "https://www.w3.org/ns/did/v1",
-    "https://windingtree.com/ns/orgid/v1"
-]
-```
-
-## Example of the valid json file
-
-### Legal entity
+### Legal Entity
 
 ```json
 {
@@ -412,3 +394,14 @@ Link to the [DID context](./src/context.json) file should be contained in the ev
     }
 }
 ```
+
+## ORG.ID Ecosystem
+
+![ORG.ID Ecosystem](https://github.com/windingtree/org.id/raw/master/assets/org.id-ecosystem.png)
+
+- [Winding Tree DAO](https://github.com/windingtree/dao) controls ORG.ID Registry smart contract and some Directories (including their rules)
+- [ORG.ID Registry](https://github.com/windingtree/org.id) contains records of all organizations and organizational units
+- **ORG.JSON Schema (you are here)**
+- [ORG.ID Resolver](https://github.com/windingtree/org.id-resolver) is an application for resolving ORG.ID data in [W3C DID](https://w3c.github.io/did-core/) format
+- [ORG.ID Directories](https://github.com/windingtree/org.id-directories) are curated lists of organizations
+- [Arbor](https://arbor.fm) can be used to look up an ORG.ID, and also to create and manage your own ORG.ID
