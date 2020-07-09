@@ -58,8 +58,6 @@ definitions:
       - legalIdentifier
       - legalType
       - registeredAddress
-      - locations
-      - contacts
     properties:
       legalName:
         description: Legal name, e.g. 'Acme, Inc.' or 'Ajax Ltd.'
