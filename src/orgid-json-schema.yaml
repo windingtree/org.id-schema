@@ -282,11 +282,9 @@ definitions:
     type: object
     required:
       - country
-      - subdivision
       - locality
       - postalCode
       - streetAddress
-      - premise
     properties:
       country:
         description: ISO 3166-1 alpha-2 country code
