@@ -306,11 +306,9 @@ definitions:
     type: object
     required:
       - country
-      - subdivision
       - locality
       - postalCode
       - streetAddress
-      - premise
     properties:
       country:
         description: A country code in "ISO 3166 alpha-2" country code standard
