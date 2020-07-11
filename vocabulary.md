@@ -1,31 +1,26 @@
-# The ORG.ID Vocabulary
+# ORG.JSON Vocabulary
 
-Latest version  
-    [ORGID_VOCAB_URL]
+Permanent location of this file: [ORGID_VOCAB_URL]
 
 ## Abstract
 
-The ORG.ID vocabulary is used to enable Internet-based applications to represent, reads, identify and manage digital information about organizations using ORG.ID protocol.
+ORG.JSON, part of [ORGiD](https://orgid.tech), is a data format for representing data about organizations and their structural units.
+
+This document describes classes and properties that can be used to create, read and validate ORG.JSON datasheets.
 
 ## Status of This Document
 
-This specification was published by the WindingTree and proposed to the community as possible standard.  
+This specification was published by the Winding Tree and proposed to the community as standard.
 
-If you wish to make comments regarding this document, please send them to this address: [public address].
-
-## Introduction
-
-This document describes a number of classes and properties that can be used to create, read and validate organization records.
+Google group for discussing ORGiD and ORG.JSON: https://groups.google.com/a/windingtree.com/g/standards (standards@windingtree.com).
 
 ## Namespaces
 
-Data types of properties described in this document are related to the OpenAPI Specification that available [by the link](https://swagger.io/specification/). OpenAPI namespace is represented by the `oas` class.  
+- [ORGiD](https://orgid.tech) namespace: `orgid`
+- [OpenAPI](https://swagger.io/specification/) namespace: `oas`
+- [Verifiable Credentials](https://www.w3.org/TR/vc-data-model/) namespace: `vc`
 
-ORG.ID namespace is represented by the `orgid` class.  
-
-Verifiable Credentials namespace is represented vy the `vc` class. More information about concept and data models specification can be found here [https://www.w3.org/TR/vc-data-model/](https://www.w3.org/TR/vc-data-model/)
-
-# Classes  
+## Classes
 
 - [`orgid:trust`](#orgidtrust)
 - [`orgid:assertion`](#orgidassertion)
@@ -44,77 +39,84 @@ Verifiable Credentials namespace is represented vy the `vc` class. More informat
 ---
 ### `orgid:trust`
 
-The set of trust records of entity.  
+Trust records can be of two types: assertions and credentials. Assertions do not require a third party to prove the validity of the data in question, while credentials are provided by third parties.
 
 **Status**
-- stable
+- not stable
 
 **Class name**
 - `orgid:trust`
 
-**Expected properties** 
+**Expected properties**
 - [assertions](#assertions)
 - [credentials](#credentials)
 
-**Required properties**
-- [assertions](#assertions)
-
-The example below describes a `trust` class instance:  
+Example
 
 ```json
 {
     "assertions": [
         {
-            "type": "domain",
             "claim": "windingtree.com",
-            "proof": "dns"
+            "type": "dns",
+            "proof": "TXT"
         },
-        {...}
+        {
+            "claim": "glider.travel",
+            "type": "domain",
+            "proof": "http://test2.com/orgid.txt"
+        },
+        {
+            "claim": "twitter.com/jack",
+            "type": "post",
+            "proof": "https://twitter.com/jack/status/123456789/"
+        }
     ],
     "credentials": {
-        "@context": [...],
+        "@context": [],
         "id": "http://example.edu/credentials/58473",
         "type": ["VerifiableCredential", "AlumniCredential"],
-        "credentialSubject": {...},
-        "proof": {...}
+        "credentialSubject": {},
+        "proof": {}
     }
 }
 ```
 
 ---
-### `orgid:assertion`  
+### `orgid:assertion`
 
 **Status**
-- stable
+- not stable
 
 **Class name**
 - `orgid:assertion`
 
 **Expected properties**
-- [type](#assertionstype)
-- [claim](#assertionsclaim)
-- [proof](#assertionsproof)
+- [claim](#assertionclaim)
+- [type](#assertiontype)
+- [proof](#assertionproof)
 
-Required properties
-- [type](#assertionstype)
-- [claim](#assertionsclaim)
-- [proof](#assertionsproof)
+**Required properties**
+- [claim](#assertionclaim)
+- [type](#assertiontype)
+- [proof](#assertionproof)
 
-The example below describes a `assertion` class instance that contains `domain` proof (DNS TEXT record with published DID):
+Example: website `assertion` with `dns` proof (TXT DNS record):
 
 ```json
 {
-    "type": "domain",
     "claim": "windingtree.com",
-    "proof": "dns"
+    "type": "dns",
+    "proof": "TXT"
 }
 ```
 
-The example below describes a `assertion` class instance that contains `text file` proof (published textual file with DID):
+Example: website `assertion` with `domain` proof (text file):
+
 ```json
 {
-    "type": "domain",
     "claim": "lif.windingtree.com",
+    "type": "domain",
     "proof": "https://lif.windingtree.com/orgid.txt"
 }
 ```
@@ -122,10 +124,10 @@ The example below describes a `assertion` class instance that contains `text fil
 ---
 ### `orgid:legalIdentifier`
 
-A formally-issued identifier for the legal entity, other than the one that confers legal status upon it. Legal entities may have any number of identifiers (but only one legal identifier). For example, in many jurisdictions, a business will have one or more tax numbers associated with them which do not, by themselves, confer legal entity status. The Identifier property must not be used to link to the identifier issued by the authority that conferred legal entity status on a business.
+An identifier issued to the organization by local authorities during its incorporation. A.k.a. registry code, company identification number, commercial register number, entity number, etc..
 
 **Status**
-- stable
+- not stable
 
 **Class name**
 - `legalIdentifier`
@@ -138,7 +140,7 @@ A formally-issued identifier for the legal entity, other than the one that confe
 - [type](#legalidentifiertype)
 - [value](#legalidentifiervalue)
 
-The example below describes a `legalIdetifier` class instance:
+Example:
 
 ```json
 {
@@ -150,10 +152,10 @@ The example below describes a `legalIdetifier` class instance:
 ---
 ### `orgid:address`
 
-Reperesentation of the address.
+Legal entity's registered address. It must match record of the authority it is registered with.
 
 **Status**
-- stabe
+- stable
 
 **Class name**
 - `orgid:address`
@@ -170,13 +172,11 @@ Reperesentation of the address.
 
 **Required properties**
 - [country](#addresscountry)
-- [subdivision](#addresssubdivision)
 - [locality](#addresslocality)
 - [postalCode](#addresspostalcode)
 - [streetAddress](#addressstreetaddress)
-- [premise](#addresspremise)
 
-The example below describes a `address` class instance:
+Example:
 
 ```json
 {
@@ -192,7 +192,7 @@ The example below describes a `address` class instance:
 ---
 ### `orgid:geocode`
 
-Special code obtained from the OLC or What3Words
+Address geocode, e.g. Open Location Code (`olc`), what3words, etc.
 
 **Status**
 - stable
@@ -208,7 +208,7 @@ Special code obtained from the OLC or What3Words
 - [type](#geocodetype)
 - [value](#geocodevalue)
 
-The example below describes a `geocode` class instance:
+Example:
 
 ```json
 {
@@ -219,8 +219,8 @@ The example below describes a `geocode` class instance:
 
 ---
 ### `orgid:location`
-	
-A location related to the business. Asserting the Location relationship implies only that the legal entity has some connection to a location in time or space. It does not imply that the legal entity is necessarily at that location at the time when the assertion is made.
+
+Physical location related to legal entity or an organizational unit. E.g. an office, a facility, etc.
 
 **Status**
 - stable
@@ -238,14 +238,13 @@ A location related to the business. Asserting the Location relationship implies 
 **Required properties**
 - [name](#locationname)
 - [address](#locationaddress)
-- [contacts](#locationcontacts)
 
-The example below describes a `location` class instance:
+Example:
 
 ```json
 {
     "name": "Main Office",
-    "description": "",
+    "description": "This is our company's main office",
     "address": {
         "country": "CH",
         "subdivision": "ZG",
@@ -298,28 +297,25 @@ Opening hours of the entity
 - [weekDay](#openinghoursitemweekday)
 - [hours](#openinghoursitemhours)
 
-The example below describes a `openingHoursItem` class instance in case of multiple days at onece:
+Examples:
 
 ```json
-{
-    "weekDay": "mon,tue,wed,thu",
-    "hours": "9:00-16:00"
-}
-```
-
-and just one per record:
-
-```json
-{
-    "weekDay": "fri",
-    "hours": "10:00-13:00"
-}
+[
+    {
+        "weekDay": "mon,tue,wed,thu",
+        "hours": "9:00-16:00"
+    },
+    {
+        "weekDay": "fri",
+        "hours": "10:00-13:00"
+    }
+]
 ```
 
 ---
 ### `orgid:contact`
 
-The entity contact
+Contact details
 
 **Status**
 - stable
@@ -336,7 +332,7 @@ The entity contact
 - [language](#contactlanguage)
 
 
-The example below describes a `contact` class instance:
+Example:
 
 ```json
 {
@@ -346,7 +342,7 @@ The example below describes a `contact` class instance:
             "type": "telegram",
             "value": "t.me/windingtree"
         }
-    ]    
+    ]
 }
 ```
 
@@ -369,7 +365,7 @@ Messenger account information
 - [type](#messengertype)
 - [value](#messengervalue)
 
-The example below describes a `messenger` class instance:
+Example:
 
 ```json
 {
@@ -381,16 +377,12 @@ The example below describes a `messenger` class instance:
 ---
 ### `orgid:legalEntity`
 
-Legal information about this organization. Either stored directly 
-or as a signed relationship reference to another Organization 
-smart contract. Users must verify that the relationship signature 
-is valid (it did not expire and the signature was produced by someone
-associated with the organization).
+`legalEntity` is one of the two possible main blocks of ORGiD (another being `organizationalUnit`).
 
 **Status**
 - stable
 
-**Class name**  
+**Class name**
 - `orgid:legalEntity`
 
 **Expected properties**
@@ -408,12 +400,10 @@ associated with the organization).
 - [legalIdentifier](#legalentitylegalidentifier)
 - [legalType](#legalentitylegaltype)
 - [registeredAddress](#legalentityregisteredaddress)
-- [location](#legalentitylocation)
-- [contacts](#legalentitycontacts)
 
-The example below describes a `legalEntity` class instance:
+Example:
 
-```json 
+```json
 {
     "legalName": "Winding Tree Stiftung",
     "alternativeName": "Winding Tree",
@@ -465,8 +455,7 @@ The example below describes a `legalEntity` class instance:
                     "weekDay": "fri",
                     "hours": "10:00-13:00"
                 }
-            ],
-            "contacts": []
+            ]
         }
     ],
     "contacts": [
@@ -477,7 +466,7 @@ The example below describes a `legalEntity` class instance:
                     "type": "telegram",
                     "value": "t.me/windingtree"
                 }
-            ]    
+            ]
         }
     ]
 }
@@ -504,7 +493,7 @@ Media resource like image, video, document
 - [description](#mediaresourcedescription)
 - [uri](#mediaresourceuri)
 
-The example below describes a `mediaResource` class instance:
+Example:
 
 ```json
 {
@@ -576,12 +565,8 @@ Information about the organizational unit. e.g. Hotel, Agency
 **Required properties**
 - [name](#organizationalunitname)
 - [type](#organizationalunittype)
-- [description](#organizationalunitdescription)
-- [address](#organizationalunitaddress)
-- [contacts](#organizationalunitcontacts)
-- [media](#organizationalunitmedia)
 
-The example below describes a `organizationalUnit` class instance:
+Example:
 
 ```json
 {
@@ -590,8 +575,8 @@ The example below describes a `organizationalUnit` class instance:
         "hotel",
         "boutique"
     ],
-    "description": "Grand Budapest Hotel is total lorem ipsum",
-    "longDescription": "Until recently, the prevailing view assumed lorem ipsum was born as a nonsense text. “It's not Latin, though it looks like it, and it actually says nothing,” Before & After magazine answered a curious reader, “Its ‘words’ loosely approximate the frequency with which letters occur in English, which is why at a glance it looks pretty real.”\nAs Cicero would put it, “Um, not so fast.”\nThe placeholder text, beginning with the line “Lorem ipsum dolor sit amet, consectetur adipiscing elit”, looks like Latin because in its youth, centuries ago, it was Latin.",
+    "description": "Grand Budapest Hotel is a boutique hotel in the heart of Budapest",
+    "longDescription": "",
     "address": {
         "country": "CZ",
         "subdivision": "71",
@@ -661,10 +646,10 @@ The example below describes a `organizationalUnit` class instance:
 
 A list of claims with proofs
 
-**Status**  
+**Status**
 - stable
 
-**Range**  
+**Range**
 - `oas:array`
 
 **Items**
@@ -675,10 +660,10 @@ A list of claims with proofs
 
 Verifiable credentials list
 
-**Status**  
+**Status**
 - stable
 
-**Range**  
+**Range**
 - `oas:array`
 
 **Items**
@@ -687,92 +672,92 @@ Verifiable credentials list
 ---
 ### assertions.type
 
-The claim type. e.g. domain, twitter, facebook  
+The claim type. e.g. domain, twitter, facebook
 
-**Status**  
+**Status**
 - stable
 
-**Range**  
+**Range**
 - `oas:string`
 
 
 ---
 ### assertions.claim
 
-The claim subject. For example - account or domain name  
+The claim subject. For example - account or domain name
 
-**Status**  
+**Status**
 - stable
 
-**Range**  
+**Range**
 - `oas:string`
 
 
 ---
 ### assertions.proof
 
-A proof of the claim. e.q. link to the file with DID inside or DNS record  
+A proof of the claim. e.q. link to the file with DID inside or DNS record
 
-**Status**  
+**Status**
 - stable
 
-**Range**  
+**Range**
 - `oas:string`
 
 
 ---
 ### legalEntity.description
 
-**Status**  
+**Status**
 - stable
 
-**Range**  
+**Range**
 - `oas:string`
 
 
 ---
-### legalEntity.legalName  
+### legalEntity.legalName
 
 The legal name of the business. A business might have more than one legal name, particularly in countries with more than one official language.
 
-**Status**  
+**Status**
 - stable
 
-**Range**  
+**Range**
 - `oas:string`
 
 
 ---
-### legalEntity.alternativeName  
+### legalEntity.alternativeName
 
 A recognized name other than the legal name. Some jurisdictions recognise concepts such as a trading name or alternative forms of a legal entity's name. The Alternative Name property can be used to record such names but should not be used to record translations of the primary legal name. Where more than one legal name exists and where they have equal standing but are expressed in different languages, identify the language used in each of the multiple legal names. It is notable that some jurisdictions regard the use of any name other than the primary Legal Name as suspicious.
 
-**Status**  
+**Status**
 - stable
 
-**Range**  
+**Range**
 - `oas:string`
 
 
 ---
-### legalEntity.legalIdentifier  
+### legalEntity.legalIdentifier
 
 The identifier given to the legal entity by the authority with which it is registered.
 
-**Status**  
+**Status**
 - stable
 
-**Range**  
+**Range**
 - `oas:string`
 
-### legalEntity.identifiers  
+### legalEntity.identifiers
 
-A set of legal identifiers obtained from registrators, associations etc.  
+A set of legal identifiers obtained from registrators, associations etc.
 
-**Status**  
+**Status**
 - stable
 
-**Range**  
+**Range**
 - `oas:array`
 
 **Items**
@@ -784,42 +769,42 @@ A set of legal identifiers obtained from registrators, associations etc.
 
 The type of the business. e.g. LLC,SA,PLC,GmbH
 
-**Status**  
+**Status**
 - stable
 
-**Range**  
+**Range**
 - `oas:string`
 
 
 ---
-### legalEntity.registeredAddress  
+### legalEntity.registeredAddress
 
 The registered address of the business. In almost all jurisdictions, legal entities must register a postal address. This may or may not be the actual address at which the legal entity does its business - it is commonly the address of their lawyer or accountant - but it is the address to which formal communications can be sent.
 
-**Status**  
+**Status**
 - stable
 
-**Range**  
+**Range**
 - `orgid:address`
 
 
 ---
 ### legalEntity.location
 
-**Status**  
+**Status**
 - stable
 
-**Range**  
+**Range**
 - [`orgid:location`](#orgidlocation)
 
 
 ---
 ### legalEntity.contacts
 
-**Status**  
+**Status**
 - stable
 
-**Range**  
+**Range**
 - `oas:array`
 
 **Items**
@@ -827,26 +812,26 @@ The registered address of the business. In almost all jurisdictions, legal entit
 
 
 ---
-### legalIdentifier.type  
+### legalIdentifier.type
 
 The type of an identifier. e.g. iata
 
-**Status**  
+**Status**
 - stable
 
-**Range**  
+**Range**
 - `oas:string`
 
 
 ---
-### legalIdentifier.value  
+### legalIdentifier.value
 
 Value of the identifier. e.g. IATA code or Trade license
 
-**Status**  
+**Status**
 - stable
 
-**Range**  
+**Range**
 - `oas:string`
 
 
@@ -855,10 +840,10 @@ Value of the identifier. e.g. IATA code or Trade license
 
 A country code in "ISO 3166 alpha-2" country code standard
 
-**Status**  
+**Status**
 - stable
 
-**Range**  
+**Range**
 - `oas:string`
 
 
@@ -867,10 +852,10 @@ A country code in "ISO 3166 alpha-2" country code standard
 
 Subdivision string
 
-**Status**  
+**Status**
 - stable
 
-**Range**  
+**Range**
 - `oas:string`
 
 
@@ -879,10 +864,10 @@ Subdivision string
 
 City / Town
 
-**Status**  
+**Status**
 - stable
 
-**Range**  
+**Range**
 - `oas:string`
 
 
@@ -891,10 +876,10 @@ City / Town
 
 Postal code / ZIP Code
 
-**Status**  
+**Status**
 - stable
 
-**Range**  
+**Range**
 - `oas:string`
 
 
@@ -903,10 +888,10 @@ Postal code / ZIP Code
 
 Street number
 
-**Status**  
+**Status**
 - stable
 
-**Range**  
+**Range**
 - `oas:string`
 
 
@@ -915,10 +900,10 @@ Street number
 
 Apartment, Suite, Box number, etc.
 
-**Status**  
+**Status**
 - stable
 
-**Range**  
+**Range**
 - `oas:string`
 
 
@@ -927,10 +912,10 @@ Apartment, Suite, Box number, etc.
 
 Geographic coordinates
 
-**Status**  
+**Status**
 - stable
 
-**Range**  
+**Range**
 - `oas:string`
 
 
@@ -939,10 +924,10 @@ Geographic coordinates
 
 Special codes to ease locate an entity on the map
 
-**Status**  
+**Status**
 - stable
 
-**Range**  
+**Range**
 - `oas:array`
 
 **Items**
@@ -954,10 +939,10 @@ Special codes to ease locate an entity on the map
 
 Geo code type. e.g. olc, what2words, etc.
 
-**Status**  
+**Status**
 - stable
 
-**Range**  
+**Range**
 - `oas:string`
 
 
@@ -966,10 +951,10 @@ Geo code type. e.g. olc, what2words, etc.
 
 Geo code value
 
-**Status**  
+**Status**
 - stable
 
-**Range**  
+**Range**
 - `oas:string`
 
 
@@ -978,10 +963,10 @@ Geo code value
 
 Location name
 
-**Status**  
+**Status**
 - stable
 
-**Range**  
+**Range**
 - `oas:string`
 
 
@@ -990,30 +975,30 @@ Location name
 
 Location description
 
-**Status**  
+**Status**
 - stable
 
-**Range**  
+**Range**
 - `oas:string`
 
 
 ---
 ### location.address
 
-**Status**  
+**Status**
 - stable
 
-**Range**  
+**Range**
 - [`orgid:address`](#orgidaddress)
 
 
 ---
 ### location.openingHours
 
-**Status**  
+**Status**
 - stable
 
-**Range**  
+**Range**
 - `oas:array`
 
 **Items**
@@ -1023,13 +1008,13 @@ Location description
 ---
 ### location.contacts
 
-**Status**  
+**Status**
 - stable
 
-**Range**  
+**Range**
 - `oas:array`
 
-**Items**  
+**Items**
 - `orgid:contact`
 
 ---
@@ -1128,7 +1113,7 @@ List of messangers accounts of the contact
 ---
 ### contact.language
 
-List of languages of the contact.  
+List of languages of the contact.
 A languages code specifies a unique name for each culture based on "RFC 4646" (Windows Vista and later). The name is a combination of an "ISO 639" two-letter lowercase culture code associated with a language and an "ISO 3166" two-letter uppercase subculture code associated with a country or region. e.g. "en-US"
 
 **Status**
@@ -1428,4 +1413,3 @@ Link to the media resource. e.g. image of video file
 
 **Format**
 - uri
-
