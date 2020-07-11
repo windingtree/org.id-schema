@@ -6,12 +6,15 @@ ORG.JSON is a data format used for describing organizations of all types: commer
 
 The goal behind ORG.JSON is to provide correct and truthful snapshot of an organization, sufficient to represent its subject in any online transaction.
 
-An ORG.JSON file may either describe a legal entity, or an organizational unit. While "legal entity" is self-explanatory, units may represent a wide range of company's structural parts: departments (accounting or legal department), business locations (in case the same legal entity operates a few different stores), etc. We intentionally made the "unit" concept flexible. Relationship between a legal entity and its units is reflected in the [ORGiD Registry](https://github.com/windingtree/org.id) smart contract.
+An ORG.JSON file may describe a legal entity, an organizational unit, or both at the same time. Legal entity may have zero or any number of units. Units can't exist on their own, they must belong to a legal entity.
+
+While "legal entity" is self-explanatory, "units" may represent a wide range of company's structural parts: departments (accounting or legal department), business locations (in case the same legal entity operates a few different stores), etc. We intentionally made the "unit" concept flexible. Relationship between a legal entity and its units is reflected in the [ORGiD Registry](https://github.com/windingtree/org.id) smart contract.
 
 ## Examples
 
 - [legal entity](examples/legal-entity.json)
 - [organizational unit](examples/unit.json)
+- [real-life examples](https://github.com/windingtree/orgids)
 
 ## Structure
 
