@@ -18,7 +18,7 @@
   },
   "homepage": "https://github.com/windingtree/org.json-schema#readme",
   "devDependencies": {
-    "js-yaml": "3.13.1"
+    "js-yaml": "3.14.0"
   },
   "publishConfig": {
     "access": "public"

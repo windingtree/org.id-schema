@@ -29,6 +29,30 @@
             "serviceEndpoint": "https://example.com/orgid-auth/"
         }
     ],
+    "payment": [
+        {
+            "type": "crypto",
+            "currency": [
+                "btc"
+            ],
+            "address": "bc1qar0srrr7xfkvy5l643lydnw9re59gtzzwf5mdq",
+            "description": "General donation channel"
+        },
+        {
+            "type": "bank",
+            "currency": [
+                "usd",
+                "eur"
+            ],
+            "iban": "DE75512108001245126199",
+            "swift": "UBSWUS33XXX"
+        },
+        {
+            "type": "simard",
+            "currency": ["usd","eur"],
+            "description": "Bookings and service payments"
+        }
+    ],
     "trust": {
         "assertions": [
             {
@@ -47,7 +71,7 @@
                 "proof": "http://test3.com/orgid.txt"
             },
             {
-                "type": "post",
+                "type": "social",
                 "claim": "twitter.com/jack",
                 "proof": "https://twitter.com/jack/status/123456789/"
             }
