@@ -1,8 +1,11 @@
-<a href="https://orgid.tech"><img src="https://github.com/windingtree/branding/raw/master/ORGiD/svg/ORGiD-logo.svg" height="50" alt="ORGiD"></a>
+![org.json-schema](https://travis-ci.org/windingtree/org.json-schema.svg?branch=master)  
+
+<a href="https://orgid.tech"><img src="https://raw.githubusercontent.com/windingtree/branding/master/org.id/svg/org.id-logo.svg" height="50" alt="ORGiD"></a>   
+
 
 ## ORG.JSON Schema
 
-ORG.JSON is a data format used for describing organizations of all types: commercial firms, NGOs, even organizations that aren't incorporated (like [W3C](https://www.w3.org/Consortium/facts#org), for example).
+ORG.JSON is a data format based on the [json-schema](http://json-schema.org/specification.html) specification used for describing organizations of all types: commercial firms, NGOs, even organizations that aren't incorporated (like [W3C](https://www.w3.org/Consortium/facts#org), for example).
 
 The goal behind ORG.JSON is to provide correct and truthful snapshot of an organization, sufficient to represent its subject in any online transaction.
 
@@ -37,8 +40,6 @@ npm run build
 ```
 
 ## ORGiD Ecosystem
-
-![ORGiD Ecosystem](https://github.com/windingtree/ORGiD/raw/master/assets/ORGiD-ecosystem.png)
 
 - [Winding Tree DAO](https://github.com/windingtree/dao) controls ORGiD Registry smart contract and some Directories (including their rules)
 - [ORGiD Registry](https://github.com/windingtree/ORGiD) contains records of all organizations and organizational units
