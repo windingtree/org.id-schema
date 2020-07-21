@@ -1,7 +1,13 @@
-![org.json-schema](https://travis-ci.org/windingtree/org.json-schema.svg?branch=master)  
+![npm](https://img.shields.io/npm/v/@windingtree/org.json-schema) ![org.json-schema](https://travis-ci.org/windingtree/org.json-schema.svg?branch=master)  
 
 <a href="https://orgid.tech"><img src="https://raw.githubusercontent.com/windingtree/branding/master/org.id/svg/org.id-logo.svg" height="50" alt="ORGiD"></a>   
 
+
+## Version 0.4.0 breaking change
+
+- `legalEntity.legalIdentifier` is renamed to `legalEntity.registryCode`
+
+If you are want to use an old term you should define s specific `schemaVersion` (0.3.2) in your `org.json` file overwise your `org.json` will throw a warning during validation.  
 
 ## ORG.JSON Schema
 

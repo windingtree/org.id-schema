@@ -68,7 +68,7 @@ definitions:
     type: object
     required:
       - legalName
-      - legalIdentifier
+      - registryCode
       - legalType
       - registeredAddress
     properties:
@@ -87,7 +87,7 @@ definitions:
           notable that some jurisdictions regard the use of any name other than
           the primary Legal Name as suspicious.
         type: string
-      legalIdentifier:
+      registryCode:
         description: >-
           Identifier given to the legal entity by the authority with which
           it is registered.

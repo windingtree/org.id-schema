@@ -105,7 +105,7 @@
   "legalEntity": {
     "legalName": "Acme, Corp.",
     "alternativeName": "Acme",
-    "legalIdentifier": "US12345567",
+    "registryCode": "US12345567",
     "identifiers": [
       {
         "type": "IATA",
