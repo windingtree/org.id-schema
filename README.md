@@ -31,6 +31,26 @@ npm i @windingtree/org.json-schema
 const orgJsonSchema = require('@windingtree/org.json-schema');
 ```
 
+## Using multiple versions of schema
+
+Define packages in your `package.json` file like following:  
+
+```json
+{
+  "dependencies": {
+    "org.json-schema-0.3.1": "npm:@windingtree/org.json-schema@0.3.1",
+    "org.json-schema-0.3.2": "npm:@windingtree/org.json-schema@0.3.2"
+  }
+}
+```
+
+and then use in your application:  
+
+```javascript
+const orgJsonSchema1 = require('org.json-schema-0.3.1');
+const orgJsonSchema2 = require('org.json-schema-0.3.2');
+```
+
 ## JSON Schema Specification
 
 This will generate a JSON Schema specification file in the `dist` directory:
