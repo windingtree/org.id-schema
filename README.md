@@ -16,10 +16,6 @@ While "legal entity" is self-explanatory, "units" may represent a wide range of 
 - [organizational unit](examples/unit.json)
 - [real-life examples](https://github.com/windingtree/orgids)
 
-## Structure
-
-[Complete ORG.JSON vocabulary](./vocabulary.md).
-
 ## Usage
 
 ### NPM package

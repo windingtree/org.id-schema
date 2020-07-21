@@ -9,6 +9,13 @@ required:
   - id
   - created
 properties:
+  schemaVersion:
+    description: >-
+      Semantic version of the org.json schema. 
+      If not defined it means the latest version
+    type: string
+    pattern: "^([0-9]+.)?([0-9]+.)?([0-9]+)$"
+    example: "0.3.2"
   '@context':
     $ref: '#/definitions/ContextReference'
   id:
@@ -162,22 +169,36 @@ definitions:
   LinkedContextReference:
     description: Linked context URI
     type: string
+    example:
+      "https://www.w3.org/ns/did/v1"
   LinkedMultipleContextReference:
     description: A list of context references
     type: array
     items:
       allOf:
         - $ref: '#/definitions/LinkedContextReference'
+    example:
+      [
+        "https://www.w3.org/ns/did/v1",
+        "https://windingtree.com/ns/orgid/v1"
+      ]
   LinkedContextDocumentReference:
     description: 'Context document https://www.w3.org/TR/json-ld/#the-context'
     type: object
+    example:
+      {
+        "@context": "https://json-ld.org/contexts/person.jsonld",
+        "name": "Example Site",
+        "homepage": "http://example.site.org/",
+        "image": "http://example.site.org/images/person.png"
+      }
   DIDReference:
     description: >-
       The DID subject is denoted by the id property. The DID subject is the
       entity that the DID document (ORG.JSON) is about. That is, it is the
-      entity identified by the DID and described in the DID document. e.g.
-      "did:orgid:0xB4Caa470E33A4cE899C16e6C7E125eA03956e95D"
+      entity identified by the DID and described in the DID document.
     type: string
+    example: "did:orgid:0x94bf5a57b850a35b4d1d7b59f663ce3a8a76fd9928ef2067cc772fc97fb0ad75"
   TrustAssertionsReference:
     description: List of assertions (claims with proofs)
     type: array
@@ -224,6 +245,42 @@ definitions:
       authentication or establishing secure communication with service
       endpoints.
     type: object
+    required:
+      - id
+      - type
+      - controller
+    properties:
+      id:
+        description: Identifies the owner of the corresponding private key
+        $ref: '#/definitions/DIDReference'
+      type:
+        description: Public key type
+        type: string
+        enum:
+          - RSA # RSA public key values MUST either be encoded as a JWK or be encoded in Privacy Enhanced Mail (PEM) format using the publicKeyPem property
+          - ed25519 # Ed25519 public key values MUST either be encoded as a JWK or be encoded as the raw 32-byte public key value in Base58 Bitcoin format using the publicKeyBase58 property.
+          - secp256k1 # Secp256k1 Koblitz public key values MUST either be encoded as a JWK or be encoded as the raw 33-byte public key value in Base58 Bitcoin format using the publicKeyBase58 property.
+          - secp256r1 # Secp256r1 public key values MUST either be encoded as a JWK or be encoded as the raw 32-byte public key value encoded in Base58 Bitcoin format using the publicKeyBase58 property.
+          - X25519 # Curve25519 (also known as X25519) public key values MUST either be encoded as a JWK or be encoded as the raw 32-byte public key value in Base58 Bitcoin format using the publicKeyBase58 property.
+      controller:
+        description: Identifies the controller of the corresponding private key
+        $ref: '#/definitions/DIDReference'
+      publicKeyPem:
+        description: Public key value in Privacy Enhanced Mail (PEM) format
+        type: string
+      publicKeyBase58:
+        description: Public key in value in Base58 Bitcoin format
+        type: string
+      note:
+        description: Note about the private key purpose
+      example:
+        {
+          "id": "did:orgid:0x94bf5a57b850a35b4d1d7b59f663ce3a8a76fd9928ef2067cc772fc97fb0ad75#webserver",
+          "type": "secp256k1",
+          "controller": "did:orgid:0x94bf5a57b850a35b4d1d7b59f663ce3a8a76fd9928ef2067cc772fc97fb0ad75",
+          "publicKeyPem": "MFYwEAYHKoZIzj0CAQYFK4EEAAoDQgAE/7GpAW4+se9gZOFPtwk63ZhV1nX6M0UobMYO6FMAnON6vCbglyOaRzEltugkp6GrM8LZ6is0rMBMAXCvb9FH2g==",
+          "note": "B2C Webserver Key"
+        }      
   ServiceReference:
     description: >-
       One of the primary purposes of ORG.JSON is to enable discovery of
@@ -249,6 +306,14 @@ definitions:
           - oneOf:
               - $ref: '#/definitions/LinkedEndpointReference'
               - $ref: '#/definitions/LinkedDocumentEndpointReference'
+    example:
+      {
+        "id": "did:orgid:0x94bf5a57b850a35b4d1d7b59f663ce3a8a76fd9928ef2067cc772fc97fb0ad75#apiv1",
+        "serviceEndpoint": "https://staging.glider.travel/api/v1",
+        "type": "glider",
+        "description": "Search and Book API",
+        "docs": "https://staging.glider.travel/api/docs/"
+      }
   PaymentReference:
     description: >-
       Public information about payment accounts of the organization.
@@ -261,8 +326,8 @@ definitions:
         description: The type of the payment record
         type: string
         enum:
-          - crypto # Cryptocurrency
-          - bank # Bank account
+          - crypto # Cryptocurrency. Cryptocurrency account address should be defined using `address` property
+          - bank # Bank account. Bank accounts should be defined using `swift` and `iban` properties
           - simard # Simard Pay account
       currency:
         description: Currency of the account
@@ -280,13 +345,23 @@ definitions:
       iban:
         description: International Bank Account Number (IBAN) according to ISO 13616:1997
         $ref: '#/definitions/IbanCode'
-
+    example:
+      {
+        "type": "crypto",
+        "currency": [
+          "btc"
+        ],
+        "address": "bc1qar0srrr7xfkvy5l643lydnw9re59gtzzwf5mdq",
+        "description": "General donation channel"
+      }
   LinkedEndpointReference:
     description: >-
       Service endpoint URI conforming to [RFC3986] and normalized according to
       the rules in section 6 of [RFC3986] and to any normalization rules in its
       applicable URI scheme specification.
     type: string
+    example: 
+      "https://staging.glider.travel/api/v1"
   LinkedDocumentEndpointReference:
     description: >-
       Service endpoint document conforming to JSON-LD object
@@ -300,6 +375,19 @@ definitions:
       type:
         description: Service endpoint type
         type: string
+    example:
+      {
+        "@context": {
+          "api": "https://own.api.service/schema.yaml#",
+          "orgid": "https://github.com/windingtree/org.json-schema/blob/master/src/orgid-json-schema.yaml#",
+          "type": "api:type",
+          "b2b": "orgid:/definitions/LinkedEndpointReference",
+          "admin": "orgid:/definitions/LinkedEndpointReference"
+        },
+        "type": "Booking Service",
+        "b2b": "https://your.api.service/api/v1",
+        "admin": "https://your.api.service/api/admin/v1"
+      }
   IdentifierReference:
     description: 'A set of identifiers other than legal identifier'
     type: object
@@ -313,6 +401,8 @@ definitions:
       value:
         description: Identifier value
         type: string
+    example:
+      "IATA"
   AddressReference:
     description: Legal entity official address, physical location of a store, etc.
     type: object
@@ -349,6 +439,26 @@ definitions:
         items:
           allOf:
             - $ref: '#/definitions/GeoCodeReference'
+    example:
+      {
+        "country": "CZ",
+        "subdivision": "71",
+        "locality": "Jihlava",
+        "postalCode": "71354",
+        "streetAddress": "3150 Main St.",
+        "premise": "STE 100",
+        "gps": "50.087070,14.417210",
+        "geocodes": [
+          {
+            "type": "olc",
+            "value": "3CQ9+F2 Prague"
+          },
+          {
+            "type": "what3words",
+            "value": "printers.torn.images"
+          }
+        ]
+      }
   GeoCodeReference:
     description: Open Location Code (Plus Code) or what3words
     type: object
@@ -362,6 +472,17 @@ definitions:
       value:
         description: E.g. "G6FX+QP" or "///compressor.verb.patch"
         type: string
+    example:
+      [
+        {
+          "type": "olc",
+          "value": "3CQ9+F2 Prague"
+        },
+        {
+          "type": "what3words",
+          "value": "printers.torn.images"
+        }
+      ]
   LocationReference:
     description: >-
       Any location that business is related to the organization.
@@ -385,7 +506,7 @@ definitions:
         type: array
         items:
           allOf:
-            - $ref: '#/definitions/ContactReference'
+            - $ref: '#/definitions/ContactReference'    
   OpeningHoursReference:
     description: Opening hours
     type: array
@@ -407,6 +528,11 @@ definitions:
           Time range, e.g. 9:00-17:30 or 12:30-20:05
         type: string
         pattern: '^[0-9]{1,2}:[0-9]{1,2}-[0-9]{1,2}:[0-9]{1,2}$'
+    example:
+      {
+        "weekDay": "fri",
+        "hours": "10:00-16:00"
+      }
   ContactReference:
     description: Contact reference
     type: object
@@ -433,6 +559,23 @@ definitions:
             - $ref: '#/definitions/MessengerReference'
       language:
         $ref: '#/definitions/LanguageReference'
+    example:
+      {
+        "function": "Reception",
+        "name": "John Smith",
+        "phone": "+1234567890",
+        "email": "email@spam.com",
+        "messengers": [
+          {
+            "type": "whatsapp",
+            "value": "+1234567890"
+          },
+          {
+            "type": "kik",
+            "value": "acme.ny.reception"
+          }
+        ]
+      }
   MessengerReference:
     description: Messenger account information
     type: object
@@ -446,18 +589,37 @@ definitions:
       value:
         description: Messenger account ID
         type: string
+    example:
+      [
+        {
+          "type": "whatsapp",
+          "value": "+1234567890"
+        },
+        {
+          "type": "kik",
+          "value": "acme.ny.reception"
+        }
+      ]
   LanguageReference:
     description: Preferred languages
     type: array
     items:
       allOf:
         - $ref: '#/definitions/LanguageItemReference'
+    example:
+      [
+        "en-US",
+        "en-GB",
+        "cs-CZ"
+      ]
   LanguageItemReference:
     description: >-
       Language tag according to RFC 4646. Represented as combination of
       the ISO 639-1 language code and ISO 3166-1 alpha-2 country code.
       Examples: en-US, en-GB, cs-CZ, etc.
     type: string
+    example:
+      "en-US"
   MediaListReference:
     description: List of media files
     type: object
@@ -490,6 +652,31 @@ definitions:
         items:
           allOf:
             - $ref: '#/definitions/MediaReference'
+    example:
+      {
+        "logo": "https://imagehosting/hotel.jpg",
+        "images": [
+          {
+            "description": "Hotel Lobby",
+            "uri": "https://imagehosting/123456789.jpg",
+            "thumbnail": "https://imagehosting/123456789-thumbnail.jpg"
+          }
+        ],
+        "videos": [
+          {
+            "description": "Hotel Tour",
+            "uri": "https://videohosting/hotel-tour.mp4",
+            "cover": "https://imagehosting/hotel-tour-cover.jpg",
+            "thumbnail": "https://imagehosting/hotel-tour-cover-thumbnail.jpg"
+          }
+        ],
+        "documents": [
+          {
+            "description": "Hotel Presentation",
+            "uri": "https://filehosting/hotel-presentation.pdf"
+          }
+        ]
+      }
   MediaReference:
     description: Media file
     type: object
@@ -507,28 +694,40 @@ definitions:
         description: Link to the media resource
         type: string
         format: uri
+    example:
+      {
+        "description": "Hotel Tour",
+        "uri": "https://videohosting/hotel-tour.mp4",
+        "cover": "https://imagehosting/hotel-tour-cover.jpg",
+        "thumbnail": "https://imagehosting/hotel-tour-cover-thumbnail.jpg"
+      }
   Currency:
     description: Currency code
     type: string
     pattern: "^[a-zA-Z]{2,}$"
-    example: "EUR"
+    example:
+      "EUR"
   CryptoETHAddress:
     description: Ethereum address
     type: string
     pattern: "^0x[a-fA-F0-9]{40}$"
-    example: "0xeAD12C6EE973E03D2d630D81eFa57F393CB9117f"
+    example:
+      "0xeAD12C6EE973E03D2d630D81eFa57F393CB9117f"
   CryptoBTCAddress:
     description: Bitcoin address
     type: string
     pattern: "^(bc1|[13])[a-zA-HJ-NP-Z0-9]{25,39}$"
-    example: "bc1qar0srrr7xfkvy5l643lydnw9re59gtzzwf5mdq"
+    example:
+      "bc1qar0srrr7xfkvy5l643lydnw9re59gtzzwf5mdq"
   SwiftCode:
     description: SWIFT/BIC bank code according to ISO 9326
     type: string
     pattern: "^[a-zA-Z]{4}[ -]{0,1}[a-zA-Z]{2}[ -]{0,1}[a-zA-Z0-9]{2}[ -]{0,1}[XXX0-9]{0,3}$"
-    example: "UBSWUS33CHI"
+    example:
+      "UBSWUS33CHI"
   IbanCode:
     description: International Bank Account Number (IBAN) according to ISO 13616:1997
     type: string
     pattern: "^([A-Z]{2}[ -]?[0-9]{2})(?=(?:[ -]?[A-Z0-9]){9,30}$)((?:[ -]?[A-Z0-9]{3,5}){2,7})([ -]?[A-Z0-9]{1,3})?$"
-    example: "DE91100000000123456789"
+    example:
+      "DE91100000000123456789"
