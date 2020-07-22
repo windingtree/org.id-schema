@@ -1,5 +1,5 @@
 {
-  "schemaVersion": "0.4.0",
+  "schemaVersion": "0.4.3",
   "@context": [
     "https://www.w3.org/ns/did/v1",
     "https://windingtree.com/ns/orgid/v1"
@@ -147,7 +147,7 @@
       }
     ],
     "media": {
-      "logo": "https://imagehosting/hotel.jpg",
+      "logo": "https://imagehosting.com/hotel.jpg",
       "images": [
         {
           "description": "Hotel Lobby",
