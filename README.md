@@ -7,7 +7,7 @@
 
 - `legalEntity.legalIdentifier` is renamed to `legalEntity.registryCode`
 
-If you are want to use an old term you should define s specific `schemaVersion` (0.3.2) in your `org.json` file overwise your `org.json` will throw a warning during validation.  
+If you are want to use an old term you should define s specific `schemaVersion` (0.3.3) in your `org.json` file overwise your `org.json` will throw a warning during validation.  
 
 ## ORG.JSON Schema
 
