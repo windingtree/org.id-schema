@@ -4,7 +4,7 @@
   "description": "ORG.ID JSON schema for WT protocol",
   "main": "dist/org.json",
   "scripts": {
-    "build": "npm run clean && mkdir -p dist && npx js-yaml ./src/orgid-json-schema.yaml > ./dist/org.json",
+    "build": "npm run clean && mkdir -p dist && npx js-yaml ./src/org-json-schema.yaml > ./dist/org.json",
     "clean": "rm -rf dist/*",
     "test": "./scripts/test.sh"
   },
