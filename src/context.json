@@ -4,7 +4,7 @@
     "orgid": "https://github.com/windingtree/org.json-schema/blob/master/src/orgid-json-schema.yaml#",
     "schemaVersion": "orgid:schemaVersion",
     "id": "orgid:id",
-    "publicKey": "orgid:/definitions/PublicKeyReference",
+    "verificationMethod": "orgid:/definitions/VerificationMethodReference",
     "service": "orgid:/definitions/ServiceReference",
     "payment": "orgid:/definitions/PaymentReference",
     "trustAssertions": "orgid:/definitions/TrustAssertionsReference",
