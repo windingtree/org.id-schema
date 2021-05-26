@@ -1,13 +1,42 @@
-![npm](https://img.shields.io/npm/v/@windingtree/org.json-schema) ![org.json-schema](https://travis-ci.org/windingtree/org.json-schema.svg?branch=master)  
+![npm](https://img.shields.io/npm/v/@windingtree/org.json-schema) ![org.json-schema](https://travis-ci.org/windingtree/org.json-schema.svg?branch=master)
 
-<a href="https://orgid.tech"><img src="https://raw.githubusercontent.com/windingtree/branding/master/org.id/svg/org.id-logo.svg" height="50" alt="ORGiD"></a>   
+<a href="https://orgid.tech"><img src="https://raw.githubusercontent.com/windingtree/branding/master/org.id/svg/org.id-logo.svg" height="50" alt="ORGiD"></a>
 
 
 ## Version 0.4.0 breaking change
 
 - `legalEntity.legalIdentifier` is renamed to `legalEntity.registryCode`
 
-If you are want to use an old term you should define s specific `schemaVersion` (0.3.4) in your `org.json` file overwise your `org.json` will throw a warning during validation.  
+If you are want to use an old term you should define s specific `schemaVersion` (0.3.4) in your `org.json` file overwise your `org.json` will throw a warning during validation.
+
+## Version 0.5.0 new features and updates
+
+This version of the ORG.JSON schema should be used with new version of the ORGiD protocol (2.0).
+
+- `publicKey` property is renamed to `verificationMethod` because of deprecation in the standard
+- Added: `verificationMethod.publicKeyJwk` property
+- Added: `verificationMethod.blockchainAccountId`
+
+`blockchainAccountId` is a string value of the public key in following format:
+
+```
+0xab16a96d359ec26a11e2c2b3d8f8b8942d5bfcdb@eip155:1
+^                                         ^  ^    ^
+1                                         2  3    4
+
+1. account address (public key)
+2. delimiter of the key and its standard
+3. the standard there described a type of the blockchain and network identifiers. In this case [the Ethereum blockchain](https://github.com/ethereum/EIPs/blob/master/EIPS/eip-155.md)
+4. the blockchain network code. According to the standard 1 is the `Ethereum mainnet`
+```
+
+- Added property `publicKey.publicKeyRevocation` to add ability of a key revocation handling
+- `trust.assertions` moved to the top level as `trustAssertions`
+- `trust.credentials` moved to the top level as `credentials`
+- Added optional `legalEntity.organizationalUnits` property that be a list of organizational units dids
+- Added optional `organizationalUnit.parentOrganization` property that be a link to the parent organization
+- Added top-level `person` property to add ORG.JSON ability to handle personal profiles
+- Definitions `CryptoETHAddress` and `CryptoBTCAddress` are replaced with single definition `BlockchainAccountId` which is standardised by the DID specification and able to handle all types of blockchain accounts
 
 ## ORG.JSON Schema
 
@@ -39,7 +68,7 @@ const orgJsonSchema = require('@windingtree/org.json-schema');
 
 ## Using multiple versions of schema
 
-Define packages in your `package.json` file like following:  
+Define packages in your `package.json` file like following:
 
 ```json
 {
@@ -50,7 +79,7 @@ Define packages in your `package.json` file like following:
 }
 ```
 
-and then use in your application:  
+and then use in your application:
 
 ```javascript
 const orgJsonSchema1 = require('org.json-schema-0.3.1');

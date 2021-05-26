@@ -1,5 +1,6 @@
 const Ajv = require('ajv');
-const schema = require('../../dist/org.json');
+const addFormats = require('ajv-formats');
+const orgJsonSchema = require('../../dist/org.json');
 const jsonFile1 = require('../../examples/legal-entity.json');
 const jsonFile2 = require('../../examples/unit.json');
 
@@ -7,6 +8,7 @@ require('chai').should();
 
 describe('Schema', () => {
     let ajv;
+    let validate;
     const files = [
         {
             name: 'legalEntity',
@@ -17,9 +19,13 @@ describe('Schema', () => {
             file: jsonFile2
         }
     ];
-    
+
     beforeEach(async () => {
-        ajv = new Ajv();
+        ajv = new Ajv({ allErrors: true });
+        // ajv.addKeyword('schemaVersion');
+        ajv.addKeyword('example');
+        addFormats(ajv);
+        validate = ajv.compile(orgJsonSchema);
     });
 
     files.forEach(({ name, file }) => {
@@ -27,7 +33,10 @@ describe('Schema', () => {
         describe(`#${name}`, () => {
 
             it('should validate an example json file against schema', async () => {
-                const result = ajv.validate(schema, file);
+                const result = validate(file);
+                if (!result) {
+                    console.log(ajv.errorsText(validate.errors));
+                }
                 (result).should.be.true;
             });
         });

@@ -4,16 +4,20 @@
     "https://www.w3.org/ns/did/v1",
     "https://windingtree.com/ns/orgid/v1"
   ],
-  "id": "did:orgid:0x94bf5a57b850a35b4d1d7b59f663ce3a8a76fd9928ef2067cc772fc97fb0ad75",
+  "id": "did:orgid:ropsten:0x94bf5a57b850a35b4d1d7b59f663ce3a8a76fd9928ef2067cc772fc97fb0ad75",
   "created": "2019-01-01T13:10:02.251Z",
   "updated": "2019-06-03T13:20:06.398Z",
-  "publicKey": [
+  "verificationMethod": [
     {
       "id": "did:orgid:0x94bf5a57b850a35b4d1d7b59f663ce3a8a76fd9928ef2067cc772fc97fb0ad75#webserver",
-      "type": "secp256k1",
+      "type": "EcdsaSecp256k1VerificationKey2019",
       "controller": "did:orgid:0x94bf5a57b850a35b4d1d7b59f663ce3a8a76fd9928ef2067cc772fc97fb0ad75",
       "publicKeyPem": "MFYwEAYHKoZIzj0CAQYFK4EEAAoDQgAE/7GpAW4+se9gZOFPtwk63ZhV1nX6M0UobMYO6FMAnON6vCbglyOaRzEltugkp6GrM8LZ6is0rMBMAXCvb9FH2g==",
-      "note": "B2C Webserver Key"
+      "note": "B2C Webserver Key",
+      "publicKeyRevocation": {
+        "reason": "keyCompromise",
+        "invalidityDate": "2019-05-03T13:20:06.398Z"
+      }
     }
   ],
   "service": [
@@ -29,7 +33,7 @@
       "currency": [
         "btc"
       ],
-      "address": "bc1qar0srrr7xfkvy5l643lydnw9re59gtzzwf5mdq",
+      "address": "128Lkh3S7CkDTBZ8W7BbpsN3YYizJMp8p6@bip122:000000000019d6689c085ae165831e93",
       "description": "General donation channel"
     },
     {
@@ -50,58 +54,56 @@
       "description": "Bookings and service payments"
     }
   ],
-  "trust": {
-    "assertions": [
-      {
-        "type": "dns",
-        "claim": "test.com",
-        "proof": "TXT"
-      },
-      {
-        "type": "domain",
-        "claim": "test2.com",
-        "proof": "http://test2.com/orgid.txt"
-      },
-      {
-        "type": "domain",
-        "claim": "test3.com",
-        "proof": "http://test3.com/orgid.txt"
-      },
-      {
-        "type": "social",
-        "claim": "twitter.com/jack",
-        "proof": "https://twitter.com/jack/status/123456789/"
-      }
-    ],
-    "credentials": [
-      {
-        "@context": [
-          "https://www.w3.org/2018/credentials/v1",
-          "https://www.w3.org/2018/credentials/examples/v1"
-        ],
-        "id": "did:orgid:0xf4234470E33A4cE899C16e6C7E125eA039564321#credential-129438",
-        "type": [
-          "VerifiableCredential",
-          "FranchiseCredential"
-        ],
-        "issuanceDate": "2010-01-01T19:53:24Z",
-        "credentialSubject": {
-          "id": "did:orgid:0x94bf5a57b850a35b4d1d7b59f663ce3a8a76fd9928ef2067cc772fc97fb0ad75",
-          "franchiseLicense": {
-            "brand": "Hilton Garden Inn",
-            "validUntil": "2020-01-01T19:53:24Z"
-          }
-        },
-        "proof": {
-          "type": "RsaSignature2018",
-          "created": "2017-06-18T21:19:10Z",
-          "proofPurpose": "assertionMethod",
-          "verificationMethod": "did:orgid:0xf4234470E33A4cE899C16e6C7E125eA039564321#key-454312",
-          "jws": "eyJhbGciOiJSUzI1NiIsImI2NCI6ZmFsc2UsImNyaXQiOlsiYjY0Il19..."
+  "trustAssertions": [
+    {
+      "type": "dns",
+      "claim": "test.com",
+      "proof": "TXT"
+    },
+    {
+      "type": "domain",
+      "claim": "test2.com",
+      "proof": "http://test2.com/orgid.txt"
+    },
+    {
+      "type": "domain",
+      "claim": "test3.com",
+      "proof": "http://test3.com/orgid.txt"
+    },
+    {
+      "type": "social",
+      "claim": "twitter.com/jack",
+      "proof": "https://twitter.com/jack/status/123456789/"
+    }
+  ],
+  "credentials": [
+    {
+      "@context": [
+        "https://www.w3.org/2018/credentials/v1",
+        "https://www.w3.org/2018/credentials/examples/v1"
+      ],
+      "id": "did:orgid:0xf4234470E33A4cE899C16e6C7E125eA039564321#credential-129438",
+      "type": [
+        "VerifiableCredential",
+        "FranchiseCredential"
+      ],
+      "issuanceDate": "2010-01-01T19:53:24Z",
+      "credentialSubject": {
+        "id": "did:orgid:0x94bf5a57b850a35b4d1d7b59f663ce3a8a76fd9928ef2067cc772fc97fb0ad75",
+        "franchiseLicense": {
+          "brand": "Hilton Garden Inn",
+          "validUntil": "2020-01-01T19:53:24Z"
         }
+      },
+      "proof": {
+        "type": "RsaSignature2018",
+        "created": "2017-06-18T21:19:10Z",
+        "proofPurpose": "assertionMethod",
+        "verificationMethod": "did:orgid:0xf4234470E33A4cE899C16e6C7E125eA039564321#key-454312",
+        "jws": "eyJhbGciOiJSUzI1NiIsImI2NCI6ZmFsc2UsImNyaXQiOlsiYjY0Il19..."
       }
-    ]
-  },
+    }
+  ],
   "legalEntity": {
     "legalName": "Acme, Corp.",
     "alternativeName": "Acme",
@@ -220,6 +222,9 @@
         "phone": "+1234567890",
         "email": "email@spam.com"
       }
+    ],
+    "organizationalUnits": [
+      "did:orgid:0x94bf5a57b850a35b4d1d7b59f663ce3a8a76fd9928ef2067cc772fc97fb0ad75"
     ]
   }
 }
