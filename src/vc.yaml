@@ -12,7 +12,6 @@ definitions:
       - issuer
       - issuanceDate
       - credentialSubject
-      - proof
     properties:
       '@context':
         $ref: './org.json.yaml#/definitions/ContextReference'
