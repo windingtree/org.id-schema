@@ -37,6 +37,8 @@ This version of the ORG.JSON schema should be used with new version of the ORGiD
 - Added optional `organizationalUnit.parentOrganization` property that be a link to the parent organization
 - Added top-level `person` property to add ORG.JSON ability to handle personal profiles
 - Definitions `CryptoETHAddress` and `CryptoBTCAddress` are replaced with single definition `BlockchainAccountId` which is standardised by the DID specification and able to handle all types of blockchain accounts
+- From now schema is building from multiple files. VC schemes are moved to separate file
+- Along with the schema file now is provided a file with typescript definitions
 
 ## ORG.JSON Schema
 

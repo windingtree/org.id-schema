@@ -24,6 +24,8 @@ describe('Schema', () => {
         ajv = new Ajv({ allErrors: true });
         // ajv.addKeyword('schemaVersion');
         ajv.addKeyword('example');
+        ajv.addKeyword('validFrom');
+        ajv.addKeyword('validUntil');
         addFormats(ajv);
         validate = ajv.compile(orgJsonSchema);
     });

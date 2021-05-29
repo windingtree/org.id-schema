@@ -82,12 +82,13 @@
         "https://www.w3.org/2018/credentials/v1",
         "https://www.w3.org/2018/credentials/examples/v1"
       ],
-      "id": "did:orgid:0xf4234470E33A4cE899C16e6C7E125eA039564321#credential-129438",
+      "id": "c48aba97-c92b-4189-8546-184112f0ebff",
+      "issuer": "did:orgid:0x94bf5a57b850a35b4d1d7b59f663ce3a8a76fd9928ef2067cc772fc97fb0ad75#credential-129438",
       "type": [
         "VerifiableCredential",
         "FranchiseCredential"
       ],
-      "issuanceDate": "2010-01-01T19:53:24Z",
+      "issuanceDate": "2019-06-03T13:20:06.398Z",
       "credentialSubject": {
         "id": "did:orgid:0x94bf5a57b850a35b4d1d7b59f663ce3a8a76fd9928ef2067cc772fc97fb0ad75",
         "franchiseLicense": {
@@ -96,10 +97,10 @@
         }
       },
       "proof": {
-        "type": "RsaSignature2018",
-        "created": "2017-06-18T21:19:10Z",
+        "type": "EcdsaSecp256k1VerificationKey2019",
+        "created": "2019-06-03T13:20:06.398Z",
         "proofPurpose": "assertionMethod",
-        "verificationMethod": "did:orgid:0xf4234470E33A4cE899C16e6C7E125eA039564321#key-454312",
+        "verificationMethod": "did:orgid:0x94bf5a57b850a35b4d1d7b59f663ce3a8a76fd9928ef2067cc772fc97fb0ad75#key-454312",
         "jws": "eyJhbGciOiJSUzI1NiIsImI2NCI6ZmFsc2UsImNyaXQiOlsiYjY0Il19..."
       }
     }

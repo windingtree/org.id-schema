@@ -1,11 +1,11 @@
 {
   "name": "@windingtree/org.json-schema",
-  "version": "0.5.3-beta",
+  "version": "0.5.4-beta",
   "description": "ORG.ID JSON schema for WT protocol",
   "main": "dist/org.json",
   "types": "dist/index.d.ts",
   "scripts": {
-    "build": "npm run clean && mkdir -p dist && npx js-yaml ./src/orgid-json-schema.yaml > ./dist/org.json && npx json2ts ./dist/org.json > ./dist/index.d.ts",
+    "build": "npm run clean && mkdir -p dist && node ./scripts/bundle.js > ./dist/org.json && npx json2ts ./dist/org.json > ./dist/index.d.ts",
     "clean": "rm -rf dist/*",
     "test": "./scripts/test.sh"
   },
