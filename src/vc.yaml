@@ -100,8 +100,7 @@ definitions:
       - jws
     properties:
       type:
-        description: The cryptographic signature suite that was used to generate the signature
-        $ref: './org.json.yaml#/definitions/CryptographicSuiteReference'
+        $ref: '#/definitions/CryptographicSignatureSuiteReference'
       created:
         description: When proof was created
         type: string
@@ -116,4 +115,9 @@ definitions:
       jws:
         description: The digital signature value
         type: string
-
+  CryptographicSignatureSuiteReference:
+    description: The cryptographic signature suite that was used to generate the signature
+    type: string
+    enum:
+      - EcdsaSecp256k1Signature2019 # https://w3c-ccg.github.io/security-vocab/#EcdsaSecp256k1Signature2019
+      - EcdsaSecp256k1RecoverySignature2020 # https://w3c-ccg.github.io/security-vocab/#EcdsaSecp256k1RecoverySignature2020
