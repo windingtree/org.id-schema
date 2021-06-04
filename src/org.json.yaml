@@ -777,3 +777,4 @@ definitions:
       - Ed25519VerificationKey2018 # Ed25519 public key values MUST either be encoded as a JWK or be encoded as the raw 32-byte public key value in Base58 Bitcoin format using the publicKeyBase58 property.
       - RsaVerificationKey2018 # RSA public key values MUST either be encoded as a JWK or be encoded in Privacy Enhanced Mail (PEM) format using the publicKeyPem property
       - X25519KeyAgreementKey2019 # Curve25519 (also known as X25519) public key values MUST either be encoded as a JWK or be encoded as the raw 32-byte public key value in Base58 Bitcoin format using the publicKeyBase58 property.
+      - EcdsaSecp256k1RecoveryMethod2020 # Secp256k1 Koblitz public key values MUST be encoded as Ethereum address (blockchainId property)
