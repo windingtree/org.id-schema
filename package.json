@@ -1,6 +1,6 @@
 {
   "name": "@windingtree/org.json-schema",
-  "version": "0.5.7-beta",
+  "version": "0.5.8-beta",
   "description": "ORG.ID JSON schema for WT protocol",
   "main": "dist/org.json",
   "types": "dist/index.d.ts",
@@ -20,12 +20,12 @@
   },
   "homepage": "https://github.com/windingtree/org.json-schema#readme",
   "devDependencies": {
-    "ajv": "8.5.0",
+    "ajv": "8.6.0",
     "ajv-formats": "2.1.0",
     "chai": "4.3.4",
     "js-yaml": "4.1.0",
     "json-schema-to-typescript": "10.1.4",
-    "mocha": "8.4.0"
+    "mocha": "9.0.1"
   },
   "publishConfig": {
     "access": "public"

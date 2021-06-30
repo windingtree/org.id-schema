@@ -28,6 +28,10 @@ properties:
     description: Date-time when the data was last changed.
     type: string
     format: date-time
+  deactivated:
+    description: Date-time when the ORGiD was deactivated
+    type: string
+    format: date-time
   verificationMethod:
     description: >-
       Public keys are used for digital signatures, encryption and other
