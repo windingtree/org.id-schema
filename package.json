@@ -1,6 +1,6 @@
 {
   "name": "@windingtree/org.json-schema",
-  "version": "0.5.9-beta",
+  "version": "0.5.10-beta",
   "description": "ORG.ID JSON schema for WT protocol",
   "main": "index.js",
   "types": "dist/index.d.ts",
