@@ -1,70 +1,73 @@
 $id: org.json
 title: ORG.JSON
-description: >-
-  ORG.JSON represents an organization or one of its structural units
-  (departments, stores, etc.). In W3C terminology it is called DID Document.
-type: object
-required:
-  - '@context'
-  - id
-  - created
-properties:
-  schemaVersion:
-    description: >-
-      Semantic version of the org.json schema.
-      If not defined it means the latest version
-    type: string
-    pattern: "^([0-9]+.)?([0-9]+.)?([0-9]+)$"
-    example: "0.3.2"
-  '@context':
-    $ref: '#/definitions/ContextReference'
-  id:
-    $ref: '#/definitions/DIDReference'
-  created:
-    description: Date-time when the data was created.
-    type: string
-    format: date-time
-  updated:
-    description: Date-time when the data was last changed.
-    type: string
-    format: date-time
-  deactivated:
-    description: Date-time when the ORGiD was deactivated
-    type: string
-    format: date-time
-  verificationMethod:
-    description: >-
-      Public keys are used for digital signatures, encryption and other
-      cryptographic operations, which in turn are the basis for purposes such as
-      authentication or establishing secure communication with service
-      endpoints.
-    type: array
-    items:
-      $ref: '#/definitions/VerificationMethodReference'
-  service:
-    description: >-
-      One of the primary purposes of ORG.JSON is to enable discovery of
-      service endpoints (aka API URIs).
-    type: array
-    items:
-      $ref: '#/definitions/ServiceReference'
-  payment:
-    description: >-
-      Public information about payment accounts of the organization.
-    type: array
-    items:
-      $ref: '#/definitions/PaymentReference'
-  trustAssertions:
-    $ref: '#/definitions/TrustAssertionsReference'
-  credentials:
-        $ref: '#/definitions/CredentialsReference'
-  legalEntity:
-    $ref: '#/definitions/LegalEntityReference'
-  organizationalUnit:
-    $ref: '#/definitions/OrganizationalUnitReference'
-  person:
-    $ref: '#/definitions/ContactReference'
+allOf:
+  - $ref: '#/definitions/OrgJsonReference'
 definitions:
+  OrgJsonReference:
+    description: >-
+      ORG.JSON represents an organization or one of its structural units
+      (departments, stores, etc.). In W3C terminology it is called DID Document.
+    type: object
+    required:
+      - '@context'
+      - id
+      - created
+    properties:
+      schemaVersion:
+        description: >-
+          Semantic version of the org.json schema.
+          If not defined it means the latest version
+        type: string
+        pattern: "^([0-9]+.)?([0-9]+.)?([0-9]+)$"
+        example: "0.3.2"
+      '@context':
+        $ref: '#/definitions/ContextReference'
+      id:
+        $ref: '#/definitions/DIDReference'
+      created:
+        description: Date-time when the data was created.
+        type: string
+        format: date-time
+      updated:
+        description: Date-time when the data was last changed.
+        type: string
+        format: date-time
+      deactivated:
+        description: Date-time when the ORGiD was deactivated
+        type: string
+        format: date-time
+      verificationMethod:
+        description: >-
+          Public keys are used for digital signatures, encryption and other
+          cryptographic operations, which in turn are the basis for purposes such as
+          authentication or establishing secure communication with service
+          endpoints.
+        type: array
+        items:
+          $ref: '#/definitions/VerificationMethodReference'
+      service:
+        description: >-
+          One of the primary purposes of ORG.JSON is to enable discovery of
+          service endpoints (aka API URIs).
+        type: array
+        items:
+          $ref: '#/definitions/ServiceReference'
+      payment:
+        description: >-
+          Public information about payment accounts of the organization.
+        type: array
+        items:
+          $ref: '#/definitions/PaymentReference'
+      trustAssertions:
+        $ref: '#/definitions/TrustAssertionsReference'
+      credentials:
+            $ref: '#/definitions/CredentialsReference'
+      legalEntity:
+        $ref: '#/definitions/LegalEntityReference'
+      organizationalUnit:
+        $ref: '#/definitions/OrganizationalUnitReference'
+      person:
+        $ref: '#/definitions/ContactReference'
   LegalEntityReference:
     description: Legal entity information
     type: object
@@ -372,8 +375,8 @@ definitions:
         description: The type of the payment record
         type: string
         enum:
-          - crypto # Cryptocurrency. Cryptocurrency account address should be defined using `address` property
-          - bank # Bank account. Bank accounts should be defined using `swift` and `iban` properties
+          - crypto # Cryptocurrency. Cryptocurrency account address should be defined using "address" property
+          - bank # Bank account. Bank accounts should be defined using "swift" and "iban" properties
           - simard # Simard Pay account
       currency:
         description: Currency of the account

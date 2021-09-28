@@ -1,11 +1,17 @@
 {
   "name": "@windingtree/org.json-schema",
-  "version": "0.5.8-beta",
+  "version": "0.5.9-beta",
   "description": "ORG.ID JSON schema for WT protocol",
-  "main": "dist/org.json",
+  "main": "index.js",
   "types": "dist/index.d.ts",
+  "files": [
+    "index.js",
+    "dist"
+  ],
   "scripts": {
-    "build": "npm run clean && mkdir -p dist && node ./scripts/bundle.js > ./dist/org.json && npx json2ts ./dist/org.json > ./dist/index.d.ts",
+    "lint": "npx eslint . --ext .js",
+    "build": "npm run clean && mkdir -p dist && node ./scripts/bundle.js && npx json2ts ./dist/org.json > ./dist/index.d.ts",
+    "bu": "npm run clean && mkdir -p dist && node ./scripts/bundle.js",
     "clean": "rm -rf dist/*",
     "test": "./scripts/test.sh"
   },
@@ -20,12 +26,13 @@
   },
   "homepage": "https://github.com/windingtree/org.json-schema#readme",
   "devDependencies": {
-    "ajv": "8.6.0",
-    "ajv-formats": "2.1.0",
+    "ajv": "8.6.3",
+    "ajv-formats": "2.1.1",
     "chai": "4.3.4",
     "js-yaml": "4.1.0",
-    "json-schema-to-typescript": "10.1.4",
-    "mocha": "9.0.1"
+    "json-schema-to-typescript": "10.1.5",
+    "mocha": "9.1.2",
+    "eslint": "7.32.0"
   },
   "publishConfig": {
     "access": "public"

@@ -1,0 +1,31 @@
+$id: org.vc.json
+title: ORG.JSON VC NFT
+description: >-
+  ORG.JSON VC version with NFT extension
+type: object
+allOf:
+  - $ref: './vc.yaml#/definitions/CredentialReference'
+required:
+  - name
+  - description
+  - image
+properties:
+  name:
+    $ref: './nft.yaml#/definitions/NftName'
+  description:
+    $ref: './nft.yaml#/definitions/NftDescription'
+  image:
+    $ref: './nft.yaml#/definitions/NftImage'
+  external_url:
+    $ref: './nft.yaml#/definitions/NftExternalUrl'
+  background_color:
+    $ref: './nft.yaml#/definitions/NftBackgroundColor'
+  animation_url:
+    $ref: './nft.yaml#/definitions/NftAnimationUrl'
+  youtube_url:
+    $ref: './nft.yaml#/definitions/NftAnimationUrl'
+  attributes:
+    $ref: './nft.yaml#/definitions/NftAttributes'
+  credentialSubject:
+    $ref: './org.json.yaml#/definitions/OrgJsonReference'
+

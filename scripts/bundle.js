@@ -3,60 +3,101 @@ const path = require('path');
 const yaml = require('js-yaml');
 const basePath = process.cwd();
 
-// File helper
+// File read helper
 const getFile = filePath => fs.readFileSync(
-    path.resolve(basePath, filePath),
-    'utf8'
+  path.resolve(basePath, filePath),
+  'utf8'
 );
 
-// Define children schemes
-let files = [
-    {
-        path: './src/org.json.yaml',
-        ref: './org.json.yaml'
-    },
-    {
-        path: './src/vc.yaml',
-        ref: './vc.yaml' // How to this file referenced in the root schema
-    }
+// File write helper
+const writeFile = (filePath, data) => fs.writeFileSync(
+  path.resolve(basePath, filePath),
+  data,
+  'utf8'
+);
+
+// Define schemes
+const files = [
+  {
+    path: './src/org.json.yaml',
+    ref: './org.json.yaml',
+    out: './dist/org.json'
+  },
+  {
+    path: './src/vc.yaml',
+    ref: './vc.yaml',
+    out: './dist/vc.json'
+  },
+  {
+    path: './src/nft.yaml',
+    ref: './nft.yaml',
+    out: './dist/nft.json'
+  },
+  {
+    path: './src/org.vc.yaml',
+    ref: './org.vc.yaml',
+    out: './dist/orgVcNft.json'
+  }
 ];
 
+// URI escaping rule
+const refsEscapeRule = /[-/\\^$*+?.()|[\]{}]/g;
+
 // Extract list of all refs and prepare a replacement RegEx
-let refs = files
-    .map(f => f.ref)
-    .map(r => r.replace(/[-\/\\^$*+?.()|[\]{}]/g, '\\$&'))
-    .join('|');
+const refs = files
+  .map(f => f.ref)
+  .map(r => r.replace(refsEscapeRule, '\\$&'))
+  .join('|');
 
-// Load root schema file
-let rootFileRaw = getFile('./src/org.json.yaml');
-rootFileRaw = rootFileRaw.replace(new RegExp(refs, 'gmi'), ''); // remove direct ref
+// Extract definitions recursively
+const getDefinitions = (filePath, files, paths = []) => {
+  let rawFile = getFile(filePath);
+  let sharedDefinitions = yaml.load(rawFile).definitions;
 
-// Extract children definitions from schemes
-const definitions = files
-    .map(
-        file => {
-            let childSchema = getFile(file.path);
-            childSchema = childSchema.replace(new RegExp(refs, 'gmi'), ''); // remove all cross refs
-            const json = yaml.load(childSchema);
-            return json.definitions;
-        }
-    )
-    .reduce(
-        (a, v) => ({
-            ...a,
-            ...v
-        }),
-        {}
-    );
+  for (const fileConfig of files) {
 
-// Parse cleared root schema file
-const rootJson = yaml.load(rootFileRaw);
+    if (!paths.includes(fileConfig.path)) {
+      const refRegex = new RegExp(fileConfig.ref.replace(refsEscapeRule, '\\$&'), 'gmi');
+      const processDefinitions = refRegex.exec(rawFile) !== null;
 
-// Join definitions and print entire schema
-console.log(JSON.stringify({
-    ...rootJson,
-    definitions: {
-        ...rootJson.definitions,
-        ...definitions
+      if (processDefinitions) {
+        sharedDefinitions = {
+          ...sharedDefinitions,
+          ...getDefinitions(
+            fileConfig.path,
+            files,
+            [...paths, filePath, fileConfig.path]
+          )
+        };
+      }
     }
-}, null, 2));
+  }
+
+  return sharedDefinitions;
+};
+
+// Load root schemas
+files.forEach(
+  fileConfig => {
+    const sharedDefinitions = getDefinitions(fileConfig.path, files);
+    const rawFile = getFile(fileConfig.path);
+    const jsonFile = yaml.load(rawFile);
+
+    return writeFile(
+      fileConfig.out,
+      JSON
+        .stringify(
+          {
+            ...jsonFile,
+            definitions: {
+              ...jsonFile.definitions,
+              ...sharedDefinitions
+            }
+          },
+          null,
+          2
+        )
+        .replace(new RegExp(refs, 'gmi'), '')
+    );
+  }
+);

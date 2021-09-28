@@ -65,7 +65,14 @@ npm i @windingtree/org.json-schema
 ```
 
 ```javascript
-const orgJsonSchema = require('@windingtree/org.json-schema');
+const { org: orgJsonSchema } = require('@windingtree/org.json-schema');
+
+// The whole list of the package exports:
+//
+// `org`      # ORG.JSON schema
+// `vc`       # VC schema
+// `nft`      # NFT schema
+// `orgVcNft` # ORG.JSON VC version with NFT extension
 ```
 
 ## Using multiple versions of schema

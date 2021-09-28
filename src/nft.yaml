@@ -1,0 +1,102 @@
+$id: nft.json
+title: NFT Metadata
+definitions:
+  NftMetadataReference:
+    description: ORGiD NFT Metadata Schema
+    type: object
+    required:
+      - name
+      - description
+      - image
+    properties:
+      name:
+        $ref: '#/definitions/NftName'
+      description:
+        $ref: '#/definitions/NftDescription'
+      image:
+        $ref: '#/definitions/NftImage'
+      external_url:
+        $ref: '#/definitions/NftExternalUrl'
+      background_color:
+        $ref: '#/definitions/NftBackgroundColor'
+      animation_url:
+        $ref: '#/definitions/NftAnimationUrl'
+      youtube_url:
+        $ref: '#/definitions/NftAnimationUrl'
+      attributes:
+        $ref: '#/definitions/NftAttributes'
+  NftName:
+    description: Name of the item
+    type: string
+  NftDescription:
+    description: >-
+      A human readable description of the item. Markdown is supported.
+    type: string
+  NftImage:
+    description: >-
+      This is the URL to the image of the item. Can be just about
+      any type of image (including SVGs), and can be IPFS URLs or paths.
+      The recommend size: 350px x 350px.
+    type: string
+  NftExternalUrl:
+    description: >-
+      This is the URL that will appear below the asset's image
+      on NFT markets or wallets and will allow users
+      to get more information about the item on an external website.
+    type: string
+    format: uri
+  NftBackgroundColor:
+    description: >-
+      Background color of the item on NFT markets, dashboards
+      or other resources. Must be a six-character hexadecimal
+      without a pre-pended #.
+    type: string
+  NftAnimationUrl:
+    description: >-
+      A URL to a multi-media attachment for the item.
+      The file extensions GLTF, GLB, WEBM, MP4, M4V, OGV,
+      and OGG are supported, along with the audio-only extensions
+      MP3, WAV, and OGA.
+      Animation_url also supports HTML pages, allowing you to build
+      rich experiences and interactive NFTs using JavaScript canvas,
+      WebGL, and more. Scripts and relative paths within the HTML page
+      are now supported. However, access to browser extensions
+      is not supported.
+    type: string
+    format: uri
+  NftYoutubeUrl:
+    description: A URL to a YouTube video.
+    type: string
+    format: uri
+  NftAttributes:
+    type: array
+    items:
+      allOf:
+        - $ref: '#/definitions/NftAttributeReference'
+  NftAttributeReference:
+    description: >-
+      Additional NFT Metadata attribute. This attributes format is adopting
+      the OpenSea metadata recommendations:
+      https://docs.opensea.io/docs/metadata-standards#attributes
+    type: object
+    required:
+      - trait_type
+      - value
+    properties:
+      trait_type:
+        description: The name of the trait
+        type: string
+      value:
+        description: The trait value
+        type: string
+      display_type:
+        $ref: '#/definitions/NftAttributeTraitDisplayType'
+  NftAttributeTraitDisplayType:
+    description: >-
+      A field indicating how you would like trait attribute to be displayed
+    type: string
+    enum:
+      - number
+      - boost_number
+      - boost_percentage
+      - date

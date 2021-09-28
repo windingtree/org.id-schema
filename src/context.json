@@ -1,7 +1,7 @@
 {
   "@context": {
     "@version": "2.0",
-    "orgid": "https://github.com/windingtree/org.json-schema/blob/master/src/orgid-json-schema.yaml#",
+    "orgid": "https://github.com/windingtree/org.json-schema/blob/master/src/org.json.yaml#",
     "schemaVersion": "orgid:schemaVersion",
     "id": "orgid:id",
     "verificationMethod": "orgid:/definitions/VerificationMethodReference",
