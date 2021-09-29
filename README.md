@@ -64,8 +64,15 @@ While "legal entity" is self-explanatory, "units" may represent a wide range of 
 npm i @windingtree/org.json-schema
 ```
 
-```javascript
-const { org: orgJsonSchema } = require('@windingtree/org.json-schema');
+```typescript
+import type { ORGJSON } from '@windingtree/org.json-schema/types/org';
+import type {
+  NftName,
+  NftDescription,
+  NftImage,
+  CredentialsReference
+} from '@windingtree/org.json-schema/types/orgVcNft';
+import { org as orgJsonSchema } from '@windingtree/org.json-schema';
 
 // The whole list of the package exports:
 //
