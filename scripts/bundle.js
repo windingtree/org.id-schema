@@ -36,7 +36,7 @@ const files = [
   {
     path: './src/org.vc.yaml',
     ref: './org.vc.yaml',
-    out: './build/orgVcNft.json'
+    out: './build/orgVc.json'
   },
   {
     path: './src/trustAssertion.yaml',

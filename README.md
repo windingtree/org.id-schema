@@ -2,12 +2,42 @@
 
 <a href="https://orgid.tech"><img src="https://raw.githubusercontent.com/windingtree/branding/master/org.id/svg/org.id-logo.svg" height="50" alt="ORGiD"></a>
 
+## Version 1.0.0-beta.*
 
-## Version 0.4.0 breaking change
+- Updated DID format that now supports multichain ORGiD:
 
-- `legalEntity.legalIdentifier` is renamed to `legalEntity.registryCode`
+```
+did:orgid:4:0x94bf5a57b850a35b4d1d7b59f663ce3a8a76fd9928ef2067cc772fc97fb0ad75
+          ^ network Id
+```
+> `4` - Ethereum Rinkeby ChainID according to [https://chainlist.org/](https://chainlist.org/)
 
-If you are want to use an old term you should define s specific `schemaVersion` (0.3.4) in your `org.json` file overwise your `org.json` will throw a warning during validation.
+- Added ORG.JSON VC schema - a cryptographically signed version of ORG.JSON
+- ORG.JSON VC schema extended with NFT-specific properties to support ORGiD NFT meta-data feature
+- ORG.JSON schema extended with `capabilityDelegation` definition
+- `trustAssertions` definition in the ORG.JSON schema is extended with support for Trust Assertion Credential
+- Added separate Trust Assertion Credential schema
+- Added typescript types which are can be imported from the `types` directory of the package as following
+
+```typescript
+import type { ORGJSON } from '@windingtree/org.json-schema/types/org.json';
+```
+
+The whole list of available types definitions:
+
+- `/types/org.json`
+- `/types/orgVc`
+- `/types/vc`
+- `/types/nft`
+- `/types/trustAssertion`
+
+The whole list of json schemas that can be imported from the package:
+
+- `org`
+- `orgVc`
+- `vc`
+- `nft`
+- `trustAssertion`
 
 ## Version 0.5.0 new features and updates
 
@@ -40,6 +70,12 @@ This version of the ORG.JSON schema should be used with new version of the ORGiD
 - From now schema is building from multiple files. VC schemes are moved to separate file
 - Along with the schema file now is provided a file with typescript definitions
 
+## Version 0.4.0 breaking change
+
+- `legalEntity.legalIdentifier` is renamed to `legalEntity.registryCode`
+
+If you are want to use an old term you should define s specific `schemaVersion` (0.3.4) in your `org.json` file overwise your `org.json` will throw a warning during validation.
+
 ## ORG.JSON Schema
 
 ORG.JSON is a data format based on the [json-schema](http://json-schema.org/specification.html) specification used for describing organizations of all types: commercial firms, NGOs, even organizations that aren't incorporated (like [W3C](https://www.w3.org/Consortium/facts#org), for example).
@@ -63,30 +99,17 @@ While "legal entity" is self-explanatory, "units" may represent a wide range of 
 ```sh
 npm i @windingtree/org.json-schema
 ```
-
-```typescript
-import type { ORGJSON } from '@windingtree/org.json-schema/types/org';
-import type {
-  NftName,
-  NftDescription,
-  NftImage,
-  CredentialsReference
-} from '@windingtree/org.json-schema/types/orgVcNft';
-import { org as orgJsonSchema } from '@windingtree/org.json-schema';
-
-// The whole list of the package exports:
-//
-// `org`            # ORG.JSON schema
-// `vc`             # VC schema
-// `nft`            # NFT schema
-// `orgVcNft`       # ORG.JSON VC version with NFT extension
-// `trustAssertion` # Trust Assertion VC schema
-```
 ## JSON Schema Specification
 
 This will generate a JSON Schema specification file in the `dist` directory:
 
 ```bash
 yarn build
+```
+
+## Testing
+
+```bash
+yarn test
 ```
 
