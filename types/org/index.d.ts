@@ -35,10 +35,6 @@ export type Currency = string;
  */
 export type BlockchainAccountId = string;
 /**
- * List of trust assertions (claims with proofs)
- */
-export type TrustAssertionsReference = AssertionReference[];
-/**
  * The cryptographic signature suite that was used to generate the signature
  */
 export type CryptographicSignatureSuiteReference =
@@ -46,6 +42,10 @@ export type CryptographicSignatureSuiteReference =
   | "Ed25519Signature2018"
   | "RsaSignature2018"
   | "EcdsaSecp256k1RecoverySignature2020";
+/**
+ * List of trust assertions (claims with proofs)
+ */
+export type TrustAssertionsReference = (AssertionReference & CredentialReference)[];
 /**
  * List of credentials (provided and signed by third parties)
  */

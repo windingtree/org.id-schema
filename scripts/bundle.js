@@ -21,22 +21,27 @@ const files = [
   {
     path: './src/org.json.yaml',
     ref: './org.json.yaml',
-    out: './dist/org.json'
+    out: './build/org.json'
   },
   {
     path: './src/vc.yaml',
     ref: './vc.yaml',
-    out: './dist/vc.json'
+    out: './build/vc.json'
   },
   {
     path: './src/nft.yaml',
     ref: './nft.yaml',
-    out: './dist/nft.json'
+    out: './build/nft.json'
   },
   {
     path: './src/org.vc.yaml',
     ref: './org.vc.yaml',
-    out: './dist/orgVcNft.json'
+    out: './build/orgVcNft.json'
+  },
+  {
+    path: './src/trustAssertion.yaml',
+    ref: './trustAssertion.yaml',
+    out: './build/trustAssertion.json'
   }
 ];
 

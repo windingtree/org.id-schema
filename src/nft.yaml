@@ -1,4 +1,4 @@
-$id: nft.json
+$id: nft.yaml
 title: NFT Metadata
 definitions:
   NftMetadataReference:

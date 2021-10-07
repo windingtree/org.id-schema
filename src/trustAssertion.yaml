@@ -1,0 +1,22 @@
+$id: trustAssertion.yaml
+title: Trust Assertion Credential
+description: >-
+  Verifiable Credential that confirms a trust assertion claim
+type: object
+allOf:
+  - $ref: './vc.yaml#/definitions/CredentialReference'
+properties:
+  credentialSubject:
+    $ref: '#/definitions/TrustAssertionSubjectReference'
+definitions:
+  TrustAssertionSubjectReference:
+    description: The trust assertion subject
+    type: object
+    required:
+      - id
+      - trustAssertion
+    properties:
+      id:
+        $ref: './org.json.yaml#/definitions/DIDReference'
+      trustAssertion:
+        $ref: './org.json.yaml#/definitions/AssertionReference'

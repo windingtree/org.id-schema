@@ -1,4 +1,4 @@
-$id: org.json
+$id: org.json.yaml
 title: ORG.JSON
 allOf:
   - $ref: '#/definitions/OrgJsonReference'
@@ -223,6 +223,7 @@ definitions:
     items:
       allOf:
         - $ref: '#/definitions/AssertionReference'
+        - $ref: './vc.yaml#/definitions/CredentialReference'
   CredentialsReference:
     description: List of credentials (provided and signed by third parties)
     type: array

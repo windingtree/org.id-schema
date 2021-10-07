@@ -1,4 +1,4 @@
-![npm](https://img.shields.io/npm/v/@windingtree/org.json-schema) ![org.json-schema](https://travis-ci.org/windingtree/org.json-schema.svg?branch=master)
+![npm](https://img.shields.io/npm/v/@windingtree/org.json-schema) [![NPM Package](https://github.com/windingtree/org.json-schema/actions/workflows/tests.yml/badge.svg)](https://github.com/windingtree/org.json-schema/actions/workflows/tests.yml)
 
 <a href="https://orgid.tech"><img src="https://raw.githubusercontent.com/windingtree/branding/master/org.id/svg/org.id-logo.svg" height="50" alt="ORGiD"></a>
 
@@ -76,45 +76,17 @@ import { org as orgJsonSchema } from '@windingtree/org.json-schema';
 
 // The whole list of the package exports:
 //
-// `org`      # ORG.JSON schema
-// `vc`       # VC schema
-// `nft`      # NFT schema
-// `orgVcNft` # ORG.JSON VC version with NFT extension
+// `org`            # ORG.JSON schema
+// `vc`             # VC schema
+// `nft`            # NFT schema
+// `orgVcNft`       # ORG.JSON VC version with NFT extension
+// `trustAssertion` # Trust Assertion VC schema
 ```
-
-## Using multiple versions of schema
-
-Define packages in your `package.json` file like following:
-
-```json
-{
-  "dependencies": {
-    "org.json-schema-0.3.1": "npm:@windingtree/org.json-schema@0.3.1",
-    "org.json-schema-0.3.2": "npm:@windingtree/org.json-schema@0.3.2"
-  }
-}
-```
-
-and then use in your application:
-
-```javascript
-const orgJsonSchema1 = require('org.json-schema-0.3.1');
-const orgJsonSchema2 = require('org.json-schema-0.3.2');
-```
-
 ## JSON Schema Specification
 
 This will generate a JSON Schema specification file in the `dist` directory:
 
 ```bash
-npm run build
+yarn build
 ```
 
-## ORGiD Ecosystem
-
-- [Winding Tree DAO](https://github.com/windingtree/dao) controls ORGiD Registry smart contract and some Directories (including their rules)
-- [ORGiD Registry](https://github.com/windingtree/ORGiD) contains records of all organizations and organizational units
-- **ORG.JSON Schema (you are here)**
-- [ORGiD Resolver](https://github.com/windingtree/ORGiD-resolver) is an application for resolving ORGiD data in [W3C DID](https://w3c.github.io/did-core/) format
-- [ORGiD Directories](https://github.com/windingtree/ORGiD-directories) are curated lists of organizations
-- [Arbor](https://arbor.fm) can be used to look up an ORGiD, and also to create and manage your own ORGiD

@@ -11,7 +11,7 @@ yarn-error.log*
 # IDE
 .idea/
 
-node_modules/
-dist/
-
+node_modules
+dist
+build
 temp

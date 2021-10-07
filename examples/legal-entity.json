@@ -74,6 +74,34 @@
       "type": "social",
       "claim": "twitter.com/jack",
       "proof": "https://twitter.com/jack/status/123456789/"
+    },
+    {
+      "@context": [
+        "https://www.w3.org/2018/credentials/v1",
+        "https://www.w3.org/2018/credentials/examples/v1"
+      ],
+      "id": "c48aba97-c92b-4189-8546-184112f0ebff",
+      "issuer": "did:orgid:0x94bf5a57b850a35b4d1d7b59f663ce3a8a76fd9928ef2067cc772fc97fb0ad75#credential-129438",
+      "type": [
+        "VerifiableCredential",
+        "TrustAssertion"
+      ],
+      "issuanceDate": "2019-06-03T13:20:06.398Z",
+      "credentialSubject": {
+        "id": "did:orgid:4:0x94bf5a57b850a35b4d1d7b59f663ce3a8a76fd9928ef2067cc772fc97fb0ad75",
+        "trustAssertion": {
+          "type": "domain",
+          "claim": "test2.com",
+          "proof": "http://test2.com/orgid.txt"
+        }
+      },
+      "proof": {
+        "type": "EcdsaSecp256k1Signature2019",
+        "created": "2019-06-03T13:20:06.398Z",
+        "proofPurpose": "assertionMethod",
+        "verificationMethod": "did:orgid:0x94bf5a57b850a35b4d1d7b59f663ce3a8a76fd9928ef2067cc772fc97fb0ad75#key-454312",
+        "jws": "eyJhbGciOiJSUzI1NiIsImI2NCI6ZmFsc2UsImNyaXQiOlsiYjY0Il19..."
+      }
     }
   ],
   "credentials": [
@@ -102,10 +130,7 @@
         "proofPurpose": "assertionMethod",
         "verificationMethod": "did:orgid:0x94bf5a57b850a35b4d1d7b59f663ce3a8a76fd9928ef2067cc772fc97fb0ad75#key-454312",
         "jws": "eyJhbGciOiJSUzI1NiIsImI2NCI6ZmFsc2UsImNyaXQiOlsiYjY0Il19..."
-      },
-      "name": "Name",
-      "description": "Description",
-      "image": "https://image.com"
+      }
     }
   ],
   "legalEntity": {

@@ -16,10 +16,10 @@
     "experimentalDecorators": true,
     "strictNullChecks": true
   },
-  "include": [
-    "index.ts"
-  ],
   "exclude": [
     "node_modules"
+  ],
+  "files": [
+    "index.ts"
   ]
 }

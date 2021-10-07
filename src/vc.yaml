@@ -1,4 +1,4 @@
-$id: vc.json
+$id: vc.yaml
 title: ORGiD VC
 definitions:
   CredentialReference:
