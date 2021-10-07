@@ -1,7 +1,5 @@
 ![npm](https://img.shields.io/npm/v/@windingtree/org.json-schema) [![NPM Package](https://github.com/windingtree/org.json-schema/actions/workflows/tests.yml/badge.svg)](https://github.com/windingtree/org.json-schema/actions/workflows/tests.yml)
 
-<a href="https://orgid.tech"><img src="https://raw.githubusercontent.com/windingtree/branding/master/org.id/svg/org.id-logo.svg" height="50" alt="ORGiD"></a>
-
 ## Version 1.0.0-beta.*
 
 - Updated DID format that now supports multichain ORGiD:
