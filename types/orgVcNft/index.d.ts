@@ -84,6 +84,10 @@ export type TrustAssertionsReference = AssertionReference[];
  */
 export type CredentialsReference = CredentialReference[];
 /**
+ * The capability delegation is used to specify mechanism that might be used by the DID subject (organization entity or person) to delegate a cryptographic capability to another party, such as delegating the authority to access a specific HTTP API to a subordinate or to specify a method of verification of credentials. ORGiD protocol uses capability delegation to specify an own method of ORG.JSON VC verification or a third party verification method to do it.
+ */
+export type CapabilityDelegationReference = (DIDReference | VerificationMethodReference)[];
+/**
  * Opening hours
  */
 export type OpeningHoursReference = OpeningHoursRangeReference[];
@@ -248,6 +252,7 @@ export interface OrgJsonReference {
   payment?: PaymentReference[];
   trustAssertions?: TrustAssertionsReference;
   credentials?: CredentialsReference;
+  capabilityDelegation?: CapabilityDelegationReference;
   legalEntity?: LegalEntityReference;
   organizationalUnit?: OrganizationalUnitReference;
   person?: ContactReference;
