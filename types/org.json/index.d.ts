@@ -45,7 +45,7 @@ export type CryptographicSignatureSuiteReference =
 /**
  * List of trust assertions (claims with proofs)
  */
-export type TrustAssertionsReference = (AssertionReference & CredentialReference)[];
+export type TrustAssertionsReference = (AssertionReference | CredentialReference)[];
 /**
  * List of credentials (provided and signed by third parties)
  */

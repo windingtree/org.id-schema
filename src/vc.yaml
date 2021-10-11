@@ -1,5 +1,7 @@
 $id: vc.yaml
 title: ORGiD VC
+allOf:
+  - $ref: '#/definitions/CredentialReference'
 definitions:
   CredentialReference:
     description: >-

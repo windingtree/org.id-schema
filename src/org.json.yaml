@@ -221,7 +221,7 @@ definitions:
     description: List of trust assertions (claims with proofs)
     type: array
     items:
-      allOf:
+      oneOf:
         - $ref: '#/definitions/AssertionReference'
         - $ref: './vc.yaml#/definitions/CredentialReference'
   CredentialsReference:

@@ -1,5 +1,7 @@
 $id: nft.yaml
 title: NFT Metadata
+allOf:
+  - $ref: '#/definitions/NftMetadataReference'
 definitions:
   NftMetadataReference:
     description: ORGiD NFT Metadata Schema
