@@ -26,3 +26,5 @@ properties:
     $ref: './nft.yaml#/definitions/NftAnimationUrl'
   attributes:
     $ref: './nft.yaml#/definitions/NftAttributes'
+  credentialSubject:
+    $ref: './org.json.yaml#/definitions/OrgJsonReference'
