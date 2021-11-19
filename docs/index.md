@@ -35,11 +35,6 @@ import type { ORGJSON } from '@windingtree/org.json-schema/types/org.json';
 import { org as orgJsonSchema } from '@windingtree/org.json-schema';
 import { object } from '@windingtree/org.id-utils';
 
-export interface OrgJsonValidatorConfig {
-  schema: ORGJSON;
-  path: string;
-}
-
 const orgJson = { /* ... */ }; // raw data object
 
 const validationResult = object.validateWithSchemaOrRef(
