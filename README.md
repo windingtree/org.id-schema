@@ -31,3 +31,6 @@ yarn build
 yarn test
 ```
 
+## TODO for the next version
+
+- Reduce the `capabilityDelegation` definition to the only list of verification method Ids and remove in-place verification method definition possibility
