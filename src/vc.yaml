@@ -89,7 +89,7 @@ definitions:
         type: string
         example: LawEnforcement
       id:
-        description: Holder' ORGiD
+        description: Holder's ORGiD
         $ref: './org.json.yaml#/definitions/DIDReference'
   VCProofReference:
     description: Digital proof that makes the credential tamper-evident
@@ -122,6 +122,3 @@ definitions:
     type: string
     enum:
       - EcdsaSecp256k1Signature2019 # https://w3c-ccg.github.io/security-vocab/#EcdsaSecp256k1Signature2019
-      - Ed25519Signature2018 # https://w3c-ccg.github.io/security-vocab/#Ed25519Signature2018
-      - RsaSignature2018 # https://w3c-ccg.github.io/security-vocab/#RsaSignature2018
-      - EcdsaSecp256k1RecoverySignature2020 # https://w3c-ccg.github.io/security-vocab/#EcdsaSecp256k1RecoverySignature2020

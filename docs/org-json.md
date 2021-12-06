@@ -101,7 +101,7 @@ A `verificationMethod` is a set of parameters that can be used for the verificat
   "verificationMethod": [
     {
       "id": "did:orgid:0x94b...ad75#key1",
-      "type": "EcdsaSecp256k1VerificationKey2019",
+      "type": "EcdsaSecp256k1RecoveryMethod2020",
       "controller": "did:orgid:0x94b...ad75",
       "publicKeyJwk": {
         "crv": "secp256k1",
@@ -116,7 +116,7 @@ A `verificationMethod` is a set of parameters that can be used for the verificat
 }
 ```
 
-The example above illustrate a definition of the verification method that uses `EcdsaSecp256k1VerificationKey2019` cryptography suite. The public key in this example is represented in a JWK form.
+The example above illustrate a definition of the verification method that uses `EcdsaSecp256k1RecoveryMethod2020` cryptography suite. The public key in this example is represented in a JWK form.
 
 The ORGiD SDK supports the generation of various types of key representations but currently, for verification and assetion purposes can be used the following types:
 

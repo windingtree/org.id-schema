@@ -37,15 +37,11 @@ export type BlockchainAccountId = string;
 /**
  * The cryptographic signature suite that was used to generate the signature
  */
-export type CryptographicSignatureSuiteReference =
-  | "EcdsaSecp256k1Signature2019"
-  | "Ed25519Signature2018"
-  | "RsaSignature2018"
-  | "EcdsaSecp256k1RecoverySignature2020";
+export type CryptographicSignatureSuiteReference = "EcdsaSecp256k1Signature2019";
 /**
  * List of trust assertions (claims with proofs)
  */
-export type TrustAssertionsReference = (AssertionReference | CredentialReference)[];
+export type TrustAssertionsReference = CredentialReference[];
 /**
  * List of credentials (provided and signed by third parties)
  */
@@ -126,13 +122,7 @@ export interface VerificationMethodReference {
   /**
    * The cryptographic suite that was used to generate a public key
    */
-  type:
-    | "JsonWebKey2020"
-    | "EcdsaSecp256k1VerificationKey2019"
-    | "Ed25519VerificationKey2018"
-    | "RsaVerificationKey2018"
-    | "X25519KeyAgreementKey2019"
-    | "EcdsaSecp256k1RecoveryMethod2020";
+  type: "EcdsaSecp256k1RecoveryMethod2020";
   /**
    * The DID subject is denoted by the id property. The DID subject is the entity that the DID document (ORG.JSON) is about. That is, it is the entity identified by the DID and described in the DID document.
    */
@@ -146,7 +136,7 @@ export interface VerificationMethodReference {
    */
   publicKeyPem?: string;
   /**
-   * Public key in JWT format
+   * Public key in JWT format (recommended key format)
    */
   publicKeyJwk?: {
     [k: string]: unknown;
@@ -233,24 +223,6 @@ export interface PaymentReference {
    * International Bank Account Number (IBAN) according to ISO 13616:1997
    */
   iban?: string;
-  [k: string]: unknown;
-}
-/**
- * Trust assertion
- */
-export interface AssertionReference {
-  /**
-   * Claim subject. E.g. domain name or social account
-   */
-  claim: string;
-  /**
-   * Proof type: (domain|dns|social)
-   */
-  type: "domain" | "dns" | "social";
-  /**
-   * Proof of the claim: dns record, text file URI, or link to a post on facebook, linkedin, etc.
-   */
-  proof: string;
   [k: string]: unknown;
 }
 /**

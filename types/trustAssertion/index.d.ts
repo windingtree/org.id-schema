@@ -25,11 +25,7 @@ export type LinkedMultipleContextReference = LinkedContextReference[];
 /**
  * The cryptographic signature suite that was used to generate the signature
  */
-export type CryptographicSignatureSuiteReference =
-  | "EcdsaSecp256k1Signature2019"
-  | "Ed25519Signature2018"
-  | "RsaSignature2018"
-  | "EcdsaSecp256k1RecoverySignature2020";
+export type CryptographicSignatureSuiteReference = "EcdsaSecp256k1Signature2019";
 /**
  * The DID subject is denoted by the id property. The DID subject is the entity that the DID document (ORG.JSON) is about. That is, it is the entity identified by the DID and described in the DID document.
  */
@@ -96,7 +92,7 @@ export interface VCTypedHolderReference {
    */
   type: string;
   /**
-   * Holder' ORGiD
+   * Holder's ORGiD
    */
   id: string;
   [k: string]: unknown;

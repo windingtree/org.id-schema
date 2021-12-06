@@ -221,8 +221,7 @@ definitions:
     description: List of trust assertions (claims with proofs)
     type: array
     items:
-      oneOf:
-        - $ref: '#/definitions/AssertionReference'
+      allOf:
         - $ref: './vc.yaml#/definitions/CredentialReference'
   CredentialsReference:
     description: List of credentials (provided and signed by third parties)
@@ -253,11 +252,6 @@ definitions:
           Proof of the claim: dns record, text file URI, or link to a post on
           facebook, linkedin, etc.
         type: string
-  ProofReference:
-    description: >-
-      A linked data proof is comprised of information about the proof,
-      parameters required to verify it, and the proof value itself.
-    type: object
   VerificationMethodReference:
     description: >-
       Public keys are used for digital signatures, encryption and other
@@ -288,7 +282,7 @@ definitions:
         example: >-
           -----BEGIN PUBLIC KEY-----\nMII8YbF3s8q3c...j8Fk88FsRa3K\n-----END PUBLIC KEY-----\n
       publicKeyJwk:
-        description: Public key in JWT format
+        description: Public key in JWT format (recommended key format)
         $ref: '#/definitions/PublicKeyJwkReference'
       publicKeyBase58:
         description: Public key in value in Base58 Bitcoin format
@@ -300,9 +294,9 @@ definitions:
         $ref: '#/definitions/VerificationMethodRevocationReference'
     example: >-
       {
-        "id": "did:orgid:0x94bf5a57b850a35b4d1d7b59f663ce3a8a76fd9928ef2067cc772fc97fb0ad75#webserver",
-        "type": "secp256k1",
-        "controller": "did:orgid:0x94bf5a57b850a35b4d1d7b59f663ce3a8a76fd9928ef2067cc772fc97fb0ad75",
+        "id": "did:orgid:1:0x94bf5a57b850a35b4d1d7b59f663ce3a8a76fd9928ef2067cc772fc97fb0ad75#key1",
+        "type": "EcdsaSecp256k1RecoveryMethod2020",
+        "controller": "did:orgid:1:0x94bf5a57b850a35b4d1d7b59f663ce3a8a76fd9928ef2067cc772fc97fb0ad75",
         "publicKeyPem": "MFYwEAYHKoZIzj0CAQYFK4EEAAoDQgAE/7GpAW4+se9gZOFPtwk63ZhV1nX6M0UobMYO6FMAnON6vCbglyOaRzEltugkp6GrM8LZ6is0rMBMAXCvb9FH2g==",
         "note": "B2C Webserver Key"
       }
@@ -764,8 +758,6 @@ definitions:
     pattern: "^([a-zA-Z-0-9]+)@([a-zA-Z-0-9]+):([a-zA-Z-0-9]+)$" # <ACCOUNT_ADDRESS>@<BLOCKCHAIN_TYPE_OR_STANDARD>:<BLOCKCHAIN_ID_ACCORDING_TO_TYPE> https://github.com/ChainAgnostic/CAIPs/blob/master/CAIPs/caip-10.md
     example: >-
       0xab16a96d359ec26a11e2c2b3d8f8b8942d5bfcdb@eip155:1
-      128Lkh3S7CkDTBZ8W7BbpsN3YYizJMp8p6@bip122:000000000019d6689c085ae165831e93
-      cosmos1t2uflqwqe0fsj0shcfkrvpukewcw40yjj6hdc0@cosmos:cosmoshub-3
   SwiftCode:
     description: SWIFT/BIC bank code according to ISO 9326
     type: string
@@ -782,12 +774,7 @@ definitions:
     description: The cryptographic suite type
     type: string
     enum:
-      - JsonWebKey2020 # Common specification of the public key encoded in the JWK format. For details see: https://w3c-ccg.github.io/lds-jws2020/#json-web-key-2020
-      - EcdsaSecp256k1VerificationKey2019 # Secp256k1 Koblitz public key values MUST either be encoded as a JWK or be encoded as the raw 33-byte public key value in Base58 Bitcoin format using the publicKeyBase58 property.
-      - Ed25519VerificationKey2018 # Ed25519 public key values MUST either be encoded as a JWK or be encoded as the raw 32-byte public key value in Base58 Bitcoin format using the publicKeyBase58 property.
-      - RsaVerificationKey2018 # RSA public key values MUST either be encoded as a JWK or be encoded in Privacy Enhanced Mail (PEM) format using the publicKeyPem property
-      - X25519KeyAgreementKey2019 # Curve25519 (also known as X25519) public key values MUST either be encoded as a JWK or be encoded as the raw 32-byte public key value in Base58 Bitcoin format using the publicKeyBase58 property.
-      - EcdsaSecp256k1RecoveryMethod2020 # Secp256k1 Koblitz public key values MUST be encoded as Ethereum address (blockchainId property)
+      - EcdsaSecp256k1RecoveryMethod2020 # Secp256k1 public key: https://w3c-ccg.github.io/ld-cryptosuite-registry/#ecdsasecp256k1recoverymethod2020
   CapabilityDelegationReference:
     description: >-
       The capability delegation is used to specify mechanism that might be used
