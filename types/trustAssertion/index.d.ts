@@ -25,7 +25,7 @@ export type LinkedMultipleContextReference = LinkedContextReference[];
 /**
  * The cryptographic signature suite that was used to generate the signature
  */
-export type CryptographicSignatureSuiteReference = "EcdsaSecp256k1Signature2019";
+export type CryptographicSignatureSuiteReference = "EcdsaSecp256k1Signature2019" | "JsonWebSignature2020";
 /**
  * The DID subject is denoted by the id property. The DID subject is the entity that the DID document (ORG.JSON) is about. That is, it is the entity identified by the DID and described in the DID document.
  */

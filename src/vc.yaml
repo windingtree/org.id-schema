@@ -121,4 +121,5 @@ definitions:
     description: The cryptographic signature suite that was used to generate the signature
     type: string
     enum:
-      - EcdsaSecp256k1Signature2019 # https://w3c-ccg.github.io/security-vocab/#EcdsaSecp256k1Signature2019
+      - EcdsaSecp256k1Signature2019 # secp256k1 alg (node.js env): https://w3c-ccg.github.io/security-vocab/#EcdsaSecp256k1Signature2019
+      - JsonWebSignature2020 # ES256 alg (node.js & web env): https://w3c-ccg.github.io/security-vocab/#JsonWebSignature2020

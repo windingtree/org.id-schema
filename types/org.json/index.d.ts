@@ -37,7 +37,7 @@ export type BlockchainAccountId = string;
 /**
  * The cryptographic signature suite that was used to generate the signature
  */
-export type CryptographicSignatureSuiteReference = "EcdsaSecp256k1Signature2019";
+export type CryptographicSignatureSuiteReference = "EcdsaSecp256k1Signature2019" | "JsonWebSignature2020";
 /**
  * List of trust assertions (claims with proofs)
  */
@@ -122,7 +122,7 @@ export interface VerificationMethodReference {
   /**
    * The cryptographic suite that was used to generate a public key
    */
-  type: "EcdsaSecp256k1RecoveryMethod2020";
+  type: "EcdsaSecp256k1VerificationKey2019" | "JsonWebKey2020";
   /**
    * The DID subject is denoted by the id property. The DID subject is the entity that the DID document (ORG.JSON) is about. That is, it is the entity identified by the DID and described in the DID document.
    */
