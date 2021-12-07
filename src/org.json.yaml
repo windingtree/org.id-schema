@@ -771,11 +771,12 @@ definitions:
     example:
       "DE91100000000123456789"
   CryptographicSuiteReference:
-    description: The cryptographic suite type
+    description: The cryptographic suite type that can be used for signatures verification
     type: string
     enum:
-      - EcdsaSecp256k1VerificationKey2019 # secp256k1 alg (node.js env) public key: https://w3c-ccg.github.io/security-vocab/#EcdsaSecp256k1VerificationKey2019
-      - JsonWebKey2020 # ES256 alg (node.js & web env): https://w3c-ccg.github.io/security-vocab/#JsonWebKey2020
+      - EcdsaSecp256k1VerificationKey2019 # secp256k1 (supported in node.js using lib) public key: https://w3c-ccg.github.io/security-vocab/#EcdsaSecp256k1VerificationKey2019
+      - EcdsaSecp256k1RecoveryMethod2020 # secp256k1 (supported in node.js & browser using wallet signature) https://w3c-ccg.github.io/security-vocab/#EcdsaSecp256k1RecoveryMethod2020
+      - JsonWebKey2020 # ES256 (supported in node.js & browser using lib): https://w3c-ccg.github.io/security-vocab/#JsonWebKey2020
   CapabilityDelegationReference:
     description: >-
       The capability delegation is used to specify mechanism that might be used

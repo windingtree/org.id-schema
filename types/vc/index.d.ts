@@ -21,7 +21,10 @@ export type LinkedMultipleContextReference = LinkedContextReference[];
 /**
  * The cryptographic signature suite that was used to generate the signature
  */
-export type CryptographicSignatureSuiteReference = "EcdsaSecp256k1Signature2019" | "JsonWebSignature2020";
+export type CryptographicSignatureSuiteReference =
+  | "EcdsaSecp256k1Signature2019"
+  | "EcdsaSecp256k1RecoverySignature2020"
+  | "JsonWebSignature2020";
 
 /**
  * ORGiD Verifiable Credentials Schema
