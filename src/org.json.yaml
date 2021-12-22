@@ -78,6 +78,7 @@ definitions:
       - registryCode
       - legalType
       - registeredAddress
+      - media
     properties:
       legalName:
         description: Legal name, e.g. 'Acme, Inc.' or 'Ajax Ltd.'
@@ -140,6 +141,7 @@ definitions:
     type: object
     required:
       - name
+      - media
     properties:
       name:
         description: >-
@@ -668,11 +670,12 @@ definitions:
   MediaListReference:
     description: List of media files
     type: object
+    required:
+      - logo
     properties:
       logo:
         description: Organization or unit logo
         type: string
-        format: url
       images:
         description: List of images
         type: array

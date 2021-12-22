@@ -338,7 +338,7 @@ export interface LegalEntityReference {
   registeredAddress: AddressReference;
   locations?: LocationReference[];
   contacts?: ContactReference[];
-  media?: MediaListReference;
+  media: MediaListReference;
   /**
    * A list of organizational units of the legal entity
    */
@@ -490,7 +490,7 @@ export interface MediaListReference {
   /**
    * Organization or unit logo
    */
-  logo?: string;
+  logo: string;
   /**
    * List of images
    */
@@ -550,7 +550,7 @@ export interface OrganizationalUnitReference {
   address?: AddressReference;
   openingHours?: OpeningHoursReference;
   contacts?: ContactReference[];
-  media?: MediaListReference;
+  media: MediaListReference;
   /**
    * The DID subject is denoted by the id property. The DID subject is the entity that the DID document (ORG.JSON) is about. That is, it is the entity identified by the DID and described in the DID document.
    */
