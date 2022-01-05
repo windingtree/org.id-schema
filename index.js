@@ -1,0 +1,13 @@
+"use strict";
+exports.__esModule = true;
+exports.trustAssertion = exports.orgVcNft = exports.nft = exports.vc = exports.org = void 0;
+var org_json_1 = require("./dist/org.json");
+exports.org = org_json_1["default"];
+var vc_json_1 = require("./dist/vc.json");
+exports.vc = vc_json_1["default"];
+var nft_json_1 = require("./dist/nft.json");
+exports.nft = nft_json_1["default"];
+var orgVcNft_json_1 = require("./dist/orgVcNft.json");
+exports.orgVcNft = orgVcNft_json_1["default"];
+var trustAssertion_json_1 = require("./dist/trustAssertion.json");
+exports.trustAssertion = trustAssertion_json_1["default"];
