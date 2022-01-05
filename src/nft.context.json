@@ -1,0 +1,14 @@
+{
+    "@context": {
+      "@version": "2.0",
+      "nft": "https://github.com/windingtree/org.json-schema/blob/master/src/nft.yaml#",
+      "name": "nft:/definitions/NftName",
+      "description": "nft:/definitions/NftDescription",
+      "image": "nft:/definitions/NftImage",
+      "external_url": "nft:/definitions/NftExternalUrl",
+      "background_color": "nft:/definitions/NftBackgroundColor",
+      "animation_url": "nft:/definitions/NftAnimationUrl",
+      "youtube_url": "nft:/definitions/NftAnimationUrl",
+      "attributes": "nft:/definitions/NftAttributes"
+    }
+  }

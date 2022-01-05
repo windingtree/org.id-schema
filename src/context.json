@@ -1,17 +1,16 @@
 {
   "@context": {
-    "@version": "1.1",
-    "orgid": "https://github.com/windingtree/org.json-schema/blob/master/src/org-json-schema.yaml#",
+    "@version": "2.0",
+    "orgid": "https://github.com/windingtree/org.json-schema/blob/master/src/org.json.yaml#",
     "schemaVersion": "orgid:schemaVersion",
     "id": "orgid:id",
-    "publicKey": "orgid:/definitions/PublicKeyReference",
+    "verificationMethod": "orgid:/definitions/VerificationMethodReference",
     "service": "orgid:/definitions/ServiceReference",
     "payment": "orgid:/definitions/PaymentReference",
-    "trust": {
-      "assertions": "orgid:/definitions/TrustAssertionsReference",
-      "credentials": "orgid:/definitions/TrustCredentialsReference"
-    },
+    "trustAssertions": "orgid:/definitions/TrustAssertionsReference",
+    "credentials": "orgid:/definitions/TrustCredentialsReference",
     "legalEntity": "orgid:/definitions/LegalEntityReference",
-    "organizationalUnit": "orgid:/definitions/OrganizationalUnitReference"
+    "organizationalUnit": "orgid:/definitions/OrganizationalUnitReference",
+    "person": "orgid:/definitions/ContactReference"
   }
 }
