@@ -11,7 +11,7 @@ The package `@windingtree/org.json-schema` provides a following set of validatio
 ## Installing the package
 
 ```bash
-yarn add @windingtree/org.json-schema@1.0.0-beta.4
+yarn add @windingtree/org.json-schema
 ```
 
 ## Import of schemas
