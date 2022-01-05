@@ -2,7 +2,7 @@
 
 ## Documentation
 
-[ORG.JSON schemas documentation](./docs/index.md).
+[ORG.JSON schemas documentation](https://windingtree.github.io/org.id-sdk/#/build/org.json-schema/index).
 
 ## Examples
 
@@ -15,7 +15,7 @@
 ### NPM package
 
 ```sh
-yarn add @windingtree/org.json-schema@1.0.0-beta.5
+yarn add @windingtree/org.json-schema
 ```
 ## JSON Schema Specification
 
@@ -30,6 +30,10 @@ yarn build
 ```bash
 yarn test
 ```
+
+## Maintenance
+
+New packages must be released using [GitHub release workflow](https://github.com/windingtree/org.json-schema/releases/new).
 
 ## TODO for the next version
 
