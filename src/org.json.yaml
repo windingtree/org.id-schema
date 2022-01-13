@@ -758,9 +758,10 @@ definitions:
   BlockchainAccountId:
     description: Public key of the blockchain account
     type: string
-    pattern: "^([a-zA-Z-0-9]+)@([a-zA-Z-0-9]+):([a-zA-Z-0-9]+)$" # <ACCOUNT_ADDRESS>@<BLOCKCHAIN_TYPE_OR_STANDARD>:<BLOCKCHAIN_ID_ACCORDING_TO_TYPE> https://github.com/ChainAgnostic/CAIPs/blob/master/CAIPs/caip-10.md
+    pattern: "^([-a-zA-Z0-9]{5,41}):([-a-zA-Z0-9]{1,32}):([a-zA-Z0-9]{1,64})|([a-zA-Z0-9]{1,64})@([-a-z0-9]{5,41}):([-a-zA-Z-0-9]{1,32})$" # <BLOCKCHAIN_TYPE>:<CHAIN_ID>:<ACCOUNT_ADDRESS> https://github.com/ChainAgnostic/CAIPs/blob/master/CAIPs/caip-10.md
     example: >-
-      0xab16a96d359ec26a11e2c2b3d8f8b8942d5bfcdb@eip155:1
+      eip155:1:0xab16a96d359ec26a11e2c2b3d8f8b8942d5bfcdb
+      0xab16a96d359ec26a11e2c2b3d8f8b8942d5bfcdb@eip155:1 # Legacy format
   SwiftCode:
     description: SWIFT/BIC bank code according to ISO 9326
     type: string
