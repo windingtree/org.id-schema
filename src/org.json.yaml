@@ -291,6 +291,7 @@ definitions:
         type: string
       note:
         description: Note about the private key purpose
+        type: string
       verificationMethodRevocation:
         description: Verification method revocation status
         $ref: '#/definitions/VerificationMethodRevocationReference'

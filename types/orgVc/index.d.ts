@@ -294,9 +294,7 @@ export interface VerificationMethodReference {
   /**
    * Note about the private key purpose
    */
-  note?: {
-    [k: string]: unknown;
-  };
+  note?: string;
   /**
    * Verification method revocation status
    */
