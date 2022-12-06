@@ -584,6 +584,8 @@ definitions:
   ContactReference:
     description: Contact reference
     type: object
+    required:
+      - function
     properties:
       function:
         description: >-
@@ -599,6 +601,10 @@ definitions:
         description: Email
         type: string
         format: email
+      website:
+        description: Website URI
+        type: string
+        pattern: '^(https|http){1}:\/\/([\w\d.-]+)(:(\d*))?(\/[\w\d.-?=#&%-_]*)?$'
       messengers:
         description: Messenger accounts
         type: array
@@ -613,6 +619,7 @@ definitions:
         "name": "John Smith",
         "phone": "+1234567890",
         "email": "email@spam.com",
+        "website": "https://website.web",
         "messengers": [
           {
             "type": "whatsapp",

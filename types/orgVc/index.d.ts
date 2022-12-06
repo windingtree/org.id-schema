@@ -281,12 +281,7 @@ export interface VerificationMethodReference {
    * A public key PEM property is used to specify the PEM-encoded version of the public key
    */
   publicKeyPem?: string;
-  /**
-   * Public key in JWT format (recommended key format)
-   */
-  publicKeyJwk?: {
-    [k: string]: unknown;
-  };
+  publicKeyJwk?: PublicKeyJwkReference;
   /**
    * Public key in value in Base58 Bitcoin format
    */
@@ -295,27 +290,34 @@ export interface VerificationMethodReference {
    * Note about the private key purpose
    */
   note?: string;
+  verificationMethodRevocation?: VerificationMethodRevocationReference;
+  [k: string]: unknown;
+}
+/**
+ * Public key in JWT format (recommended key format)
+ */
+export interface PublicKeyJwkReference {
+  [k: string]: unknown;
+}
+/**
+ * Verification method revocation status
+ */
+export interface VerificationMethodRevocationReference {
   /**
-   * Verification method revocation status
+   * Revocation reason according to https://datatracker.ietf.org/doc/html/rfc5280#section-5.3.1
    */
-  verificationMethodRevocation?: {
-    /**
-     * Revocation reason according to https://datatracker.ietf.org/doc/html/rfc5280#section-5.3.1
-     */
-    reason?:
-      | "unspecified"
-      | "keyCompromise"
-      | "affiliationChanged"
-      | "superseded"
-      | "cessationOfOperation"
-      | "certificateHold"
-      | "privilegeWithdrawn";
-    /**
-     * Date of the public key invalidation
-     */
-    invalidityDate?: string;
-    [k: string]: unknown;
-  };
+  reason?:
+    | "unspecified"
+    | "keyCompromise"
+    | "affiliationChanged"
+    | "superseded"
+    | "cessationOfOperation"
+    | "certificateHold"
+    | "privilegeWithdrawn";
+  /**
+   * Date of the public key invalidation
+   */
+  invalidityDate?: string;
   [k: string]: unknown;
 }
 /**
@@ -507,7 +509,7 @@ export interface ContactReference {
   /**
    * Contact function: sales, support, accounting, etc.
    */
-  function?: string;
+  function: string;
   /**
    * Contact person or department name
    */
@@ -520,6 +522,10 @@ export interface ContactReference {
    * Email
    */
   email?: string;
+  /**
+   * Website URI
+   */
+  website?: string;
   /**
    * Messenger accounts
    */
