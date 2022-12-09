@@ -1,6 +1,6 @@
 # Validation schemas
 
-The package `@windingtree/org.json-schema` provides a following set of validation schemas based on [json-schema](http://json-schema.org/specification.html) standard.
+The package `@windingtree/org.id-schema` provides a following set of validation schemas based on [json-schema](http://json-schema.org/specification.html) standard.
 
 - `ORG.JSON`: base ORG.JSON schema
 - `ORGiD VC`: generic verifiable credential schema
@@ -11,7 +11,7 @@ The package `@windingtree/org.json-schema` provides a following set of validatio
 ## Installing the package
 
 ```bash
-yarn add @windingtree/org.json-schema
+yarn add @windingtree/org.id-schema
 ```
 
 ## Import of schemas
@@ -23,7 +23,7 @@ import {
   orgVc as orgJsonVcNftSchema,
   trustAssertion as trustAssertionSchema,
   nft as nftMetaDataSchema
-} from '@windingtree/org.json-schema';
+} from '@windingtree/org.id-schema';
 ```
 
 ## Using schema for a data validation
@@ -31,8 +31,8 @@ import {
 > For the validation the ready-made `validateWithSchemaOrRef` utility from the `@windingtree/org.id-utils` package can used. Under the hood this utility is uses a powerful [`ajv`](https://github.com/ajv-validator/ajv) package.
 
 ```typescript
-import type { ORGJSON } from '@windingtree/org.json-schema/types/org.json';
-import { org as orgJsonSchema } from '@windingtree/org.json-schema';
+import type { ORGJSON } from '@windingtree/org.id-schema/types/org.json';
+import { org as orgJsonSchema } from '@windingtree/org.id-schema';
 import { object } from '@windingtree/org.id-utils';
 
 const orgJson = { /* ... */ }; // raw data object
@@ -56,11 +56,11 @@ if (validationResult !== null) {
 > Below you can see examples of import of major types. To get detailed information about all available types please review types definition files using your IDE.
 
 ```typescript
-import type { ORGJSON } from '@windingtree/org.json-schema/types/org.json';
-import type { ORGiDVC } from '@windingtree/org.json-schema/types/vc';
-import type { ORGJSONVCNFT } from '@windingtree/org.json-schema/types/orgVc';
-import type { TrustAssertionCredential } from '@windingtree/org.json-schema/types/trustAssertion';
-import type { NFTMetadata } from '@windingtree/org.json-schema/types/';
+import type { ORGJSON } from '@windingtree/org.id-schema/types/org.json';
+import type { ORGiDVC } from '@windingtree/org.id-schema/types/vc';
+import type { ORGJSONVCNFT } from '@windingtree/org.id-schema/types/orgVc';
+import type { TrustAssertionCredential } from '@windingtree/org.id-schema/types/trustAssertion';
+import type { NFTMetadata } from '@windingtree/org.id-schema/types/';
 ```
 
 ## Schemas

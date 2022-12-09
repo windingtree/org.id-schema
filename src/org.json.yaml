@@ -427,7 +427,7 @@ definitions:
       {
         "@context": {
           "api": "https://own.api.service/schema.yaml#",
-          "orgid": "https://github.com/windingtree/org.json-schema/blob/master/src/orgid-json-schema.yaml#",
+          "orgid": "https://github.com/windingtree/org.id-schema/blob/master/src/orgid-json-schema.yaml#",
           "type": "api:type",
           "b2b": "orgid:/definitions/LinkedEndpointReference",
           "admin": "orgid:/definitions/LinkedEndpointReference"

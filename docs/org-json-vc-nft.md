@@ -12,7 +12,7 @@ The example of the VC with DID document as a credential subject and NFT metadata
 {
   "@context": [
     "https://www.w3.org/2018/credentials/v1",
-    "https://raw.githubusercontent.com/windingtree/org.json-schema/feat/new-orgid/src/context.json"
+    "https://raw.githubusercontent.com/windingtree/org.id-schema/feat/new-orgid/src/context.json"
   ],
   "id": "c48aba97-c92b-4189-8546-184112f0ebff", // <-- unique credential Id
   "issuer": "did:orgid:4:0x57b...ad94", // <-- credential issuer

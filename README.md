@@ -1,8 +1,8 @@
-![npm](https://img.shields.io/npm/v/@windingtree/org.json-schema) [![NPM Package](https://github.com/windingtree/org.json-schema/actions/workflows/tests.yml/badge.svg)](https://github.com/windingtree/org.json-schema/actions/workflows/tests.yml)
+![npm](https://img.shields.io/npm/v/@windingtree/org.id-schema) [![NPM Package](https://github.com/windingtree/org.id-schema/actions/workflows/tests.yml/badge.svg)](https://github.com/windingtree/org.id-schema/actions/workflows/tests.yml)
 
 ## Documentation
 
-[ORG.JSON schemas documentation](https://windingtree.github.io/org.id-sdk/#/build/org.json-schema/index).
+[ORG.JSON schemas documentation](https://windingtree.github.io/org.id-sdk/#/build/org.id-schema/index).
 
 ## Examples
 
@@ -15,7 +15,7 @@
 ### NPM package
 
 ```sh
-yarn add @windingtree/org.json-schema
+yarn add @windingtree/org.id-schema
 ```
 ## JSON Schema Specification
 
@@ -33,7 +33,7 @@ yarn test
 
 ## Maintenance
 
-New packages must be released using [GitHub release workflow](https://github.com/windingtree/org.json-schema/releases/new).
+New packages must be released using [GitHub release workflow](https://github.com/windingtree/org.id-schema/releases/new).
 
 ## TODO for the next version
 

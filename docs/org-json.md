@@ -20,7 +20,7 @@ So, let see some examples.
 {
   "@context": [
     "https://www.w3.org/ns/did/v1",
-    "https://raw.githubusercontent.com/windingtree/org.json-schema/feat/new-orgid/src/context.json"
+    "https://raw.githubusercontent.com/windingtree/org.id-schema/feat/new-orgid/src/context.json"
   ],
   "id": "did:orgid:4:0x94...ad75",
   "created": "2021-01-01T13:10:02.251Z"
@@ -83,7 +83,7 @@ The definition above means that organization "TheName" with ORGiD "did:orgid:4:0
 
 ## Organizational unit
 
-For handling of an organizational unit profiles ORG.JSON specification proposes to use `organizationalUnit` property. The way of how this property is work is the same as for `legalEntity`. The detailed information about the structure of the `organizationalUnit` can be found in the [org.json.yaml](https://github.com/windingtree/org.json-schema/blob/feat/new-orgid/src/org.json.yaml) file (see `OrganizationalUnitReference` definition).
+For handling of an organizational unit profiles ORG.JSON specification proposes to use `organizationalUnit` property. The way of how this property is work is the same as for `legalEntity`. The detailed information about the structure of the `organizationalUnit` can be found in the [org.json.yaml](https://github.com/windingtree/org.id-schema/blob/feat/new-orgid/src/org.json.yaml) file (see `OrganizationalUnitReference` definition).
 
 ## Personal profile
 

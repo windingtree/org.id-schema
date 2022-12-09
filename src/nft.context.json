@@ -1,7 +1,7 @@
 {
     "@context": {
       "@version": "2.0",
-      "nft": "https://github.com/windingtree/org.json-schema/blob/master/src/nft.yaml#",
+      "nft": "https://github.com/windingtree/org.id-schema/blob/master/src/nft.yaml#",
       "name": "nft:/definitions/NftName",
       "description": "nft:/definitions/NftDescription",
       "image": "nft:/definitions/NftImage",
